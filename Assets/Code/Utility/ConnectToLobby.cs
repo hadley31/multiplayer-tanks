@@ -17,7 +17,7 @@ public class ConnectToLobby : MonoBehaviour
 
 	private void CreateRoom ()
 	{
-		NetworkManager.CreateRoom ("Test Room");
+		NetworkManager.JoinOrCreateRoom ("Test Room");
 	}
 
 	private void ChangeScene ()

@@ -8,6 +8,8 @@ public class NetworkManager : PunBehaviour
 {
 	private void Awake ()
 	{
+		PhotonNetwork.sendRate = 30;
+		PhotonNetwork.sendRateOnSerialize = 30;
 		DontDestroyOnLoad (this);
 	}
 
@@ -167,6 +169,17 @@ public class NetworkManager : PunBehaviour
 	public static void JoinRoom (string name)
 	{
 		PhotonNetwork.JoinRoom (name);
+	}
+
+	public static void JoinOrCreateRoom (string name)
+	{
+		RoomOptions options = new RoomOptions
+		{
+			IsVisible = true,
+			IsOpen = true,
+			MaxPlayers = 20,
+		};
+		PhotonNetwork.JoinOrCreateRoom (name, options, TypedLobby.Default);
 	}
 
 	public static void JoinRandomRoom ()

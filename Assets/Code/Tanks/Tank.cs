@@ -79,8 +79,6 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if (photonView.isMine)
 		{
 			GetInput ();
-
-		//	Rotate ();
 			Look ();
 
 			LayLandmine ();
@@ -88,7 +86,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		}
 		else
 		{
-			DeserializeView ();
+			RemoteUpdate ();
 		}
 	}
 
@@ -97,6 +95,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if (photonView.isMine)
 		{
 			Move ();
+			Rotate ();
 		}
 	}
 
@@ -136,7 +135,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if ( velocity.sqrMagnitude > Mathf.Epsilon )
 		{
 			Quaternion target = Quaternion.LookRotation (velocity, Vector3.up);
-			transform.rotation = Quaternion.Slerp (transform.rotation, target, Time.deltaTime * turnSpeed);
+			rb.rotation = Quaternion.Slerp (transform.rotation, target, Time.fixedDeltaTime * turnSpeed);
 		}
 	}
 
@@ -203,7 +202,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		}
 	}
 
-	protected void DeserializeView ()
+	protected void RemoteUpdate ()
 	{
 		float pingInSeconds = PhotonNetwork.GetPing () * 0.001f;
 		float timeSinceLastUpdate = (float) ( PhotonNetwork.time - lastNetworkDataReceivedTime );
