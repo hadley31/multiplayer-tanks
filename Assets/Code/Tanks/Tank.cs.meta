@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: e772eaada4348a449a39c6d54d774630
+timeCreated: 1498264771
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - projectilePrefab: {instanceID: 0}
+  - spawnPosition: {instanceID: 0}
+  - fireParticles: {fileID: 114425830710188870, guid: 1fd86744d00348c4e959017ba3897145,
+      type: 2}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
