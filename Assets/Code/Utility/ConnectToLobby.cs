@@ -9,10 +9,16 @@ public class ConnectToLobby : MonoBehaviour
 		NetworkManager.Connect ();
 	}
 
-	private void Awake ()
+	private void OnEnable ()
 	{
 		NetworkManager.OnJoinLobby += CreateRoom;
 		NetworkManager.OnJoinRoom += ChangeScene;
+	}
+
+	private void OnDisable ()
+	{
+		NetworkManager.OnJoinLobby -= CreateRoom;
+		NetworkManager.OnJoinRoom -= ChangeScene;
 	}
 
 	private void CreateRoom ()
@@ -22,6 +28,6 @@ public class ConnectToLobby : MonoBehaviour
 
 	private void ChangeScene ()
 	{
-		PhotonNetwork.LoadLevel (2);
+		PhotonNetwork.LoadLevel (1);
 	}
 }

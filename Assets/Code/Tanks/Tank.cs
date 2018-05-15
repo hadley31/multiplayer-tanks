@@ -296,6 +296,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if (photonView.isMine)
 		{
 			PhotonNetwork.Destroy (gameObject);
+			FindObjectOfType<GameManager> ().SpawnPlayer ();
 		}
 	}
 }
