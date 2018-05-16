@@ -39,4 +39,5 @@ MonoBehaviour:
   - SetRPC
   - SpawnPlayer
   - NetworkPrime
+  - DestroyObject
   DisableAutoOpenWizard: 1

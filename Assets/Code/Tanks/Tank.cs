@@ -287,19 +287,17 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if (PhotonNetwork.isMasterClient)
 		{
 			p.DestroyObject ();
-			DestroyObject ();
+
+			photonView.RPC ("DestroyObject", photonView.owner);
 		}
 	}
 
+	[PunRPC]
 	public void DestroyObject ()
-	{
-		PhotonNetwork.Destroy (gameObject);
-	}
-
-	private void OnDestroy ()
 	{
 		if (photonView.isMine)
 		{
+			PhotonNetwork.Destroy (photonView);
 			FindObjectOfType<GameManager> ().SpawnPlayer ();
 		}
 	}
