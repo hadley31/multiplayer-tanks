@@ -10,51 +10,35 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 
 	#region Static Spawn Methods
 
-	public static Projectile Spawn (Projectile prefab, Vector3 position, Vector3 direction, ProjectileInfo info)
+	public static void Spawn (Vector3 position, Vector3 direction, float speed, int bounces, int sender)
 	{
-		Projectile p = Instantiate (prefab, position, Quaternion.identity);
-		p.direction = direction;
-		p.info = info.Clone ();
-		return p;
-	}
+		Projectile p = PhotonNetwork.Instantiate (resourceName, position, Quaternion.identity, 0).GetComponent<Projectile> ();
 
-	public static Projectile SpawnOnNetwork (Vector3 position, Vector3 direction, ProjectileInfo info, int senderID)
-	{
-		if (PhotonNetwork.inRoom)
+		p.direction = direction;
+		p.senderID = sender;
+		p.speed = speed;
+		p.bounces = bounces;
+
+		if (!PhotonNetwork.isMasterClient)
 		{
-			Projectile p = PhotonNetwork.Instantiate (resourceName, position, Quaternion.identity, 0).GetComponent<Projectile> ();
-			p.direction = direction;
-			p.info = info != null ? info.Clone () : new ProjectileInfo ();
-			p.senderID = senderID;
-			return p;
+			p.photonView.TransferOwnership (PhotonNetwork.masterClient);
 		}
-		return null;
+
+		p.photonView.RPC ("NetworkPrime", PhotonTargets.Others, position, direction, speed, bounces, sender, PhotonNetwork.time);
 	}
 
 	#endregion
 
 	public Vector3 direction;
-	public ProjectileInfo info;
+	public float speed;
 	public int senderID;
+	public int bounces;
 
 	#region Monobehaviors
 
-	protected void Start ()
-	{
-		Destroy (gameObject, info.lifeSpan);
-		transform.localScale = Vector3.one * info.radius * 2;
-	}
-
 	protected void Update ()
 	{
-		if (photonView.isMine)
-		{
-			Move ();
-		}
-		else
-		{
-			SerializeView ();
-		}
+		Move ();
 	}
 
 	protected void OnTriggerEnter (Collider col)
@@ -102,7 +86,7 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 
 		Vector3 estimatedPosition = networkPosition + ( networkDirection * totalTimePassed );
 
-		Vector3 newPosition = Vector3.Lerp (transform.position, estimatedPosition, info.moveSpeed * Time.deltaTime);
+		Vector3 newPosition = Vector3.Lerp (transform.position, estimatedPosition, speed * Time.deltaTime);
 
 		if (Vector3.SqrMagnitude (estimatedPosition - transform.position) > 4f)
 		{
@@ -112,23 +96,35 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 		transform.position = newPosition;
 	}
 
+
+	[PunRPC]
+	public void NetworkPrime (Vector3 position, Vector3 direction, float speed, int bounces, int sender, double time)
+	{
+		float dt = (float)(PhotonNetwork.time - time);
+		transform.position = position + direction * dt * speed;
+		this.direction = direction;
+		this.speed = speed;
+		this.bounces = bounces;
+		this.senderID = sender;
+	}
+
 	#endregion
 
 	protected virtual void Move ()
 	{
-		transform.Translate (direction * Time.deltaTime * info.moveSpeed, Space.World);
+		transform.Translate (direction * Time.deltaTime * speed, Space.World);
 	}
 
 	public void Bounce (Vector3 normal)
 	{
-		if ( normal == Vector3.zero || Vector3.Dot (normal, direction) > 0 || info.bounces <= 0 )
+		if ( normal == Vector3.zero || Vector3.Dot (normal, direction) > 0 || bounces <= 0 )
 		{
 			DestroyObject ();
 			return;
 		}
 
 		direction = Vector3.Reflect (direction, normal);
-		info.bounces--;
+		bounces--;
 	}
 
 	public void OnProjectileInteraction (Projectile p)
@@ -138,9 +134,16 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 
 	public void DestroyObject ()
 	{
-		if (photonView.isMine)
+		if (PhotonNetwork.inRoom)
 		{
-			PhotonNetwork.Destroy (gameObject);
+			if (PhotonNetwork.isMasterClient)
+			{
+				PhotonNetwork.Destroy (gameObject);
+			}
+		}
+		else
+		{
+			Destroy (gameObject);
 		}
 	}
 }

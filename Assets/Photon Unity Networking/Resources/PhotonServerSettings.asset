@@ -38,4 +38,5 @@ MonoBehaviour:
   - RequestForPickupTimes
   - SetRPC
   - SpawnPlayer
+  - NetworkPrime
   DisableAutoOpenWizard: 1

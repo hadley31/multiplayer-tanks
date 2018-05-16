@@ -185,7 +185,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if ( stream.isWriting )
 		{
 			stream.SendNext (transform.position);
-			stream.SendNext (velocity);
+			stream.SendNext (rb.velocity);
 
 			stream.SendNext (transform.eulerAngles.y);
 			stream.SendNext (top.eulerAngles.y);
@@ -237,7 +237,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 
 		if ( CanShoot () )
 		{
-			Projectile.SpawnOnNetwork (projectileSpawnPoint.position, projectileSpawnPoint.forward, projectileInfo, PhotonNetwork.player.ID);
+			Projectile.Spawn (projectileSpawnPoint.position, projectileSpawnPoint.forward, projectileInfo.moveSpeed, projectileInfo.bounces, PhotonNetwork.player.ID);
 			fireTimer = fireRate;
 		}
 	}
@@ -284,18 +284,22 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		if (photonView.isMine)
+		if (PhotonNetwork.isMasterClient)
 		{
-			DestroyObject ();
 			p.DestroyObject ();
+			DestroyObject ();
 		}
 	}
 
 	public void DestroyObject ()
 	{
+		PhotonNetwork.Destroy (gameObject);
+	}
+
+	private void OnDestroy ()
+	{
 		if (photonView.isMine)
 		{
-			PhotonNetwork.Destroy (gameObject);
 			FindObjectOfType<GameManager> ().SpawnPlayer ();
 		}
 	}
