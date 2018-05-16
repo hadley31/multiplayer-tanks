@@ -121,8 +121,7 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 
 	public void Bounce (Vector3 normal)
 	{
-		print ("Bounce");
-		if ( info.bounces <= 0 )
+		if ( normal == Vector3.zero || Vector3.Dot (normal, direction) > 0 || info.bounces <= 0 )
 		{
 			DestroyObject ();
 			return;

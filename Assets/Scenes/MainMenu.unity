@@ -89,7 +89,8 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaIndirect: 2
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000002, guid: 4e499c5a05316b64c87978df6f2cd2d6,
+    type: 2}
   m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
@@ -723,7 +724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2117309942}
   - component: {fileID: 2117309941}
-  - component: {fileID: 2117309940}
   - component: {fileID: 2117309939}
   - component: {fileID: 2117309938}
   m_Layer: 0
@@ -741,13 +741,6 @@ AudioListener:
   m_GameObject: {fileID: 2117309937}
   m_Enabled: 1
 --- !u!124 &2117309939
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2117309937}
-  m_Enabled: 1
---- !u!92 &2117309940
 Behaviour:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}

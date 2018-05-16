@@ -8,8 +8,8 @@ public class NetworkManager : PunBehaviour
 {
 	private void Awake ()
 	{
-		PhotonNetwork.sendRate = 30;
-		PhotonNetwork.sendRateOnSerialize = 30;
+		PhotonNetwork.sendRate = 18;
+		PhotonNetwork.sendRateOnSerialize = 18;
 		DontDestroyOnLoad (this);
 	}
 
@@ -25,7 +25,6 @@ public class NetworkManager : PunBehaviour
 
 	public static event Action OnConnectToMaster;
 	public static event Action OnConnectToPhoton;
-	public static event Action OnDisconnectFromMaster;
 	public static event Action OnDisconnectFromPhoton;
 	public static event DisconnectCauseDelegate OnConnectionFailed;
 	public static event DisconnectCauseDelegate OnConnectToPhotonFailed;
