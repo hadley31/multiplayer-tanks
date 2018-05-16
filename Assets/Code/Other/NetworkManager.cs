@@ -12,16 +12,12 @@ public class NetworkManager : PunBehaviour
 		PhotonNetwork.sendRateOnSerialize = 18;
 		DontDestroyOnLoad (this);
 	}
-
-	#region Delegates
+	
+	#region Events and Delegates
 
 	public delegate void PlayerDelegate (PhotonPlayer player);
 	public delegate void DisconnectCauseDelegate (DisconnectCause cause);
 	public delegate void HashtableDelegate (Hashtable table);
-
-	#endregion
-
-	#region Events
 
 	public static event Action OnConnectToMaster;
 	public static event Action OnConnectToPhoton;

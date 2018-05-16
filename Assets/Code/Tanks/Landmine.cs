@@ -10,32 +10,27 @@ public class Landmine : Entity, IProjectileInteractive
 
 	#region Static Spawn Methods
 
-	public static Landmine Spawn (Landmine prefab, Vector3 position)
+	public static void Spawn (Vector3 position, float fuse, int sender)
 	{
-		if (prefab)
-		{
-			return Instantiate (prefab, position, Quaternion.identity);
-		}
-		return null;
-	}
+		Landmine lm = PhotonNetwork.Instantiate (resourceName, position, Quaternion.identity, 0).GetComponent<Landmine> ();
 
-	public static Landmine SpawnOnNetwork (Vector3 position, LandmineInfo info, int senderID)
-	{
-		if ( PhotonNetwork.inRoom )
+		lm.transform.position = position;
+		lm.senderID = sender;
+
+		if ( !PhotonNetwork.isMasterClient )
 		{
-			Landmine p = PhotonNetwork.Instantiate (resourceName, position, Quaternion.identity, 0).GetComponent<Landmine> ();
-			p.info = info != null ? info.Clone () : new LandmineInfo ();
-			p.senderID = senderID;
-			return p;
+			lm.photonView.TransferOwnership (PhotonNetwork.masterClient);
 		}
-		return null;
+		lm.photonView.RPC ("NetworkPrime", PhotonTargets.Others, position, fuse, sender, PhotonNetwork.time);
 	}
 
 	#endregion
 
 	public Transform explosion;
-	public LandmineInfo info;
 	public int senderID;
+	public float fuseTime;
+	public float radius;
+	public int damage;
 
 	protected Material material;
 	protected float fuseTimer;
@@ -44,8 +39,7 @@ public class Landmine : Entity, IProjectileInteractive
 
 	protected void Start ()
 	{
-		material = GetComponent<Renderer> ().material;
-		fuseTimer = info.fuseTime;
+		this.material = GetComponent<Renderer> ().material;
 	}
 
 	protected void Update ()
@@ -67,39 +61,21 @@ public class Landmine : Entity, IProjectileInteractive
 			if ( fuseTimer <= 0 )
 			{
 				DestroyObject ();
-				fuseTimer = info.fuseTime;
+				fuseTimer = this.fuseTime;
 			}
-		}
-		else
-		{
-			SerializeView ();
 		}
 	}
 
 	#region Networking
 
-	protected Vector3 networkPosition;
-	protected double lastNetworkDataReceivedTime = 0;
-
-	protected virtual void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info)
+	[PunRPC]
+	public void NetworkPrime (Vector3 position, float fuse, int sender, double time)
 	{
-		if ( stream.isWriting )
-		{
-			// This is us updating the projectile
-			stream.SendNext (transform.position);
-		}
-		else
-		{
-			// This is someone elses projectile
-			networkPosition = (Vector3) stream.ReceiveNext ();
-			// Keep track of the timestamp for the update function
-			lastNetworkDataReceivedTime = info.timestamp;
-		}
-	}
-
-	protected virtual void SerializeView ()
-	{
-
+		float dt = (float) ( PhotonNetwork.time - time );
+		this.transform.position = position;
+		this.fuseTime = fuse;
+		this.fuseTimer -= dt;
+		this.senderID = sender;
 	}
 
 	#endregion
@@ -118,7 +94,7 @@ public class Landmine : Entity, IProjectileInteractive
 		if ( photonView.isMine )
 		{
 			EntityHealth ourHealth = GetComponent<EntityHealth> ();
-			Collider[] colliders = Physics.OverlapSphere (transform.position, info.radius);
+			Collider[] colliders = Physics.OverlapSphere (transform.position, radius);
 			foreach (Collider c in colliders)
 			{
 				EntityHealth h = c.GetComponent<EntityHealth> ();
@@ -126,7 +102,7 @@ public class Landmine : Entity, IProjectileInteractive
 				if (h != null && h != ourHealth)
 				{
 					print (h.gameObject.name);
-					h.Decrease (info.damage);
+					h.Decrease (damage);
 				}
 			}
 

@@ -269,7 +269,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 		if ( CanLayLandmine () )
 		{
 			print ("Placed Landmine");
-			Landmine.SpawnOnNetwork (transform.position, landmineInfo, PhotonNetwork.player.ID);
+			Landmine.Spawn (transform.position, landmineInfo.fuseTime, PhotonNetwork.player.ID);
 			landmineUseTimer = landmineUseCooldown;
 			landmines--;
 		}
