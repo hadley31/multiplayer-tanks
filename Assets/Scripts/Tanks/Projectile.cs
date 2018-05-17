@@ -8,27 +8,6 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 {
 	public const string resourceName = "Projectile";
 
-	#region Static Spawn Methods
-
-	public static void Spawn (Vector3 position, Vector3 direction, float speed, int bounces, int sender)
-	{
-		Projectile p = PhotonNetwork.Instantiate (resourceName, position, Quaternion.identity, 0).GetComponent<Projectile> ();
-
-		p.direction = direction;
-		p.senderID = sender;
-		p.speed = speed;
-		p.bounces = bounces;
-
-		if (!PhotonNetwork.isMasterClient)
-		{
-			p.photonView.TransferOwnership (PhotonNetwork.masterClient);
-		}
-
-		p.photonView.RPC ("NetworkPrime", PhotonTargets.Others, position, direction, speed, bounces, sender, PhotonNetwork.time);
-	}
-
-	#endregion
-
 	public Vector3 direction;
 	public float speed;
 	public int senderID;

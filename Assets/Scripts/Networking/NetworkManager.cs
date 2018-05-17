@@ -50,7 +50,7 @@ public class NetworkManager : PunBehaviour
 
 	public static void Connect ()
 	{
-		PhotonNetwork.ConnectUsingSettings ("0.0.1");
+		PhotonNetwork.ConnectUsingSettings ("v0.0.1");
 	}
 
 	public static void Disconnect ()

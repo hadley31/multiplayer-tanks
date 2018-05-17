@@ -12,14 +12,14 @@ public class TankBoostVisual : MonoBehaviour
 
 	private void Update ()
 	{
-		if ( tank != null )
-		{
-			float newValue = tank.boost / tank.maxBoost;
-			if ( newValue != oldValue )
-			{
-				slider.value = newValue;
-				oldValue = newValue;
-			}
-		}
+		//if ( tank != null )
+		//{
+		//	float newValue = tank.boost / tank.maxBoost;
+		//	if ( newValue != oldValue )
+		//	{
+		//		slider.value = newValue;
+		//		oldValue = newValue;
+		//	}
+		//}
 	}
 }
