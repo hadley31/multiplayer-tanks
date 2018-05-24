@@ -4,6 +4,11 @@ using UnityEngine;
 
 public abstract class ControlElement : MonoBehaviour
 {
+	public bool InControl
+	{
+		get { return Universe.ElementInControl == this; }
+	}
+
 	protected virtual void OnEnable ()
 	{
 		Universe.controls.Add (this);

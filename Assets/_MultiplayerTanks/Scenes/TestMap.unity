@@ -138,7 +138,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 90938126}
-  - component: {fileID: 90938127}
   m_Layer: 0
   m_Name: Scripts
   m_TagString: Untagged
@@ -159,30 +158,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &90938127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 90938125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 17dd8823319412c458a08031fb836339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  team1SpawnPoints:
-  - {fileID: 1762738671}
-  - {fileID: 195847222}
-  - {fileID: 1697153634}
-  - {fileID: 1010336517}
-  - {fileID: 661155307}
-  team2SpawnPoints:
-  - {fileID: 96607419}
-  - {fileID: 640223346}
-  - {fileID: 1483749182}
-  - {fileID: 709239219}
-  - {fileID: 1527466352}
-  camera: {fileID: 1379757278}
 --- !u!1 &96607418
 GameObject:
   m_ObjectHideFlags: 0
@@ -1544,7 +1519,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 90938127}
+      - m_Target: {fileID: 0}
         m_MethodName: Leave
         m_Mode: 1
         m_Arguments:

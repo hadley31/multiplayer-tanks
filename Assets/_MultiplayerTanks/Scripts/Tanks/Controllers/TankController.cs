@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (Tank))]
-public class TankController : MonoBehaviour
+public abstract class TankController : ControlElement
 {
 	protected Tank tank;
 
@@ -35,7 +35,7 @@ public class TankController : MonoBehaviour
 		this.tank = GetComponent<Tank> ();
 	}
 
-	protected virtual void Update ()
+	public override void OnControlUpdate ()
 	{
 		fireTimer -= Time.deltaTime;
 		landmineUseTimer -= Time.deltaTime;

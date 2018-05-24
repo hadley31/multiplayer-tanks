@@ -16,22 +16,38 @@ public class PlayerTankController : TankController
 		groundPlane = new Plane (Vector3.up, Vector3.zero);
 	}
 
-	protected override void Update ()
+	public override void OnGainControl ()
 	{
-		base.Update ();
+		
+	}
+
+	public override void OnLoseControl ()
+	{
+		
+	}
+
+	public override void OnControlUpdate ()
+	{
+		base.OnControlUpdate ();
 
 		GetInput ();
 	}
 
 	protected virtual void FixedUpdate ()
 	{
-		tank.Rotate (velocity, turnSpeed);
-		tank.Move (velocity);
+		if (InControl)
+		{
+			tank.Rotate (velocity, turnSpeed);
+			tank.Move (velocity);
+		}
 	}
 
 	protected void LateUpdate ()
 	{
-		tank.Look (GetTargetPoint (), topRotateSpeed);
+		if (InControl)
+		{
+			tank.Look (GetTargetPoint (), topRotateSpeed);
+		}
 	}
 
 

@@ -43,19 +43,23 @@ public sealed class Universe : MonoBehaviour
 
 	public static readonly List<ControlElement> controls = new List<ControlElement> ();
 
-	private static ControlElement elementInControl;
+	public static ControlElement ElementInControl
+	{
+		get;
+		private set;
+	}
 
 	private void ControlUpdate ()
 	{
 		ControlElement last = GetLastControl ();
 
-		if (elementInControl == last)
+		if ( ElementInControl == last && ElementInControl != null )
 		{
-			elementInControl.OnControlUpdate ();
+			ElementInControl.OnControlUpdate ();
 		}
 		else
 		{
-			elementInControl?.OnLoseControl ();
+			ElementInControl?.OnLoseControl ();
 			last?.OnGainControl ();
 		}
 	}
