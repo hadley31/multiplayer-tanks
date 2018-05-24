@@ -44,7 +44,7 @@ public class NetworkTank : PunBehaviour
 		if ( stream.isWriting )
 		{
 			stream.SendNext (transform.position);
-			stream.SendNext (tank.rb.velocity);
+			stream.SendNext (tank.Rigidbody.velocity);
 
 			stream.SendNext (transform.eulerAngles.y);
 			stream.SendNext (tank.top.eulerAngles.y);

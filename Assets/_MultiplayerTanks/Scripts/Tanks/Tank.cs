@@ -6,19 +6,15 @@ using UnityEngine;
 [RequireComponent (typeof (EntityHealth))]
 public class Tank : Entity, IProjectileInteractive
 {
-	public Transform projectileSpawnPoint;
 	public Transform top;
 
-	public ProjectileInfo projectileInfo;
-	public LandmineInfo landmineInfo;
-
-	public Rigidbody rb
+	public Rigidbody Rigidbody
 	{
 		get;
 		protected set;
 	}
 
-	public BoxCollider col
+	public BoxCollider Collider
 	{
 		get;
 		protected set;
@@ -30,11 +26,17 @@ public class Tank : Entity, IProjectileInteractive
 		protected set;
 	}
 
+	protected virtual void Awake ()
+	{
+		this.Rigidbody = GetComponent<Rigidbody> ();
+		this.Collider = GetComponent<BoxCollider> ();
+	}
+
 	#region Movement
 
 	public virtual void Move (Vector3 velocity)
 	{
-		rb.AddForce (velocity - rb.velocity, ForceMode.VelocityChange);
+		Rigidbody.AddForce (velocity - Rigidbody.velocity, ForceMode.VelocityChange);
 	}
 
 	public virtual void Rotate (Vector3 velocity, float turnSpeed)
@@ -42,7 +44,7 @@ public class Tank : Entity, IProjectileInteractive
 		if ( velocity.sqrMagnitude > Mathf.Epsilon )
 		{
 			Quaternion target = Quaternion.LookRotation (velocity, Vector3.up);
-			rb.rotation = Quaternion.Slerp (transform.rotation, target, Time.fixedDeltaTime * turnSpeed);
+			Rigidbody.rotation = Quaternion.Slerp (transform.rotation, target, Time.fixedDeltaTime * turnSpeed);
 		}
 	}
 
@@ -87,6 +89,6 @@ public class Tank : Entity, IProjectileInteractive
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		// Use Unity Event to trigger external action	
+		// Use Unity Event to trigger external action
 	}
 }

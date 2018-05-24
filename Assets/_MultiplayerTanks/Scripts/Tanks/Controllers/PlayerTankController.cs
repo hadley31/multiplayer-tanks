@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerTankController : TankController
 {
-	private static Plane groundPlane;
+	protected Plane groundPlane;
 
 	protected Vector3 input;
 	protected Vector3 velocity;
@@ -13,10 +13,7 @@ public class PlayerTankController : TankController
 	{
 		base.Awake ();
 
-		if ( groundPlane.normal == Vector3.zero )
-		{
-			groundPlane = new Plane (Vector3.up, Vector3.zero);
-		}
+		groundPlane = new Plane (Vector3.up, Vector3.zero);
 	}
 
 	protected override void Update ()
@@ -26,7 +23,7 @@ public class PlayerTankController : TankController
 		GetInput ();
 	}
 
-	protected void FixedUpdate ()
+	protected virtual void FixedUpdate ()
 	{
 		tank.Rotate (velocity, turnSpeed);
 		tank.Move (velocity);
@@ -40,7 +37,7 @@ public class PlayerTankController : TankController
 
 	protected override Vector3 GetTargetPoint ()
 	{
-		Ray ray = GetComponent<Camera> ().ScreenPointToRay (Input.mousePosition);
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
 		float enterPoint;
 		if ( groundPlane.Raycast (ray, out enterPoint) )

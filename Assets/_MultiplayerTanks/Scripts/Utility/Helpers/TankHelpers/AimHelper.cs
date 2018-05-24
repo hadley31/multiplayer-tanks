@@ -13,11 +13,11 @@ public class AimHelper : TankHelper
 	public override void Draw ()
 	{
 		Gizmos.color = helperColor;
-		if ( tank.projectileSpawnPoint != null )
+		if ( tank != null )
 		{
 			List<Vector3> points = new List<Vector3> ();
-			Vector3 position = tank.projectileSpawnPoint.position;
-			Vector3 direction = tank.projectileSpawnPoint.forward;
+			Vector3 position = tank.transform.position;
+			Vector3 direction = tank.transform.forward;
 
 			points.Add (position);
 			for ( int i = 0; i <= reflectCount; i++ )
