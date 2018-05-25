@@ -18,7 +18,7 @@ public class Wall : MonoBehaviour, IProjectileInteractive
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		p.Bounce (GetNormal (p.transform.position, p.direction, 0.1f));
+		p.Bounce (GetNormal (p.transform.position, p.Direction, 0.1f));
 	}
 
 	public Vector3 GetNormal (Vector3 position, Vector3 direction, float threshold)

@@ -24,8 +24,6 @@ GameObject:
   - component: {fileID: 135223693480385342}
   - component: {fileID: 54810862285913152}
   - component: {fileID: 114843091049709618}
-  - component: {fileID: 114277105967896492}
-  - component: {fileID: 114224999292608252}
   m_Layer: 0
   m_Name: Projectile
   m_TagString: Untagged
@@ -102,46 +100,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &114224999292608252
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1289395546568066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ownerId: 0
-  group: 0
-  OwnerShipWasTransfered: 0
-  prefixBackup: -1
-  synchronization: 0
-  onSerializeTransformOption: 3
-  onSerializeRigidBodyOption: 2
-  ownershipTransfer: 0
-  ObservedComponents:
-  - {fileID: 0}
-  ObservedComponentsFoldoutOpen: 1
-  viewIdField: 0
-  instantiationId: -1
-  currentMasterID: -1
-  isRuntimeInstantiated: 0
---- !u!114 &114277105967896492
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1289395546568066}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d862d0c8e3c3f74696f23ec449d20a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  _health: 0
-  destroyOnDie: 0
 --- !u!114 &114843091049709618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,14 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e2ce76cbf8e97439421197f41146f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 0, y: 0, z: 0}
-  info:
-    bounces: 1
-    damage: 100
-    radius: 0.075
-    moveSpeed: 10
-    lifeSpan: 10
-  senderID: 0
+  speed: 10
+  damage: 20
+  maxBounces: 1
 --- !u!135 &135223693480385342
 SphereCollider:
   m_ObjectHideFlags: 1

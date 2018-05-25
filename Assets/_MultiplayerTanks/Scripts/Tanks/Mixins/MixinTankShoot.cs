@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MixinTankShoot : MonoBehaviour
 {
+	public Projectile projectilePrefab;
+	public Transform spawnPoint;
 	public float fireRate = 0.018f;
 
 	private float fireTimer = 0;
@@ -22,7 +24,8 @@ public class MixinTankShoot : MonoBehaviour
 		Debug.Log ("MixinTankShoot::Shoot()");
 
 
-		// Implement shooting mechanics
+		Projectile p = Instantiate (projectilePrefab, spawnPoint.position, Quaternion.identity).GetComponent<Projectile> ();
+		p.Direction = spawnPoint.forward;
 
 
 		fireTimer = fireRate;

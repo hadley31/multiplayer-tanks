@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityHealth : MonoBehaviour
+public class EntityHealth : MonoBehaviour, IDestroyable
 {
 	public int maxHealth;
+
 	[Space (10)]
 	public UnityEvent onHealthChanged;
 	public UnityEvent onDie;
-
 
 	protected int m_health;
 
@@ -22,6 +22,7 @@ public class EntityHealth : MonoBehaviour
 		private set
 		{
 			m_health = Mathf.Clamp (value, 0, maxHealth);
+			onHealthChanged.Invoke ();
 			if ( m_health <= 0 )
 			{
 				Die ();
@@ -34,23 +35,32 @@ public class EntityHealth : MonoBehaviour
 		SetToMax ();
 	}
 
+	[PunRPC]
 	public void Decrease (int amount)
 	{
 		Set (Value - amount);
 	}
 
+	[PunRPC]
 	public void Set (int value)
 	{
 		Value = value;
 	}
 
+	[PunRPC]
 	public void SetToMax ()
 	{
 		Set (maxHealth);
 	}
 
+	[PunRPC]
 	private void Die ()
 	{
-		Destroy (this);
+		onDie.Invoke ();
+	}
+
+	public void DestroyObject ()
+	{
+		Destroy (gameObject);
 	}
 }

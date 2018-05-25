@@ -4,16 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (EntityHealth))]
-public class Landmine : Entity, IProjectileInteractive
+public class Landmine : Entity, IProjectileInteractive, IDestroyable
 {
-	public const string resourceName = "Landmine";
-
-	#region Static Spawn Methods
-
-	#endregion
-
 	public Transform explosion;
-	public int senderID;
 	public float fuseTime;
 	public float radius;
 	public int damage;
@@ -25,6 +18,7 @@ public class Landmine : Entity, IProjectileInteractive
 
 	protected void Start ()
 	{
+		this.fuseTimer = fuseTime;
 		this.material = GetComponent<Renderer> ().material;
 	}
 
@@ -49,44 +43,27 @@ public class Landmine : Entity, IProjectileInteractive
 		}
 	}
 
-	#region Networking
-
-	[PunRPC]
-	public void NetworkPrime (Vector3 position, float fuse, int sender, double time)
-	{
-		float dt = (float) ( PhotonNetwork.time - time );
-		this.transform.position = position;
-		this.fuseTime = fuse;
-		this.fuseTimer -= dt;
-		this.senderID = sender;
-	}
-
-	#endregion
-
 	public void OnProjectileInteraction (Projectile p)
 	{
-		if (PhotonNetwork.isMasterClient)
-		{
-			DestroyObject ();
-			p.GetComponent<EntityHealth> ().Set (0);
-		}
+		DestroyObject ();
+		p.DestroyObject ();
 	}
 
 	public void DestroyObject ()
 	{
-		//EntityHealth ourHealth = GetComponent<EntityHealth> ();
-		//Collider[] colliders = Physics.OverlapSphere (transform.position, radius);
-		//foreach (Collider c in colliders)
-		//{
-		//	EntityHealth h = c.GetComponent<EntityHealth> ();
+		EntityHealth ourHealth = GetComponent<EntityHealth> ();
+		Collider[] colliders = Physics.OverlapSphere (transform.position, radius);
+		foreach ( Collider c in colliders )
+		{
+			EntityHealth h = c.GetComponent<EntityHealth> ();
 
-		//	if (h != null && h != ourHealth)
-		//	{
-		//		print (h.gameObject.name);
-		//		h.Decrease (damage);
-		//	}
-		//}
+			if ( h != null && h != ourHealth )
+			{
+				print (h.gameObject.name);
+				h.Decrease (damage);
+			}
+		}
 
-		//PhotonNetwork.Destroy (gameObject);
+		Destroy (gameObject);
 	}
 }

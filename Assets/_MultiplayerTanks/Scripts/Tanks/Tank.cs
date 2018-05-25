@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (EntityHealth))]
-public class Tank : Entity, IProjectileInteractive, IDestroyable
+public class Tank : Entity, IProjectileInteractive
 {
 	public Transform top;
 
@@ -71,11 +71,7 @@ public class Tank : Entity, IProjectileInteractive, IDestroyable
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		// Use Unity Event to trigger external action
-	}
-
-	public void DestroyObject ()
-	{
-		Destroy (gameObject);
+		GetComponent<EntityHealth> ().Decrease (p.damage);
+		p.DestroyObject ();
 	}
 }

@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 65068149872417030}
   - component: {fileID: 23397554376405918}
   - component: {fileID: 54447125483510024}
-  - component: {fileID: 114565508537906402}
+  - component: {fileID: 114204670714445252}
   - component: {fileID: 114285671211395268}
   - component: {fileID: 208484545243343146}
   - component: {fileID: 114080667104321372}
@@ -141,6 +141,17 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!114 &114204670714445252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1402657652912684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b30da7623b280499513817ab93def5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114285671211395268
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,19 +164,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1000
-  _health: 0
-  destroyOnDie: 0
---- !u!114 &114565508537906402
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1402657652912684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38d89e0e71b9da847ab54975154155d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  onHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  onDie:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114285671211395268}
+        m_MethodName: DestroyObject
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!208 &208484545243343146
 NavMeshObstacle:
   m_ObjectHideFlags: 1

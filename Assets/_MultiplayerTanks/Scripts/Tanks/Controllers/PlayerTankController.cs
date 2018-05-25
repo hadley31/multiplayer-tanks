@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerTankController : ControlElement
 {
@@ -12,6 +13,10 @@ public class PlayerTankController : ControlElement
 	public float maxBoost = 1;
 	public float boostUseSpeed = 3;
 	public float boostRegainSpeed = 0.2f;
+
+	[Space (10)]
+	public UnityEvent onShoot;
+	public UnityEvent onUseLandmine;
 
 	protected Tank tank;
 	protected Plane groundPlane;
@@ -45,6 +50,16 @@ public class PlayerTankController : ControlElement
 	{
 		GetInput ();
 		tank.Look (GetTargetPoint (), topRotateSpeed);
+
+		if (Input.GetKeyDown (KeyCode.Mouse0))
+		{
+			onShoot.Invoke ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.X))
+		{
+			onUseLandmine.Invoke ();
+		}
 	}
 
 	protected virtual void FixedUpdate ()

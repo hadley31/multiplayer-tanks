@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MixinTankLandmine : MonoBehaviour
 {
+	public Landmine landminePrefab;
 	public int landmines = 2;
 	public int maxLandmines = 2;
 	public float landmineUseCooldown = 5;
@@ -37,7 +38,7 @@ public class MixinTankLandmine : MonoBehaviour
 		Debug.Log ("MixinTankLandmine::Use()");
 
 
-		// Implement landmine mechanics
+		Landmine lm = Instantiate (landminePrefab, transform.position, Quaternion.identity);
 
 
 		landmines--;

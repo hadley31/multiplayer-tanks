@@ -15,7 +15,6 @@ public class NetworkTank : PunBehaviour
 	protected double lastNetworkDataReceivedTime = 0;
 
 	protected Vector3 lerpedNetworkPosition;
-	protected float lerpedNetworkRotation;
 
 	public PhotonPlayer Owner
 	{
@@ -100,6 +99,17 @@ public class NetworkTank : PunBehaviour
 
 		// Update the rigidbody's rotation
 		Quaternion newRotation = Quaternion.Euler (0, networkRotation, 0);
-		tank.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.deltaTime * 10); // TODO: turnSpeed
+		tank.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.fixedDeltaTime * 10); // TODO: turnSpeed
+	}
+
+
+
+
+	public void NetworkDestroy ()
+	{
+		if (photonView.isMine)
+		{
+			PhotonNetwork.Destroy (this.gameObject);
+		}
 	}
 }

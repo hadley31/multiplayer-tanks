@@ -2,15 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NetworkLandmine : MonoBehaviour {
+public class NetworkLandmine : MonoBehaviour
+{
+	public const string resourceName = "Landmine";
 
-	// Use this for initialization
-	void Start () {
-		
+	protected Landmine landmine;
+
+	protected void Awake ()
+	{
+		this.landmine = GetComponent<Landmine> ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	[PunRPC]
+	public void NetworkPrime (Vector3 position, float fuse, int sender, double time)
+	{
+		float dt = (float) ( PhotonNetwork.time - time );
+		this.transform.position = position;
+		landmine.fuseTime = fuse;
+	//	landmine.fuseTimer -= dt;
 	}
 }

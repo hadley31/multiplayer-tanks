@@ -40,4 +40,8 @@ MonoBehaviour:
   - SpawnPlayer
   - NetworkPrime
   - DestroyObject
+  - Decrease
+  - Die
+  - Set
+  - SetToMax
   DisableAutoOpenWizard: 1
