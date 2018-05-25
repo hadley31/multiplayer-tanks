@@ -96,9 +96,9 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
-  m_IsKinematic: 1
+  m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 116
   m_CollisionDetection: 2
 --- !u!114 &114843091049709618
 MonoBehaviour:
@@ -111,9 +111,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e2ce76cbf8e97439421197f41146f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 7
   damage: 20
   maxBounces: 1
+  interactCooldown: 0.1
 --- !u!135 &135223693480385342
 SphereCollider:
   m_ObjectHideFlags: 1

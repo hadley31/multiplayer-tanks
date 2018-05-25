@@ -38,7 +38,7 @@ public class MixinTankLandmine : MonoBehaviour
 		Debug.Log ("MixinTankLandmine::Use()");
 
 
-		Landmine lm = Instantiate (landminePrefab, transform.position, Quaternion.identity);
+		Instantiate (landminePrefab, transform.position, Quaternion.identity);
 
 
 		landmines--;

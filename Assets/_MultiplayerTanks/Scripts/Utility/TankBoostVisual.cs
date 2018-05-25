@@ -8,7 +8,7 @@ public class TankBoostVisual : MonoBehaviour
 	public Tank tank;
 	public Slider slider;
 
-	private float oldValue = 0;
+	//private float oldValue = 0;
 
 	private void Update ()
 	{

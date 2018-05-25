@@ -4,8 +4,9 @@ using System.Linq;
 using UnityEngine;
 
 [System.Serializable]
-public class AimHelper : TankHelper
+public class AimHelper : GizmoHelper
 {
+	public Transform barrel;
 	public int reflectCount;
 	public float castRadius;
 	public Color helperColor = Color.green;
@@ -13,11 +14,11 @@ public class AimHelper : TankHelper
 	public override void Draw ()
 	{
 		Gizmos.color = helperColor;
-		if ( tank != null )
+		if ( barrel != null )
 		{
 			List<Vector3> points = new List<Vector3> ();
-			Vector3 position = tank.transform.position;
-			Vector3 direction = tank.transform.forward;
+			Vector3 position = barrel.position;
+			Vector3 direction = barrel.forward;
 
 			points.Add (position);
 			for ( int i = 0; i <= reflectCount; i++ )

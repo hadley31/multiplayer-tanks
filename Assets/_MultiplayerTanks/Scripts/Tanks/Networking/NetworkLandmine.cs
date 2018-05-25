@@ -16,7 +16,7 @@ public class NetworkLandmine : MonoBehaviour
 	[PunRPC]
 	public void NetworkPrime (Vector3 position, float fuse, int sender, double time)
 	{
-		float dt = (float) ( PhotonNetwork.time - time );
+	//	float dt = (float) ( PhotonNetwork.time - time );
 		this.transform.position = position;
 		landmine.fuseTime = fuse;
 	//	landmine.fuseTimer -= dt;

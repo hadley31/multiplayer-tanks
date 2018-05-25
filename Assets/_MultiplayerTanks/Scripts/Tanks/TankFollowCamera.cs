@@ -31,21 +31,11 @@ public class TankFollowCamera : MonoBehaviour
 
 		if (!tank)
 		{
-			if ( Input.GetKey (KeyCode.W) )
+			Vector3 direction = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized;
+
+			if ( direction != Vector3.zero )
 			{
-				transform.Translate (Vector3.forward * Time.deltaTime * scrollSpeed, Space.World);
-			}
-			if ( Input.GetKey (KeyCode.S) )
-			{
-				transform.Translate (Vector3.back * Time.deltaTime * scrollSpeed, Space.World);
-			}
-			if ( Input.GetKey (KeyCode.A) )
-			{
-				transform.Translate (Vector3.left * Time.deltaTime * scrollSpeed, Space.World);
-			}
-			if ( Input.GetKey (KeyCode.D) )
-			{
-				transform.Translate (Vector3.right * Time.deltaTime * scrollSpeed, Space.World);
+				transform.Translate (direction * Time.deltaTime * scrollSpeed, Space.World);
 			}
 		}
 	}

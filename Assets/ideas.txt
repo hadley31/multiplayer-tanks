@@ -1,2 +1,7 @@
-- use rigidbody for syncing movement over network instead of lerping
-	-- this will (hopefully) reduce physics issues caused by translating
+Ideas:
+
+
+
+
+
+Issues:

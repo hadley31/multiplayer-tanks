@@ -24,7 +24,7 @@ public class MixinTankShoot : MonoBehaviour
 		Debug.Log ("MixinTankShoot::Shoot()");
 
 
-		Projectile p = Instantiate (projectilePrefab, spawnPoint.position, Quaternion.identity).GetComponent<Projectile> ();
+		Projectile p = Instantiate (projectilePrefab, spawnPoint.position, Quaternion.identity);
 		p.Direction = spawnPoint.forward;
 
 
