@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (EntityHealth))]
-public class Tank : Entity, IProjectileInteractive
+public class Tank : Entity, IProjectileInteractive, IDestroyable
 {
 	public Transform top;
 
@@ -20,6 +20,12 @@ public class Tank : Entity, IProjectileInteractive
 		protected set;
 	}
 
+	public Vector3 Velocity
+	{
+		get { return Rigidbody.velocity; }
+		private set { Rigidbody.velocity = value; }
+	}
+
 	public int Team
 	{
 		get;
@@ -32,7 +38,7 @@ public class Tank : Entity, IProjectileInteractive
 		this.Collider = GetComponent<BoxCollider> ();
 	}
 
-	#region Movement
+	#region Movement and Looking
 
 	public virtual void Move (Vector3 velocity)
 	{
@@ -47,10 +53,6 @@ public class Tank : Entity, IProjectileInteractive
 			Rigidbody.rotation = Quaternion.Slerp (transform.rotation, target, Time.fixedDeltaTime * turnSpeed);
 		}
 	}
-
-	#endregion
-
-	#region Top Look
 
 	public virtual void Look (Vector3 target, float turnSpeed)
 	{
@@ -67,28 +69,13 @@ public class Tank : Entity, IProjectileInteractive
 
 	#endregion
 
-	#region Shoot / Landmine
-
-	public virtual void Shoot ()
-	{
-		// TODO: Use a Unity Event to trigger external spawn methods
-
-		print ("Shoot");
-	}
-
-
-
-	public virtual void LayLandmine ()
-	{
-		// TODO: Use a Unity Event to trigger external spawn methods
-
-		print ("LayLandmine");
-	}
-
-	#endregion
-
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
 		// Use Unity Event to trigger external action
+	}
+
+	public void DestroyObject ()
+	{
+		Destroy (gameObject);
 	}
 }

@@ -1,25 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class EntityHealth : Photon.MonoBehaviour
+public class EntityHealth : MonoBehaviour
 {
-	[SerializeField]
-	protected int maxHealth, _health;
+	public int maxHealth;
+	[Space (10)]
+	public UnityEvent onHealthChanged;
+	public UnityEvent onDie;
 
-	[SerializeField]
-	protected bool destroyOnDie = true;
+
+	protected int m_health;
 
 	public int Value
 	{
 		get
 		{
-			return _health;
+			return m_health;
 		}
 		private set
 		{
-			_health = Mathf.Clamp (value, 0, maxHealth);
-			if ( _health <= 0 )
+			m_health = Mathf.Clamp (value, 0, maxHealth);
+			if ( m_health <= 0 )
 			{
 				Die ();
 			}
@@ -38,14 +41,7 @@ public class EntityHealth : Photon.MonoBehaviour
 
 	public void Set (int value)
 	{
-		if ( PhotonNetwork.inRoom )
-		{
-			photonView.RPC ("SetRPC", PhotonTargets.All, value);
-		}
-		else
-		{
-			SetRPC (value);
-		}
+		Value = value;
 	}
 
 	public void SetToMax ()
@@ -55,22 +51,6 @@ public class EntityHealth : Photon.MonoBehaviour
 
 	private void Die ()
 	{
-		if ( PhotonNetwork.inRoom && photonView.isMine )
-		{
-			SendMessage ("DestroyObject", SendMessageOptions.DontRequireReceiver);
-		}
-		if ( destroyOnDie )
-		{
-			if ( PhotonNetwork.inRoom )
-				PhotonNetwork.Destroy (gameObject);
-			else
-				Destroy (gameObject);
-		}
-	}
-
-	[PunRPC]
-	private void SetRPC (int value)
-	{
-		Value = value;
+		Destroy (this);
 	}
 }

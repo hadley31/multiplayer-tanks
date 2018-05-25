@@ -20,6 +20,7 @@ public sealed class Universe : MonoBehaviour
 		}
 		else
 		{
+			Debug.LogWarning ("A Universe object already exists! Destroying new Universe!");
 			Destroy (this);
 		}
 	}
@@ -61,6 +62,8 @@ public sealed class Universe : MonoBehaviour
 		{
 			ElementInControl?.OnLoseControl ();
 			last?.OnGainControl ();
+
+			ElementInControl = last;
 		}
 	}
 

@@ -14,7 +14,10 @@ public class NetworkTank : PunBehaviour
 	protected float networkTopRotation;
 	protected double lastNetworkDataReceivedTime = 0;
 
-	public PhotonPlayer owner
+	protected Vector3 lerpedNetworkPosition;
+	protected float lerpedNetworkRotation;
+
+	public PhotonPlayer Owner
 	{
 		get { return photonView.owner; }
 	}
@@ -27,8 +30,7 @@ public class NetworkTank : PunBehaviour
 		if (!photonView.ObservedComponents.Contains (this))
 		{
 			photonView.ObservedComponents.Add (this);
-		}
-		
+		}	
 	}
 
 	protected void Update ()
@@ -44,7 +46,7 @@ public class NetworkTank : PunBehaviour
 		if ( stream.isWriting )
 		{
 			stream.SendNext (transform.position);
-			stream.SendNext (tank.Rigidbody.velocity);
+			stream.SendNext (tank.Velocity);
 
 			stream.SendNext (transform.eulerAngles.y);
 			stream.SendNext (tank.top.eulerAngles.y);
@@ -75,21 +77,29 @@ public class NetworkTank : PunBehaviour
 		// Estimate the position of the tank using linear approximation
 		Vector3 estimatedPosition = networkPosition + ( networkVelocity * totalTimePassed );
 
-		// Interpolate the position for a smooth transition
-		Vector3 newPosition = Vector3.Lerp (transform.position, estimatedPosition, Time.deltaTime * 3); // TODO: moveSpeed
-
-		// If the difference between the estimated position and the current position, set the newPosition to the estimated position 
+		// If the difference between the estimated position and the current position, set the newPosition to the estimated position
 		if ( Vector3.SqrMagnitude (estimatedPosition - transform.position) > 25f )
 		{
-			newPosition = estimatedPosition;
+			this.lerpedNetworkPosition = estimatedPosition;
+		}
+		else
+		{
+			// Otherwise, interpolate the position for a smooth transition
+			this.lerpedNetworkPosition = Vector3.Lerp (transform.position, estimatedPosition, Time.deltaTime * 3); // TODO: moveSpeed
 		}
 
-		transform.position = newPosition;
-
-		Quaternion newRotation = Quaternion.Euler (0, networkRotation, 0);
+		// Rotate the top in update
 		Quaternion newTopRotation = Quaternion.Euler (0, networkTopRotation, 0);
-
-		transform.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.deltaTime * 10); // TODO: turnSpeed
 		tank.top.rotation = Quaternion.Lerp (tank.top.rotation, newTopRotation, Time.deltaTime * 45); // TODO: topRotateSpeed
+	}
+
+	protected void FixedUpdate ()
+	{
+		// Update this rigidbody's position
+		tank.Rigidbody.MovePosition (lerpedNetworkPosition);
+
+		// Update the rigidbody's rotation
+		Quaternion newRotation = Quaternion.Euler (0, networkRotation, 0);
+		tank.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.deltaTime * 10); // TODO: turnSpeed
 	}
 }

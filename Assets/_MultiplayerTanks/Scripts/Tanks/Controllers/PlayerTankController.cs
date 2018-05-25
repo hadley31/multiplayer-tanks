@@ -2,17 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTankController : TankController
+public class PlayerTankController : ControlElement
 {
+	public float moveSpeed = 1;
+	public float turnSpeed = 10;
+	public float topRotateSpeed = 10;
+
+	public float boostSpeedMultiplier = 5;
+	public float maxBoost = 1;
+	public float boostUseSpeed = 3;
+	public float boostRegainSpeed = 0.2f;
+
+	protected Tank tank;
 	protected Plane groundPlane;
 
 	protected Vector3 input;
 	protected Vector3 velocity;
 
-	protected override void Awake ()
+	public float Boost
 	{
-		base.Awake ();
+		get;
+		set;
+	}
 
+	protected virtual void Awake ()
+	{
+		this.tank = GetComponent<Tank> ();
 		groundPlane = new Plane (Vector3.up, Vector3.zero);
 	}
 
@@ -28,9 +43,8 @@ public class PlayerTankController : TankController
 
 	public override void OnControlUpdate ()
 	{
-		base.OnControlUpdate ();
-
 		GetInput ();
+		tank.Look (GetTargetPoint (), topRotateSpeed);
 	}
 
 	protected virtual void FixedUpdate ()
@@ -42,16 +56,8 @@ public class PlayerTankController : TankController
 		}
 	}
 
-	protected void LateUpdate ()
-	{
-		if (InControl)
-		{
-			tank.Look (GetTargetPoint (), topRotateSpeed);
-		}
-	}
 
-
-	protected override Vector3 GetTargetPoint ()
+	protected virtual Vector3 GetTargetPoint ()
 	{
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 
@@ -74,14 +80,14 @@ public class PlayerTankController : TankController
 		float speed = moveSpeed;
 		if ( Input.GetKey (KeyCode.Space) )
 		{
-			speed = moveSpeed + moveSpeed * boostSpeedMultiplier * boost;
-			boost -= Time.deltaTime * boostUseSpeed;
+			speed = moveSpeed + moveSpeed * boostSpeedMultiplier * Boost;
+			Boost -= Time.deltaTime * boostUseSpeed;
 		}
-		else if ( boost < maxBoost )
+		else if ( Boost < maxBoost )
 		{
-			boost += Time.deltaTime * boostRegainSpeed;
+			Boost += Time.deltaTime * boostRegainSpeed;
 		}
-		boost = Mathf.Clamp (boost, 0, maxBoost);
+		Boost = Mathf.Clamp (Boost, 0, maxBoost);
 
 		velocity = input * speed;
 	}

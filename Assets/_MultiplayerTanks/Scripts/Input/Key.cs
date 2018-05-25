@@ -9,13 +9,22 @@ public enum KeyPressType
 	Up,
 	Held
 }
-
-public struct Key : IEquatable<Key>
+[Serializable]
+public class Key : IEquatable<Key>
 {
 	public static readonly Key None = new Key ("NO_KEY", KeyCode.Joystick8Button9);
 
-	public readonly string Name;
-	public readonly KeyCode KeyCode;
+	[SerializeField] private string name;
+	[SerializeField] private KeyCode keyCode;
+
+	public string Name
+	{
+		get { return this.name; }
+	}
+	public KeyCode KeyCode
+	{
+		get { return this.keyCode; }
+	}
 
 	public bool IsPressed
 	{
@@ -24,8 +33,8 @@ public struct Key : IEquatable<Key>
 
 	public Key (string name, KeyCode keyCode)
 	{
-		this.Name = name;
-		this.KeyCode = keyCode;
+		this.name = name;
+		this.keyCode = keyCode;
 	}
 
 	public KeyPressType GetPressType ()
@@ -73,7 +82,7 @@ public struct Key : IEquatable<Key>
 
 	public static int operator + (Key a, Key b)
 	{
-		return (a.IsPressed ? 1 : 0) + (b.IsPressed ? 1 : 0);
+		return ( a.IsPressed ? 1 : 0 ) + ( b.IsPressed ? 1 : 0 );
 	}
 
 	public static int operator - (Key a, Key b)

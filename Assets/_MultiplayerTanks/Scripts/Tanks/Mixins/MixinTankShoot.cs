@@ -2,15 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MixinTankShoot : MonoBehaviour {
+public class MixinTankShoot : MonoBehaviour
+{
+	public float fireRate = 0.018f;
 
-	// Use this for initialization
-	void Start () {
-		
+	private float fireTimer = 0;
+
+	private void Update ()
+	{
+		fireTimer -= Time.deltaTime;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void Shoot ()
+	{
+		if ( !CanShoot () )
+			return;
+
+
+		Debug.Log ("MixinTankShoot::Shoot()");
+
+
+		// Implement shooting mechanics
+
+
+		fireTimer = fireRate;
+	}
+
+	protected virtual bool CanShoot ()
+	{
+		return fireTimer <= 0;
 	}
 }
