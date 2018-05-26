@@ -1,18 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 using ExitGames.Client.Photon;
 
 public class NetworkManager : PunBehaviour
 {
+	public static NetworkManager Instance;
+
+	public static bool OfflineMode
+	{
+		get { return PhotonNetwork.offlineMode; }
+		set { PhotonNetwork.offlineMode = value; }
+	}
+
+	public static int SendRate
+	{
+		get { return PhotonNetwork.sendRate; }
+		set
+		{
+			PhotonNetwork.sendRate = value;
+			PhotonNetwork.sendRateOnSerialize = value;
+		}
+	}
+
+	public int sendRate = 20;
+
 	private void Awake ()
 	{
-		PhotonNetwork.sendRate = 18;
-		PhotonNetwork.sendRateOnSerialize = 18;
-		DontDestroyOnLoad (this);
+		SendRate = sendRate;
 	}
-	
+
+	private void OnEnable ()
+	{
+		if ( Instance == null )
+		{
+			Instance = this;
+			DontDestroyOnLoad (this);
+		}
+		else
+		{
+			Debug.LogWarning ("A NetworkManager object already exists! Destroying new NetworkManager!");
+			Destroy (this);
+		}
+	}
+
+	private void OnDisable ()
+	{
+		if ( Instance == this )
+		{
+			Instance = null;
+		}
+	}
+
 	#region Events and Delegates
 
 	public delegate void PlayerDelegate (PhotonPlayer player);
@@ -38,7 +77,7 @@ public class NetworkManager : PunBehaviour
 	public static event Action OnJoinRoomFailed;
 	public static event Action OnJoinRandomRoomFailed;
 	public static event Action OnCreateRoomFailed;
-	public static HashtableDelegate OnRoomPropertiesChanged;
+	public static event HashtableDelegate OnRoomPropertiesChanged;
 
 	public static event PlayerDelegate OnOtherPlayerConnect;
 	public static event PlayerDelegate OnOtherPlayerDisconnect;

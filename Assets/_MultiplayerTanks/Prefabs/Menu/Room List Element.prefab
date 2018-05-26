@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 222522959437022176}
   - component: {fileID: 114232323273328228}
   - component: {fileID: 114641460128579834}
-  - component: {fileID: 114284047117009194}
   - component: {fileID: 114114262180669634}
   m_Layer: 5
   m_Name: Room List Element
@@ -144,19 +143,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114284047117009194
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1565305225344850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9586e57a3269cc4691c4be4f8cc2e25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomName: {fileID: 114087477100495824}
-  playerCountAndTotal: {fileID: 114606346221482814}
 --- !u!114 &114606346221482814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -229,7 +215,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114284047117009194}
+      - m_Target: {fileID: 0}
         m_MethodName: OnClick
         m_Mode: 1
         m_Arguments:

@@ -25,7 +25,7 @@ public class Wall : MonoBehaviour, IProjectileInteractive
 	{
 		Vector3 offset = position - Bounds.center;
 		
-		if (direction.x > 0 && Mathf.Abs(Bounds.extents.x + offset.x) < threshold )
+		if ( direction.x > 0 && Mathf.Abs (offset.x + Bounds.extents.x) < threshold )
 			return Vector3.left;
 		if ( direction.x < 0 && Mathf.Abs (offset.x - Bounds.extents.x) < threshold )
 			return Vector3.right;
