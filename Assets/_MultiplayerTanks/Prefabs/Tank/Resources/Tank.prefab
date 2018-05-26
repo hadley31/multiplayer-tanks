@@ -584,6 +584,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72b18372cfd78254788baf67b110440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveLerpSpeed: 4
+  rotateLerpSpeed: 20
+  lookLerpSpeed: 25
+  maxPositionError: 25
 --- !u!114 &114704399957638496
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -6,6 +6,13 @@ using Photon;
 [RequireComponent(typeof(Tank))]
 public class NetworkTank : PunBehaviour
 {
+	public float moveLerpSpeed = 4;
+	public float rotateLerpSpeed = 10;
+	public float lookLerpSpeed = 25;
+
+	public float maxPositionError = 2;
+
+
 	private Vector3 networkPosition;
 	private Vector3 networkVelocity;
 	private float networkRotation;
@@ -45,7 +52,7 @@ public class NetworkTank : PunBehaviour
 
 			// Update the rigidbody's rotation
 			Quaternion newRotation = Quaternion.Euler (0, networkRotation, 0);
-			Movement.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.fixedDeltaTime * Movement.rotateSpeed);
+			Movement.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.fixedDeltaTime * rotateLerpSpeed);
 		}
 	}
 
@@ -75,7 +82,7 @@ public class NetworkTank : PunBehaviour
 	{
 		// Rotate the top in update
 		Quaternion newTopRotation = Quaternion.Euler (0, networkTopRotation, 0);
-		Movement.top.rotation = Quaternion.Lerp (Movement.top.rotation, newTopRotation, Time.deltaTime * Movement.lookSpeed);
+		Movement.top.rotation = Quaternion.Lerp (Movement.top.rotation, newTopRotation, Time.deltaTime * lookLerpSpeed);
 	}
 
 	private Vector3 GetLerpedPosition ()
@@ -92,15 +99,16 @@ public class NetworkTank : PunBehaviour
 		// Estimate the position of the tank using linear approximation
 		Vector3 estimatedPosition = networkPosition + ( networkVelocity * totalTimePassed );
 
-		// If the difference between the estimated position and the current position, set the newPosition to the estimated position
-		if ( Vector3.SqrMagnitude (estimatedPosition - transform.position) > 2f )
+		Vector3 lerpedPosition = Vector3.Lerp (transform.position, estimatedPosition, Time.deltaTime * moveLerpSpeed);
+		
+
+		if ( Vector3.SqrMagnitude (lerpedPosition - estimatedPosition) < maxPositionError )
 		{
-			return estimatedPosition;
+			return lerpedPosition;
 		}
 		else
 		{
-			// Otherwise, interpolate the position for a smooth transition
-			return Vector3.Lerp (transform.position, estimatedPosition, Time.deltaTime * Movement.moveSpeed);
+			return estimatedPosition;
 		}
 	}
 

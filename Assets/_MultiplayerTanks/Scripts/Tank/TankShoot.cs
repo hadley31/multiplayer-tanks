@@ -38,7 +38,7 @@ public class TankShoot : Photon.MonoBehaviour
 	[PunRPC]
 	private void CreateProjectile (Vector3 position, Vector3 direction, float speed, int id, double createTime)
 	{
-		Projectile p = Instantiate (projectilePrefab, spawnPoint.position, Quaternion.identity);
-		p.Direction = spawnPoint.forward;
+		Projectile p = Instantiate (projectilePrefab, position, Quaternion.identity);
+		p.Direction = direction;
 	}
 }
