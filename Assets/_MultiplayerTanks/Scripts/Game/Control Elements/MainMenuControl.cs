@@ -8,12 +8,14 @@ public class MainMenuControl : ControlElement
 	public override void OnGainControl ()
 	{
 		NetworkManager.OnJoinLobby += OnConnectedToLobby;
+		NetworkManager.OnJoinRoom += OnJoinRoom;
 		NetworkManager.OnConnectionFailed += OnConnectToLobbyFailed;
 	}
 
 	public override void OnLoseControl ()
 	{
 		NetworkManager.OnJoinLobby -= OnConnectedToLobby;
+		NetworkManager.OnJoinRoom -= OnJoinRoom;
 		NetworkManager.OnConnectionFailed -= OnConnectToLobbyFailed;
 	}
 
@@ -24,11 +26,13 @@ public class MainMenuControl : ControlElement
 
 	public void OfflinePlayground ()
 	{
-		SceneManager.LoadScene ("TestMap", LoadSceneMode.Single);
+		NetworkManager.OfflineMode = true;
+		NetworkManager.CreateRoom ("Offline");
 	}
 
 	public void PlayOnline ()
 	{
+		NetworkManager.OfflineMode = false;
 		GetComponent<CanvasGroup> ().interactable = false;
 		NetworkManager.Connect ();
 	}
@@ -37,6 +41,11 @@ public class MainMenuControl : ControlElement
 	private void OnConnectedToLobby ()
 	{
 		NetworkManager.JoinOrCreateRoom ("OD");
+	}
+
+	private void OnJoinRoom ()
+	{
+		PhotonNetwork.LoadLevel ("TestMap");
 	}
 
 	private void OnConnectToLobbyFailed (DisconnectCause cause)

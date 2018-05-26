@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class EntityHealth : MonoBehaviour, IDestroyable
+public class Health : MonoBehaviour, IDestroyable
 {
 	public int maxHealth;
 
@@ -35,7 +35,6 @@ public class EntityHealth : MonoBehaviour, IDestroyable
 		SetToMax ();
 	}
 
-	[PunRPC]
 	public void Decrease (int amount)
 	{
 		Set (Value - amount);

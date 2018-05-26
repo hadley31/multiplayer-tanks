@@ -44,4 +44,5 @@ MonoBehaviour:
   - Die
   - Set
   - SetToMax
+  - CreateProjectile
   DisableAutoOpenWizard: 1

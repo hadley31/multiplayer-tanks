@@ -4,7 +4,7 @@ using UnityEngine;
 
 public delegate void EntityDelegate (Entity e);
 
-public class Entity : MonoBehaviour
+public class Entity : Photon.MonoBehaviour
 {
 
 }

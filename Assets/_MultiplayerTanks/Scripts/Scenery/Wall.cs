@@ -24,15 +24,39 @@ public class Wall : MonoBehaviour, IProjectileInteractive
 	public Vector3 GetNormal (Vector3 position, Vector3 direction, float threshold)
 	{
 		Vector3 offset = position - Bounds.center;
-		
-		if ( direction.x > 0 && Mathf.Abs (offset.x + Bounds.extents.x) < threshold )
-			return Vector3.left;
-		if ( direction.x < 0 && Mathf.Abs (offset.x - Bounds.extents.x) < threshold )
-			return Vector3.right;
-		if ( direction.z > 0 && Mathf.Abs (offset.z + Bounds.extents.z) < threshold )
-			return Vector3.back;
-		if ( direction.z < 0 && Mathf.Abs (offset.z - Bounds.extents.z) < threshold )
-			return Vector3.forward;
-		return Vector3.zero;
+		Vector3 normal = Vector3.zero;
+		float distance = 0;
+		float minDistance = float.MaxValue;
+
+		distance = Mathf.Abs (offset.x + Bounds.extents.x);
+		if ( direction.x > 0 && distance < minDistance )
+		{
+			normal = Vector3.left;
+			minDistance = distance;
+		}
+
+		distance = Mathf.Abs (offset.x - Bounds.extents.x);
+		if ( direction.x < 0 && distance < minDistance )
+		{
+			normal = Vector3.right;
+			minDistance = distance;
+		}
+			
+		distance = Mathf.Abs (offset.z + Bounds.extents.z);
+		if ( direction.z > 0 && distance < minDistance )
+		{
+			normal = Vector3.back;
+			minDistance = distance;
+		}
+
+		distance = Mathf.Abs (offset.z - Bounds.extents.z);
+		if ( direction.z < 0 && distance < minDistance )
+		{
+			normal = Vector3.forward;
+			minDistance = distance;
+		}
+			
+
+		return normal;
 	}
 }

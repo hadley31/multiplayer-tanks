@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameLevelControl : MonoBehaviour {
+public class GameLevelControl : ControlElement
+{
+	public Transform spawnpoint;
+	public TankFollowCamera cameraRigPrefab;
 
-	// Use this for initialization
-	void Start () {
-		
+	private Tank tank;
+
+	public override void OnGainControl ()
+	{
+		if (tank == null)
+		{
+			tank = PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0).GetComponent<Tank> ();
+
+			TankFollowCamera rig = Instantiate (cameraRigPrefab);
+
+			rig.Prime (tank);
+		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public override void OnLoseControl ()
+	{
+
+	}
+
+	public override void OnControlUpdate ()
+	{
+
 	}
 }

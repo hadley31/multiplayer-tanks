@@ -1,0 +1,22 @@
+
+
+
+
+Pressing:
+
+
+
+
+
+Issues:
+	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
+
+
+
+
+
+Ideas:
+	Gamemodes:
+		Soccer
+		Batte Royale
+		One in the chamber

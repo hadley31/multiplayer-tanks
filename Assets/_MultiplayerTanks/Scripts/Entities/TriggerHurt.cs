@@ -8,12 +8,12 @@ public class TriggerHurt : Trigger
 	public float hurtInterval = 1;
 
 	protected float hurtTimer = 0;
-	protected List<EntityHealth> hurtList;
+	protected List<Health> hurtList;
 
 	protected override void OnTriggerEnterEnt (Entity ent)
 	{
 		base.OnTriggerEnterEnt (ent);
-		Add (ent.GetComponent<EntityHealth> ());
+		Add (ent.GetComponent<Health> ());
 	}
 
 	protected override void OnTriggerStayEnt (Entity ent)
@@ -23,7 +23,7 @@ public class TriggerHurt : Trigger
 			hurtTimer += Time.deltaTime;
 			if (hurtTimer >= hurtInterval)
 			{
-				foreach (EntityHealth h in hurtList)
+				foreach (Health h in hurtList)
 				{
 					if (h != null)
 						h.Decrease (damage);
@@ -35,20 +35,20 @@ public class TriggerHurt : Trigger
 	protected override void OnTriggerExitEnt (Entity ent)
 	{
 		base.OnTriggerEnterEnt (ent);
-		Remove (ent.GetComponent<EntityHealth> ());
+		Remove (ent.GetComponent<Health> ());
 	}
 
-	protected virtual void Add (EntityHealth h)
+	protected virtual void Add (Health h)
 	{
 		if (h != null) {
 			if (hurtList == null)
-				hurtList = new List<EntityHealth> ();
+				hurtList = new List<Health> ();
 
 			hurtList.Add (h);
 		}
 	}
 
-	protected virtual void Remove (EntityHealth h)
+	protected virtual void Remove (Health h)
 	{
 		hurtList?.Remove (h);
 	}

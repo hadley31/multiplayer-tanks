@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (EntityHealth))]
+[RequireComponent (typeof (Health))]
 public class Landmine : Entity, IProjectileInteractive, IDestroyable
 {
 	public Transform explosion;
@@ -51,11 +51,11 @@ public class Landmine : Entity, IProjectileInteractive, IDestroyable
 
 	public void DestroyObject ()
 	{
-		EntityHealth ourHealth = GetComponent<EntityHealth> ();
+		Health ourHealth = GetComponent<Health> ();
 		Collider[] colliders = Physics.OverlapSphere (transform.position, radius);
 		foreach ( Collider c in colliders )
 		{
-			EntityHealth h = c.GetComponent<EntityHealth> ();
+			Health h = c.GetComponent<Health> ();
 
 			if ( h != null && h != ourHealth )
 			{

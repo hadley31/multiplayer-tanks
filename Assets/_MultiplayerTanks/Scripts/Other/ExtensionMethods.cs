@@ -32,7 +32,10 @@ public static class ExtensionMethods
 		{
 			return (T) obj;
 		}
-		return defaultValue;
+		else
+		{
+			return defaultValue;
+		}
 	}
 
 	#region Kills
@@ -79,60 +82,17 @@ public static class ExtensionMethods
 
 	public static void SetProperty (this Room room, string key, object obj)
 	{
-		if ( room.IsLocalClientInside )
-			return;
-
 		room.SetCustomProperties (new Hashtable () { { key, obj } });
 	}
 
-	public static T GetProperty<T> (this Room room, string key, T defaultValue = default (T))
+	public static T GetProperty<T> (this Room room, string key, T onlineDefault = default (T))
 	{
-		if ( room.IsLocalClientInside )
-			return defaultValue;
-
 		object obj;
 		if ( room.CustomProperties.TryGetValue (key, out obj) && obj is T )
 		{
 			return (T) obj;
 		}
-		return defaultValue;
-	}
-
-	public static void AddFlag (this Room room, string flag)
-	{
-		List<string> flags = room.GetFlags ();
-		if (!flags.Contains (flag))
-		{
-			flags.Add (flag);
-		}
-		room.SetProperty (RoomProperty.Flags, flags.ToArray ());
-	}
-
-	public static void RemoveFlag (this Room room, string flag)
-	{
-		List<string> flags = room.GetFlags ();
-		flags.Remove (flag);
-		room.SetProperty (RoomProperty.Flags, flags.ToArray ());
-	}
-
-	public static bool GetFlag (this Room room, string flag)
-	{
-		List<string> flags = room.GetFlags ();
-		return flags.Contains (flag);
-	}
-
-	public static void SetFlags (this Room room, List<string> flags)
-	{
-		if ( flags == null || flags.Count == 0 )
-			return;
-
-		room.SetProperty (RoomProperty.Flags, flags.ToArray ());
-	}
-
-	public static List<string> GetFlags (this Room room)
-	{
-		string[] flagArray = room.GetProperty<string[]> (RoomProperty.Flags);
-		return flagArray != null ? flagArray.ToList () : new List<string> ();
+		return onlineDefault;
 	}
 
 	#endregion

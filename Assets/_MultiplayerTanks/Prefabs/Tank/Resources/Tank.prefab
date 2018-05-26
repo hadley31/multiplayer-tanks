@@ -97,10 +97,12 @@ GameObject:
   m_Component:
   - component: {fileID: 4692385551879476}
   - component: {fileID: 114295742659909230}
+  - component: {fileID: 114291954256589394}
   - component: {fileID: 114326414294758354}
-  - component: {fileID: 114669373817060710}
-  - component: {fileID: 114608800424691432}
+  - component: {fileID: 114912334019126838}
   - component: {fileID: 114357885377584908}
+  - component: {fileID: 114686656373703234}
+  - component: {fileID: 114704399957638496}
   - component: {fileID: 65966721399322284}
   - component: {fileID: 54449584011037320}
   - component: {fileID: 114501506878839622}
@@ -482,6 +484,17 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.46, y: 0.5, z: 0.8}
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!114 &114291954256589394
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674659365865050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3460fd7443c9cf149af2d3f059ea47ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114295742659909230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -493,7 +506,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e772eaada4348a449a39c6d54d774630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  top: {fileID: 4557420026592182}
 --- !u!114 &114326414294758354
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -502,48 +514,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d9307b565737e47a0a72ae4a12968e, type: 3}
+  m_Script: {fileID: 11500000, guid: fbe525a6d30f148459ab211b538637ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  top: {fileID: 4557420026592182}
   moveSpeed: 4
-  turnSpeed: 10
-  topRotateSpeed: 50
+  rotateSpeed: 10
+  lookSpeed: 50
   boostSpeedMultiplier: 3
   maxBoost: 1
   boostUseSpeed: 3
   boostRegainSpeed: 0.2
-  onShoot:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114669373817060710}
-        m_MethodName: Shoot
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
-  onUseLandmine:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 114608800424691432}
-        m_MethodName: Use
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114357885377584908
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -583,7 +564,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674659365865050}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba9b9c5650ecf104db42f1d3e8380393, type: 3}
   m_Name: 
@@ -592,7 +573,7 @@ MonoBehaviour:
   reflectCount: 1
   castRadius: 0.075
   helperColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &114608800424691432
+--- !u!114 &114686656373703234
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -600,16 +581,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 083ab5a10e0fd8c42a7f6afefbad0163, type: 3}
+  m_Script: {fileID: 11500000, guid: 72b18372cfd78254788baf67b110440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landminePrefab: {fileID: 114173939571103772, guid: bc586e1d43524c04eb1ca4330c70bc0b,
-    type: 2}
-  landmines: 2
-  maxLandmines: 2
-  landmineUseCooldown: 5
-  landmineRechargeCooldown: 20
---- !u!114 &114669373817060710
+--- !u!114 &114704399957638496
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -617,7 +592,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 662ea06cd0f14b34baefb579517da2b0, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownerId: 0
+  group: 0
+  OwnerShipWasTransfered: 0
+  prefixBackup: -1
+  synchronization: 3
+  onSerializeTransformOption: 3
+  onSerializeRigidBodyOption: 2
+  ownershipTransfer: 0
+  ObservedComponents:
+  - {fileID: 114686656373703234}
+  ObservedComponentsFoldoutOpen: 1
+  viewIdField: 0
+  instantiationId: -1
+  currentMasterID: -1
+  isRuntimeInstantiated: 0
+--- !u!114 &114912334019126838
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1674659365865050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6875e633d0c331044ab6517d354c0c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 114843091049709618, guid: feab7de62db410b459c3f90bcd15fc26,
