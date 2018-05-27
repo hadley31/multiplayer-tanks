@@ -6,34 +6,46 @@ using UnityEngine;
 [RequireComponent (typeof (Health))]
 public class Tank : Entity, IProjectileInteractive
 {
-
-	public Rigidbody Rigidbody
-	{
-		get;
-		protected set;
-	}
-
-	public BoxCollider Collider
-	{
-		get;
-		protected set;
-	}
-
 	public int Team
 	{
 		get;
 		protected set;
 	}
 
-	protected virtual void Awake ()
+	public PhotonPlayer Owner
 	{
-		this.Rigidbody = GetComponent<Rigidbody> ();
-		this.Collider = GetComponent<BoxCollider> ();
+		get { return photonView.owner; }
+	}
+
+	public string OwnerAlias
+	{
+		get { return Owner?.NickName; }
 	}
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		GetComponent<Health> ().Decrease (p.damage);
-		p.DestroyObject ();
+		if (NetworkManager.OfflineMode)
+		{
+			GetComponent<Health> ().DecreaseHealth (p.Damage);
+			p.DestroyObject ();
+		}
+		else if (PhotonNetwork.isMasterClient)
+		{
+			photonView.RPC ("DecreaseHealth", PhotonTargets.All, p.Damage);
+			p.DestroyObjectRPC ();
+		}
+	}
+
+	public void DestroyTank ()
+	{
+		// Temporary... Eventually we want to just disable visuals so that some components still work
+		if ( NetworkManager.OfflineMode )
+		{
+			PhotonNetwork.Destroy (photonView);
+		}
+		else if ( photonView.isMine )
+		{
+			PhotonNetwork.Destroy (photonView);
+		}
 	}
 }

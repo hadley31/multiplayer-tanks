@@ -26,7 +26,7 @@ public class TriggerHurt : Trigger
 				foreach (Health h in hurtList)
 				{
 					if (h != null)
-						h.Decrease (damage);
+						h.DecreaseHealth (damage);
 				}
 			}
 		}

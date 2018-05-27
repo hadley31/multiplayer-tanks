@@ -18,6 +18,20 @@ public static class ExtensionMethods
 
 	#endregion
 
+	#region Vector3
+
+	public static Color ToColor (this Vector3 a)
+	{
+		return new Color (a.x, a.y, a.z);
+	}
+
+	public static Vector3 ToVector (this Color a)
+	{
+		return new Vector3 (a.r, a.g, a.b);
+	}
+
+	#endregion
+
 	#region PhotonPlayer
 
 	public static void SetProperty (this PhotonPlayer player, string key, object obj)

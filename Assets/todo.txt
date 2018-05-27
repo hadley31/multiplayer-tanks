@@ -1,4 +1,12 @@
-
+Todo:
+	- Add sounds
+		-- Bullet-Wall
+		-- Tank explode
+		-- Landmine explode
+	- Add visuals
+		-- Tank explode
+		-- Landmine explode
+		-- New bullet trail (maybe multiple)
 
 
 
@@ -10,13 +18,19 @@ Pressing:
 
 Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
+	- Colliding bullets on non-master clients do not destroy for a good bit
+		-- consider "destroying" on local client and wait for confirmation by server
+	- 
 
 
 
 
 
 Ideas:
-	Gamemodes:
-		Soccer
-		Batte Royale
-		One in the chamber
+	- Gamemodes:
+		-- Soccer
+		-- Batte Royale
+		-- One in the chamber
+	- projectile trails
+	- bullet shaped projectiles
+	- tank path tracks

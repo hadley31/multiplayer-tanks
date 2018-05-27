@@ -15,6 +15,8 @@ public class GameLevelControl : ControlElement
 		{
 			tank = PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0).GetComponent<Tank> ();
 
+			tank.name = "Tank_" + PhotonNetwork.playerName;
+
 			TankFollowCamera rig = Instantiate (cameraRigPrefab);
 
 			rig.Prime (tank);

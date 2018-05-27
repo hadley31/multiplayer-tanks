@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Health : MonoBehaviour, IDestroyable
+public class Health : Photon.MonoBehaviour, IDestroyable
 {
 	public int maxHealth;
 
@@ -32,30 +32,54 @@ public class Health : MonoBehaviour, IDestroyable
 
 	protected virtual void Awake ()
 	{
-		SetToMax ();
-	}
-
-	public void Decrease (int amount)
-	{
-		Set (Value - amount);
+		SetToMaxHealth ();
 	}
 
 	[PunRPC]
-	public void Set (int value)
+	public void SetHealth (int value)
 	{
 		Value = value;
 	}
 
-	[PunRPC]
-	public void SetToMax ()
+	public void SetHealthRPC (int value)
 	{
-		Set (maxHealth);
+		photonView.RPC ("SetHealth", PhotonTargets.AllBuffered, value);
 	}
 
 	[PunRPC]
+	public void DecreaseHealth (int amount)
+	{
+		SetHealth (Value - amount);
+	}
+
+	public void DecreaseHealthRPC (int amount)
+	{
+		photonView.RPC ("DecreaseHealth", PhotonTargets.AllBuffered, amount);
+	}
+
+	[PunRPC]
+	public void SetToMaxHealth ()
+	{
+		SetHealth (maxHealth);
+	}
+
+	public void SetToMaxHealthRPC ()
+	{
+		photonView.RPC ("SetToMaxHealth", PhotonTargets.AllBuffered);
+	}
+
 	private void Die ()
 	{
-		onDie.Invoke ();
+		// This may look repetative but it is important to keep the logic separate 
+		// in case we decide to add more functionality later
+		if (NetworkManager.OfflineMode)
+		{
+			onDie.Invoke ();
+		}
+		else if (photonView.isMine)
+		{
+			onDie.Invoke ();
+		}
 	}
 
 	public void DestroyObject ()

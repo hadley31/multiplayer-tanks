@@ -18,10 +18,17 @@ public class TankInput : Photon.MonoBehaviour
 		set;
 	}
 
+	private TankLandmine Landmine
+	{
+		get;
+		set;
+	}
+
 	private void Awake ()
 	{
 		Movement = GetComponent<TankMovement> ();
 		Shooting = GetComponent<TankShoot> ();
+		Landmine = GetComponent<TankLandmine> ();
 
 		groundPlane = new Plane (Vector3.up, Vector3.zero);
 	}
@@ -42,6 +49,11 @@ public class TankInput : Photon.MonoBehaviour
 		if ( Input.GetKeyDown (KeyCode.Mouse0) )
 		{
 			Shooting.Shoot ();
+		}
+
+		if (Input.GetKeyDown (KeyCode.X))
+		{
+			Landmine.Use ();
 		}
 	}
 

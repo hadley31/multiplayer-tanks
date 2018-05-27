@@ -45,4 +45,11 @@ MonoBehaviour:
   - Set
   - SetToMax
   - CreateProjectile
+  - CreateLandmine
+  - DecreaseHealth
+  - SetHealth
+  - SetToMaxHealth
+  - OnProjectileHit
+  - DestroyLandmine
+  - DestroyProjectile
   DisableAutoOpenWizard: 1

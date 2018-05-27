@@ -5,17 +5,51 @@ using UnityEngine;
 
 public class Projectile : Entity, IProjectileInteractive, IDestroyable
 {
-	public float speed;
-	public int damage;
-	public int maxBounces;
-	public float interactCooldown;
+	private const float m_interactCooldown = 0.03f;
 
-	protected float interactTimer;
+	private float m_interactTimer;
+	private float m_lifeTimer;
+
+	public float LifeTime
+	{
+		get;
+		private set;
+	}
+
+	public float Speed
+	{
+		get;
+		private set;
+	}
+
+	public int Damage
+	{
+		get;
+		private set;
+	}
+
+	public int MaxBounces
+	{
+		get;
+		private set;
+	}
 
 	public int Bounces
 	{
 		get;
-		set;
+		private set;
+	}
+
+	public int ID
+	{
+		get;
+		private set;
+	}
+
+	public Tank Owner
+	{
+		get;
+		private set;
 	}
 
 	public Rigidbody Rigidbody
@@ -30,9 +64,9 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 		{
 			return Rigidbody.velocity.normalized;
 		}
-		set
+		private set
 		{
-			Rigidbody.velocity = value.normalized * speed;
+			Rigidbody.velocity = value.normalized * Speed;
 		}
 	}
 
@@ -41,18 +75,22 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 	protected void Awake ()
 	{
 		Rigidbody = GetComponent<Rigidbody> ();
-		Bounces = maxBounces;
-		interactTimer = 0;
 	}
 
 	protected void Update ()
 	{
-		interactTimer -= Time.deltaTime;
+		m_interactTimer -= Time.deltaTime;
+		m_lifeTimer -= Time.deltaTime;
+
+		if (m_lifeTimer <= 0)
+		{
+			DestroyObject ();
+		}
 	}
 
 	protected void OnTriggerEnter (Collider col)
 	{
-		if (interactTimer > 0)
+		if (m_interactTimer > 0)
 			return;
 
 		IProjectileInteractive interaction = col.GetComponent<IProjectileInteractive> ();
@@ -61,7 +99,7 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 			interaction.OnProjectileInteraction (this);
 		}
 
-		interactTimer = interactCooldown;
+		m_interactTimer = m_interactCooldown;
 	}
 
 	#endregion
@@ -80,11 +118,70 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 
 	public void OnProjectileInteraction (Projectile p)
 	{
-		DestroyObject ();
+		if (NetworkManager.OfflineMode)
+		{
+			p.DestroyObject ();
+		}
+		else if (PhotonNetwork.isMasterClient)
+		{
+			p.DestroyObject ();
+		}
+		else
+		{
+			Destroy (p.gameObject);
+		}
+	}
+
+	public void SetPosition (Vector3 position)
+	{
+		transform.position = position;
+	}
+
+	public void SetDirection (Vector3 direction)
+	{
+		this.Direction = direction;
+	}
+
+	public void SetLifeTime (float lifetime)
+	{
+		this.LifeTime = lifetime;
+		this.m_lifeTimer = LifeTime;
+	}
+
+	public void SetSpeed (float speed)
+	{
+		this.Speed = speed;
+	}
+
+	public void SetDamage (int damage)
+	{
+		this.Damage = damage;
+	}
+
+	public void SetBounces (int maxBounces)
+	{
+		this.MaxBounces = maxBounces;
+
+		this.Bounces = MaxBounces;
+	}
+
+	public void SetOwner (Tank tank)
+	{
+		this.Owner = tank;
+	}
+
+	public void SetID (int id)
+	{
+		this.ID = id;
+	}
+
+	public void DestroyObjectRPC ()
+	{
+		Owner.GetComponent<TankShoot> ()?.DestroyProjectileRPC (this.ID);
 	}
 
 	public void DestroyObject ()
 	{
-		Destroy (gameObject);
+		Owner.GetComponent<TankShoot> ()?.DestroyProjectile (this.ID);
 	}
 }

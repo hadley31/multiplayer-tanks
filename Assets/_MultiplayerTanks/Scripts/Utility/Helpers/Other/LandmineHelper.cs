@@ -10,6 +10,6 @@ public class LandmineHelper : GizmoHelper
 	public override void Draw ()
 	{
 		Gizmos.color = Color.white;
-		Gizmos.DrawWireSphere (landmine.transform.position, landmine.radius);
+		Gizmos.DrawWireSphere (landmine.transform.position, landmine.Radius);
 	}
 }

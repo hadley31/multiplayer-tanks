@@ -5,16 +5,15 @@ using UnityEngine;
 [System.Serializable]
 public abstract class GizmoHelper : MonoBehaviour
 {
-	protected void Awake ()
+
+	protected virtual void OnEnable ()
 	{
 		if ( FindObjectOfType<GizmoHelperManager> () == null )
 		{
 			Debug.LogWarning ("A GizmoHelperManager object is required for this object to work correctly!");
+			return;
 		}
-	}
 
-	protected virtual void OnEnable ()
-	{
 		GizmoHelperManager.AddHelper (this);
 	}
 
