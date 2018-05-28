@@ -5,5 +5,5 @@ using UnityEngine;
 [System.Serializable]
 public class Gamemode
 {
-	public int roundTime;
+
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof (Rigidbody)), RequireComponent (typeof (BoxCollider))]
-public class Trigger : Entity
+public class Trigger : Photon.MonoBehaviour
 {
 	public UnityEvent onTriggerEnter;
 	public UnityEvent onTriggerStay;

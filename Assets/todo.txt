@@ -28,6 +28,7 @@ Issues:
 
 Ideas:
 	- Gamemodes:
+		-- Suicidal thoughts
 		-- Soccer
 		-- Batte Royale
 		-- One in the chamber

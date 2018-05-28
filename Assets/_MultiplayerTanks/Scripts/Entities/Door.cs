@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Door : Entity
+public class Door : Photon.MonoBehaviour
 {
 	public bool isOpen = false;
 	public float moveSpeed = 10;

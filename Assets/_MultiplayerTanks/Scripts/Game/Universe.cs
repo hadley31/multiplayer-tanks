@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using TMPro;
 
 public sealed class Universe : MonoBehaviour
 {
@@ -9,11 +10,17 @@ public sealed class Universe : MonoBehaviour
 		private set;
 	}
 
+	#region Fields
+
+	public TextMeshProUGUI universeLog;
+
+	#endregion
+
 	#region Monobehaviours
 
 	private void OnEnable ()
 	{
-		if (Instance == null)
+		if ( Instance == null )
 		{
 			Instance = this;
 			DontDestroyOnLoad (this);
@@ -27,7 +34,7 @@ public sealed class Universe : MonoBehaviour
 
 	private void OnDisable ()
 	{
-		if (Instance == this)
+		if ( Instance == this )
 		{
 			Instance = null;
 		}

@@ -2,34 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankInput : Photon.MonoBehaviour
+public class TankInput : TankBase
 {
 	private Plane groundPlane;
 
-	private TankMovement Movement
-	{
-		get;
-		set;
-	}
-
-	private TankShoot Shooting
-	{
-		get;
-		set;
-	}
-
-	private TankLandmine Landmine
-	{
-		get;
-		set;
-	}
-
 	private void Awake ()
 	{
-		Movement = GetComponent<TankMovement> ();
-		Shooting = GetComponent<TankShoot> ();
-		Landmine = GetComponent<TankLandmine> ();
-
 		groundPlane = new Plane (Vector3.up, Vector3.zero);
 	}
 
@@ -53,7 +31,7 @@ public class TankInput : Photon.MonoBehaviour
 
 		if (Input.GetKeyDown (KeyCode.X))
 		{
-			Landmine.Use ();
+			TankLandmine.Use ();
 		}
 	}
 

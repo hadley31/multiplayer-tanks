@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankMovement : Photon.MonoBehaviour
+public class TankMovement : TankBase
 {
 	public Transform top;
 

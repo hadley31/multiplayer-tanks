@@ -4,12 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (Health))]
-public class Tank : Entity, IProjectileInteractive
+public class Tank : TankBase, IProjectileInteractive
 {
+	#region Properties
+
+	public bool IsAlive
+	{
+		get;
+		private set;
+	}
+
 	public int Team
 	{
 		get;
-		protected set;
+		private set;
 	}
 
 	public PhotonPlayer Owner
@@ -21,6 +29,8 @@ public class Tank : Entity, IProjectileInteractive
 	{
 		get { return Owner?.NickName; }
 	}
+
+	#endregion
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankLandmine : Photon.MonoBehaviour
+public class TankLandmine : TankBase
 {
 	public Landmine landminePrefab;
 	public int maxLandmines = 2;
@@ -85,7 +85,7 @@ public class TankLandmine : Photon.MonoBehaviour
 		newLandmine.SetRadius (radius);
 		newLandmine.SetDamage (damage);
 		newLandmine.SetID (id);
-		newLandmine.SetOwner (GetComponent<Tank> ());
+		newLandmine.SetOwner (this.Tank);
 
 		m_Landmines.Add (newLandmine);
 	}

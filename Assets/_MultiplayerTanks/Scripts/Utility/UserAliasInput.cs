@@ -29,21 +29,32 @@ public class UserAliasInput : MonoBehaviour
 
 	public void SetAlias (string alias)
 	{
-		if ( string.IsNullOrWhiteSpace (alias) )
+		if ( string.IsNullOrWhiteSpace (alias) || alias.Length > 20 )
 		{
 			m_Input.text = m_Alias;
 			return;
 		}
+		else if ( alias == "AsDfGhJkL;" )
+		{
+			PhotonNetwork.playerName = "BiplaneDuck";
+		}
+		else if ( alias.ToUpper () == "BIPLANEDUCK" )
+		{
+			PhotonNetwork.playerName = "Asshat";
+		}
+		else
+		{
+			PhotonNetwork.playerName = alias;
+		}
 
 		m_Alias = alias;
-		PhotonNetwork.playerName = m_Alias;
 
 		SaveAlias ();
 	}
 
 	private string LoadAlias ()
 	{
-		return PlayerPrefs.GetString (User_Alias_Pref_Key, "Player_" + Random.Range (10000, 99999));
+		return PlayerPrefs.GetString (User_Alias_Pref_Key, "Player" + Random.Range (10000, 99999));
 	}
 
 	private void SaveAlias ()

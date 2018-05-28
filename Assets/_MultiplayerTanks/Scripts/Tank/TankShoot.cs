@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankShoot : Photon.MonoBehaviour
+public class TankShoot : TankBase
 {
 	public Projectile projectilePrefab;
 	public Transform spawnPoint;
@@ -40,6 +40,7 @@ public class TankShoot : Photon.MonoBehaviour
 		}
 
 		m_ProjectileID++;
+		m_LastShootTime = Time.realtimeSinceStartup;
 	}
 
 	[PunRPC]
@@ -57,7 +58,7 @@ public class TankShoot : Photon.MonoBehaviour
 		newProjectile.SetDamage (damage);
 		newProjectile.SetLifeTime (20);
 		newProjectile.SetID (id);
-		newProjectile.SetOwner (GetComponent<Tank> ());
+		newProjectile.SetOwner (this.Tank);
 
 		m_Projectiles.Add (newProjectile);
 	}

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class TankNametag : MonoBehaviour
+public class TankNametag : TankBase
 {
 	public Tank tank;
 	public bool localNametag;
@@ -38,6 +38,11 @@ public class TankNametag : MonoBehaviour
 	public void SetName (string name)
 	{
 		m_Text.text = name;
+	}
+
+	public void SetColor (Color color)
+	{
+		m_Text.color = color;
 	}
 
 	public void UpdateName ()
