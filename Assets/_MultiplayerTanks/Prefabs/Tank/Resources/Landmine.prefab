@@ -166,7 +166,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1713933594962176}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 53659cedf13cf154094675711a8ab9ae, type: 3}
   m_Name: 
@@ -184,9 +184,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 4776241873614742}
-  fuseTime: 8
-  radius: 2
-  damage: 1000
 --- !u!135 &135112764320662092
 SphereCollider:
   m_ObjectHideFlags: 1

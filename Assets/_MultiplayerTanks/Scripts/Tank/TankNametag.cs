@@ -6,7 +6,7 @@ using TMPro;
 public class TankNametag : MonoBehaviour
 {
 	public Tank tank;
-	public float followSpeed = 30;
+	public bool localNametag;
 	private TextMeshPro m_Text;
 
 	private void Awake ()
@@ -16,6 +16,12 @@ public class TankNametag : MonoBehaviour
 
 	private void OnEnable ()
 	{
+		if (tank.photonView.isMine && !localNametag)
+		{
+			this.gameObject.SetActive(false);
+			return;
+		}
+
 		UpdateName ();
 	}
 

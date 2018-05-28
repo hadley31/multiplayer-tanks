@@ -10,7 +10,7 @@ public class NetworkManager : PunBehaviour
 	public static bool OfflineMode
 	{
 		get { return PhotonNetwork.offlineMode; }
-		set { PhotonNetwork.offlineMode = value; }
+		set { OfflineModeChanged (value); }
 	}
 
 	public static int SendRate
@@ -58,6 +58,8 @@ public class NetworkManager : PunBehaviour
 	public delegate void DisconnectCauseDelegate (DisconnectCause cause);
 	public delegate void HashtableDelegate (Hashtable table);
 
+	public static event Action OnOfflineModeChanged;
+
 	public static event Action OnConnectToMaster;
 	public static event Action OnConnectToPhoton;
 	public static event Action OnDisconnectFromPhoton;
@@ -100,6 +102,21 @@ public class NetworkManager : PunBehaviour
 	#endregion
 
 	#region Connection Messages
+
+	private static void OfflineModeChanged (bool value)
+	{
+		if (PhotonNetwork.offlineMode == value)
+		{
+			return;
+		}
+
+		PhotonNetwork.offlineMode = value;
+
+		if (OnOfflineModeChanged != null)
+		{
+			OnOfflineModeChanged.Invoke ();
+		}
+	}
 
 	public override void OnConnectedToMaster ()
 	{

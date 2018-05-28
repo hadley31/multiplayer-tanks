@@ -7,15 +7,17 @@ public class DisplayPing : MonoBehaviour
 {
 	private Text text;
 
-	private void Start ()
+	private void OnEnable ()
 	{
-		if (NetworkManager.OfflineMode)
+		text = GetComponent<Text> ();
+		if ( NetworkManager.OfflineMode )
 		{
-			this.enabled = false;
+			this.gameObject.SetActive (false);
+			text.text = string.Empty;
 			return;
 		}
 
-		text = GetComponent<Text> ();
+		
 	}
 
 	private void Update ()
@@ -25,9 +27,9 @@ public class DisplayPing : MonoBehaviour
 			return;
 		}
 
-		if (PhotonNetwork.inRoom && !PhotonNetwork.offlineMode)
+		if ( PhotonNetwork.inRoom && !PhotonNetwork.offlineMode )
 		{
-			text.text = (PhotonNetwork.GetPing ()).ToString ();
+			text.text = ( PhotonNetwork.GetPing () ).ToString ();
 		}
 	}
 }

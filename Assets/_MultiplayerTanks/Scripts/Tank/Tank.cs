@@ -34,6 +34,10 @@ public class Tank : Entity, IProjectileInteractive
 			photonView.RPC ("DecreaseHealth", PhotonTargets.All, p.Damage);
 			p.DestroyObjectRPC ();
 		}
+		else
+		{
+			p.DestroyObject ();
+		}
 	}
 
 	public void DestroyTank ()
