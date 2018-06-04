@@ -14,9 +14,6 @@ public class TankShoot : TankBase
 
 
 	private float m_LastShootTime = 0;
-	private int m_ProjectileID;
-
-	private List<Projectile> m_Projectiles = new List<Projectile> ();
 
 	public void Shoot ()
 	{
@@ -30,63 +27,17 @@ public class TankShoot : TankBase
 			return;
 		}
 
+		int id = photonView.viewID & ProjectileManager.GetNextID () << 8;
+
 		if ( NetworkManager.OfflineMode )
 		{
-			CreateProjectile (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, m_ProjectileID, PhotonNetwork.time);
+			ProjectileManager.Instance.SpawnNew (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
 		}
 		else
 		{
-			photonView.RPC ("CreateProjectile", PhotonTargets.All, spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, m_ProjectileID, PhotonNetwork.time);
+			ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
 		}
 
-		m_ProjectileID++;
 		m_LastShootTime = Time.realtimeSinceStartup;
-	}
-
-	[PunRPC]
-	private void CreateProjectile (Vector3 position, Vector3 direction, int bounces, int damage, float speed, int id, double createTime)
-	{
-		Projectile newProjectile = Instantiate (projectilePrefab);
-
-		float dt = (float) ( PhotonNetwork.time - createTime );
-		position += direction * dt;
-		
-		newProjectile.SetPosition (position);
-		newProjectile.SetSpeed (speed);
-		newProjectile.SetDirection (direction);
-		newProjectile.SetBounces (bounces);
-		newProjectile.SetDamage (damage);
-		newProjectile.SetLifeTime (20);
-		newProjectile.SetID (id);
-		newProjectile.SetOwner (this.Tank);
-
-		m_Projectiles.Add (newProjectile);
-	}
-
-	public void DestroyProjectileRPC (int id)
-	{
-		if ( NetworkManager.OfflineMode )
-		{
-			DestroyProjectile (id);
-		}
-		else
-		{
-			photonView.RPC ("DestroyProjectile", PhotonTargets.All, id);
-		}
-	}
-
-	[PunRPC]
-	public void DestroyProjectile (int id)
-	{
-		m_Projectiles.RemoveAll (x => x == null);
-
-		Projectile projectile = m_Projectiles.Find (x => x.ID == id);
-
-
-		if ( projectile != null )
-		{
-			Destroy (projectile.gameObject);
-			m_Projectiles.Remove (projectile);
-		}
 	}
 }

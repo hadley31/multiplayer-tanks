@@ -20,4 +20,9 @@ public class Entity : Photon.MonoBehaviour
 			return m_Health;
 		}
 	}
+
+	public bool Is<T> ()
+	{
+		return GetComponent<T> () != null;
+	}
 }

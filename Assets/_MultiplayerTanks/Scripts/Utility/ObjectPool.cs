@@ -4,33 +4,41 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-	private Queue<PooledObject> reserve;
+	private Queue<PooledObject> reserve = new Queue<PooledObject> ();
 
 	public PooledObject prefab;
 	public int reserveSize;
 
-	public PooledObject Spawn (Vector3 position, Quaternion rotation)
+
+	public T Spawn<T> () where T : Component
 	{
-		if (reserve != null && reserve.Count > 0)
+		if ( reserve != null && reserve.Count > 0 )
 		{
 			PooledObject obj = reserve.Dequeue ();
-			obj.transform.position = position;
-			obj.transform.rotation = rotation;
-			return obj;
+
+			obj.gameObject.SetActive (true);
+
+			return obj.GetComponent<T> ();
 		}
 		else
 		{
-			PooledObject obj = Instantiate (prefab, position, rotation);
+			PooledObject obj = Instantiate (prefab);
 
-			return obj;
+			obj.Prime (this);
+
+			return obj.GetComponent<T> ();
 		}
 	}
 
 	public void Reserve (PooledObject obj)
 	{
+		Debug.Log ("ObjectPool::Reserve()");
+		Debug.Log ("Reserves: " + reserve.Count);
+
 		if (reserve.Count < reserveSize)
 		{
 			reserve.Enqueue (obj);
+			obj.gameObject.SetActive (false);
 		}
 		else
 		{

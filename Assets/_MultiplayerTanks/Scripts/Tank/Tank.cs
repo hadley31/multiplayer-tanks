@@ -27,7 +27,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public string OwnerAlias
 	{
-		get { return Owner?.NickName; }
+		get { return Owner?.NickName ?? string.Empty; }
 	}
 
 	#endregion

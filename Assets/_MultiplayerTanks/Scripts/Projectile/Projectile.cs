@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : Entity, IProjectileInteractive, IDestroyable
+public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
 {
 	private const float m_interactCooldown = 0.03f;
 
@@ -124,11 +124,11 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 		}
 		else if (PhotonNetwork.isMasterClient)
 		{
-			p.DestroyObject ();
+			p.DestroyObjectRPC ();
 		}
 		else
 		{
-			Destroy (p.gameObject);
+			p.DestroyObject ();
 		}
 	}
 
@@ -165,23 +165,25 @@ public class Projectile : Entity, IProjectileInteractive, IDestroyable
 		this.Bounces = MaxBounces;
 	}
 
-	public void SetOwner (Tank tank)
+	public void SetID (int id)
+	{
+		this.ID = id;
+
+		SetOwner (PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ());
+	}
+
+	private void SetOwner (Tank tank)
 	{
 		this.Owner = tank;
 	}
 
-	public void SetID (int id)
-	{
-		this.ID = id;
-	}
-
 	public void DestroyObjectRPC ()
 	{
-		Owner.GetComponent<TankShoot> ()?.DestroyProjectileRPC (this.ID);
+		ProjectileManager.Instance.DestroyRPC (this.ID);
 	}
-
+	
 	public void DestroyObject ()
 	{
-		Owner.GetComponent<TankShoot> ()?.DestroyProjectile (this.ID);
+		ProjectileManager.Instance.Destroy (this.ID);
 	}
 }

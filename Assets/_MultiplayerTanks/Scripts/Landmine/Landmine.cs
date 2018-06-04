@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Landmine : Entity, IProjectileInteractive, IDestroyable
+public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
 {
 	public GameObject explosion;
 

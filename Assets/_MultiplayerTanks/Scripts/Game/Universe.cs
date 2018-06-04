@@ -10,12 +10,6 @@ public sealed class Universe : MonoBehaviour
 		private set;
 	}
 
-	#region Fields
-
-	public TextMeshProUGUI universeLog;
-
-	#endregion
-
 	#region Monobehaviours
 
 	private void OnEnable ()

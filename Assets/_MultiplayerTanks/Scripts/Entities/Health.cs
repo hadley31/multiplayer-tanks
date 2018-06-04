@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent (typeof (Entity))]
 public class Health : Photon.MonoBehaviour, IDestroyable
 {
 	public int maxHealth;

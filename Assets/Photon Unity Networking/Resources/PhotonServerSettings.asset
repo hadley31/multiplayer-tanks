@@ -52,4 +52,6 @@ MonoBehaviour:
   - OnProjectileHit
   - DestroyLandmine
   - DestroyProjectile
+  - Destroy
+  - SpawnNew
   DisableAutoOpenWizard: 1
