@@ -41,6 +41,7 @@ GameObject:
   - component: {fileID: 23744642096719378}
   - component: {fileID: 136143850787270226}
   - component: {fileID: 114173939571103772}
+  - component: {fileID: 114324637339403680}
   - component: {fileID: 114171812887001558}
   m_Layer: 0
   m_Name: Landmine
@@ -184,6 +185,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosion: {fileID: 4776241873614742}
+--- !u!114 &114324637339403680
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1713933594962176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2fdedb98dce0114181c7bfcbcb455cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135112764320662092
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -60,6 +60,8 @@ public class Tank : TankBase, IProjectileInteractive
 		else if ( photonView.isMine )
 		{
 			PhotonNetwork.Destroy (photonView);
+
+			GameLevelControl.Current.SpawnLocalTank ();
 		}
 	}
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
 {
-	public GameObject explosion;
+//	public GameObject explosion;
 
 	protected Material material;
 	protected float fuseTimer;
@@ -127,12 +127,12 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 
 	public void DestroyObjectRPC ()
 	{
-		Owner.GetComponent<TankLandmine> ()?.DestroyLandmineRPC (this.ID);
+		LandmineManager.Instance.DestroyRPC (this.ID);
 	}
 
 	public void DestroyObject ()
 	{
-		Owner.GetComponent<TankLandmine> ()?.DestroyLandmine (this.ID);
+		LandmineManager.Instance.Destroy (this.ID);
 	}
 
 	private void SpawnExplosion ()
@@ -163,9 +163,11 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 	public void SetID (int id)
 	{
 		this.ID = id;
+
+		SetOwner (PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ());
 	}
 
-	public void SetOwner (Tank tank)
+	private void SetOwner (Tank tank)
 	{
 		this.Owner = tank;
 	}

@@ -21,7 +21,6 @@ public class TankLandmine : TankBase
 
 	private float m_lastUseTime;
 	private float m_rechargeTimer;
-	private int m_landmineID;
 
 	private List<Landmine> m_Landmines = new List<Landmine> ();
 
@@ -32,7 +31,7 @@ public class TankLandmine : TankBase
 
 	private void Update ()
 	{
-		if (!photonView.isMine)
+		if ( !photonView.isMine )
 		{
 			return;
 		}
@@ -53,66 +52,28 @@ public class TankLandmine : TankBase
 
 	public void Use ()
 	{
+		if ( !photonView.isMine )
+		{
+			return;
+		}
+
 		if ( Landmines <= 0 && m_rechargeTimer > 0 )
 		{
 			return;
 		}
 
-		if (NetworkManager.OfflineMode)
-		{
-			CreateLandmine (transform.position, fuse, damage, radius, m_landmineID, PhotonNetwork.time);
-		}
-		else
-		{
-			photonView.RPC ("CreateLandmine", PhotonTargets.All, transform.position, fuse, damage, radius, m_landmineID, PhotonNetwork.time);
-		}
+		int id = photonView.viewID & ProjectileManager.GetNextID () << 8;
 
-
-		Landmines--;
-		m_landmineID++;
-		m_rechargeTimer = useCooldown;
-	}
-
-	[PunRPC]
-	private void CreateLandmine (Vector3 position, float fuse, int damage, float radius, int id, double createTime)
-	{
-		Landmine newLandmine = Instantiate (landminePrefab);
-
-		fuse -= (float) ( PhotonNetwork.time - createTime );
-
-		newLandmine.SetPosition (position);
-		newLandmine.SetFuse (fuse);
-		newLandmine.SetRadius (radius);
-		newLandmine.SetDamage (damage);
-		newLandmine.SetID (id);
-		newLandmine.SetOwner (this.Tank);
-
-		m_Landmines.Add (newLandmine);
-	}
-
-	public void DestroyLandmineRPC (int id)
-	{
 		if ( NetworkManager.OfflineMode )
 		{
-			DestroyLandmine (id);
+			LandmineManager.Instance.SpawnNew (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
 		}
 		else
 		{
-			photonView.RPC ("DestroyLandmine", PhotonTargets.All, id);
+			LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
 		}
-	}
 
-	[PunRPC]
-	public void DestroyLandmine (int id)
-	{
-		m_Landmines.RemoveAll (x => x == null);
-
-		Landmine landmine = m_Landmines.Find (x => x.ID == id);
-
-		if ( landmine != null )
-		{
-			Destroy (landmine.gameObject);
-			m_Landmines.Remove (landmine);
-		}
+		Landmines--;
+		m_rechargeTimer = useCooldown;
 	}
 }

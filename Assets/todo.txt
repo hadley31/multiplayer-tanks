@@ -20,7 +20,6 @@ Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
 	- Colliding bullets on non-master clients do not destroy for a good bit
 		-- consider "destroying" on local client and wait for confirmation by server
-	- 
 
 
 
@@ -32,6 +31,5 @@ Ideas:
 		-- Soccer
 		-- Batte Royale
 		-- One in the chamber
-	- projectile trails
 	- bullet shaped projectiles
 	- tank path tracks

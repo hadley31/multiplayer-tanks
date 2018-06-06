@@ -5,8 +5,6 @@ using TMPro;
 
 public class UserAliasInput : MonoBehaviour
 {
-	const string User_Alias_Pref_Key = "ua";
-
 	private TMP_InputField m_Input;
 	private string m_Alias;
 
@@ -54,12 +52,12 @@ public class UserAliasInput : MonoBehaviour
 
 	private string LoadAlias ()
 	{
-		return PlayerPrefs.GetString (User_Alias_Pref_Key, "Player" + Random.Range (10000, 99999));
+		return PlayerPrefs.GetString (PlayerPrefsKeys.User_Alias_Pref_Key, "Player" + Random.Range (10000, 99999));
 	}
 
 	private void SaveAlias ()
 	{
-		PlayerPrefs.SetString (User_Alias_Pref_Key, m_Alias);
+		PlayerPrefs.SetString (PlayerPrefsKeys.User_Alias_Pref_Key, m_Alias);
 		PlayerPrefs.Save ();
 	}
 }

@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class GameLevelControl : ControlElement
 {
+	public static GameLevelControl Current
+	{
+		get;
+		private set;
+	}
+
 	public Transform spawnpoint;
 	public TankFollowCamera cameraRigPrefab;
 
@@ -11,7 +17,14 @@ public class GameLevelControl : ControlElement
 
 	public override void OnGainControl ()
 	{
-		if (tank == null)
+		Current = this;
+
+		SpawnLocalTank ();
+	}
+
+	public void SpawnLocalTank ()
+	{
+		if ( tank == null )
 		{
 			tank = PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0).GetComponent<Tank> ();
 
@@ -25,7 +38,10 @@ public class GameLevelControl : ControlElement
 
 	public override void OnLoseControl ()
 	{
-
+		if (Current == this)
+		{
+			Current = null;
+		}
 	}
 
 	public override void OnControlUpdate ()

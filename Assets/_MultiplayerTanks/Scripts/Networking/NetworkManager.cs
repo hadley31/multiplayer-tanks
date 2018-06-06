@@ -112,6 +112,8 @@ public class NetworkManager : PunBehaviour
 
 		PhotonNetwork.offlineMode = value;
 
+		Debug.Log (value ? "Offline mode enabled." : "Offline mode disabled.");
+
 		if (OnOfflineModeChanged != null)
 		{
 			OnOfflineModeChanged.Invoke ();
