@@ -27,7 +27,7 @@ Issues:
 
 Ideas:
 	- Gamemodes:
-		-- Suicidal thoughts
+		-- Suicidal thoughts (new name? (! per Calie's request))
 		-- Soccer
 		-- Batte Royale
 		-- One in the chamber

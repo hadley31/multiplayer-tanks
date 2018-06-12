@@ -54,4 +54,5 @@ MonoBehaviour:
   - DestroyProjectile
   - Destroy
   - SpawnNew
+  - SetActiveGamemode
   DisableAutoOpenWizard: 1

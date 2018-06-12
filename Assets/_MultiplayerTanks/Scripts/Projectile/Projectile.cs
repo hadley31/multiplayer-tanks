@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
 {
-	private const float m_interactCooldown = 0.03f;
+	private const float m_interactCooldown = 0.01f;
 
 	private float m_interactTimer;
 	private float m_lifeTimer;

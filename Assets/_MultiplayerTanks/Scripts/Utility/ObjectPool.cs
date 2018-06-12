@@ -10,7 +10,7 @@ public class ObjectPool : MonoBehaviour
 	public int reserveSize;
 
 
-	public T Spawn<T> () where T : Component
+	public PooledObject Spawn ()
 	{
 		if ( reserve != null && reserve.Count > 0 )
 		{
@@ -18,7 +18,7 @@ public class ObjectPool : MonoBehaviour
 
 			obj.gameObject.SetActive (true);
 
-			return obj.GetComponent<T> ();
+			return obj;
 		}
 		else
 		{
@@ -26,23 +26,51 @@ public class ObjectPool : MonoBehaviour
 
 			obj.Prime (this);
 
-			return obj.GetComponent<T> ();
+			return obj;
 		}
+	}
+
+	public T Spawn<T> () where T : Component
+	{
+		return Spawn ().GetComponent<T> ();
 	}
 
 	public void Reserve (PooledObject obj)
 	{
-		Debug.Log ("ObjectPool::Reserve()");
-		Debug.Log ("Reserves: " + reserve.Count);
-
-		if (reserve.Count < reserveSize)
+		if ( reserve.Count < reserveSize && !reserve.Contains (obj) )
 		{
-			reserve.Enqueue (obj);
 			obj.gameObject.SetActive (false);
+			reserve.Enqueue (obj);
 		}
 		else
 		{
 			Destroy (obj.gameObject);
 		}
+	}
+
+	public void Reserve (Component obj)
+	{
+		PooledObject pooledObj = obj.GetComponent<PooledObject> ();
+
+		if ( pooledObj == null )
+		{
+			Debug.Log ("Attempted to reserve a gameobject without a PooledObject component!");
+			return;
+		}
+
+		Reserve (pooledObj);
+	}
+
+	public void Reserve (GameObject obj)
+	{
+		PooledObject pooledObj = obj.GetComponent<PooledObject> ();
+
+		if (pooledObj == null)
+		{
+			Debug.Log ("Attempted to reserve a gameobject without a PooledObject component!");
+			return;
+		}
+
+		Reserve (pooledObj);
 	}
 }

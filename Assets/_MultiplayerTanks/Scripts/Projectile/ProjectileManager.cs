@@ -90,7 +90,7 @@ public class ProjectileManager : Photon.MonoBehaviour
 		if ( projectile != null )
 		{
 			m_Projectiles.Remove (projectile);
-			m_Pool.Reserve (projectile.GetComponent<PooledObject> ());
+			m_Pool.Reserve (projectile);
 		}
 	}
 }

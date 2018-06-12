@@ -15,7 +15,7 @@ public class PooledObject : MonoBehaviour
 		this.Pool = pool;
 	}
 
-	public void DestroyObject ()
+	public void Reserve ()
 	{
 		Pool.Reserve (this);
 	}
