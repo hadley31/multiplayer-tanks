@@ -22,8 +22,6 @@ public class GameLevelControl : ControlElement
 		PhotonNetwork.room.SetTeamColor (0, Color.red + Color.yellow);
 		Player.Local.SetTeam (0);
 
-		Player.Name = "BiplaneDuck";
-
 		ExtDebug.PrintList (Player.AllNames);
 
 		SpawnLocalTank ();

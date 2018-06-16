@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 306220736}
   - component: {fileID: 306220739}
   m_Layer: 5
-  m_Name: TextMeshPro - InputField
+  m_Name: Alias Input Field
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -542,9 +542,9 @@ RectTransform:
   - {fileID: 973317416}
   - {fileID: 2103399792}
   - {fileID: 20417610}
-  - {fileID: 1294930289}
-  - {fileID: 306220735}
   - {fileID: 864222171}
+  - {fileID: 306220735}
+  - {fileID: 1294930289}
   m_Father: {fileID: 922433633}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 864222173}
   - component: {fileID: 864222172}
   m_Layer: 5
-  m_Name: TextMeshPro Text
+  m_Name: Alias Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -751,7 +751,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 522223742}
-  m_RootOrder: 6
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1350,7 +1350,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 522223742}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -31,42 +31,47 @@ public class Health : Photon.MonoBehaviour, IDestroyable
 		}
 	}
 
-	protected virtual void Awake ()
-	{
-		SetToMaxHealth ();
-	}
-
 	[PunRPC]
-	public void SetHealth (int value)
+	public void Set (int value)
 	{
 		Value = value;
 	}
 
-	public void SetHealthRPC (int value)
+	public void SetRPC (int value)
 	{
-		photonView.RPC ("SetHealth", PhotonTargets.AllBuffered, value);
+		photonView.RPC ("Set", PhotonTargets.AllBuffered, value);
 	}
 
 	[PunRPC]
-	public void DecreaseHealth (int amount)
+	public void Decrease (int amount)
 	{
-		SetHealth (Value - amount);
+		Set (Value - amount);
 	}
 
-	public void DecreaseHealthRPC (int amount)
+	public void DecreaseRPC (int amount)
 	{
-		photonView.RPC ("DecreaseHealth", PhotonTargets.AllBuffered, amount);
+		if ( PhotonNetwork.isMasterClient == false )
+		{
+			return;
+		}
+
+		SetRPC (Value - amount);
 	}
 
 	[PunRPC]
-	public void SetToMaxHealth ()
+	public void SetToMax ()
 	{
-		SetHealth (maxHealth);
+		Set (maxHealth);
 	}
 
-	public void SetToMaxHealthRPC ()
+	public void SetToMaxRPC ()
 	{
-		photonView.RPC ("SetToMaxHealth", PhotonTargets.AllBuffered);
+		if ( PhotonNetwork.isMasterClient == false )
+		{
+			return;
+		}
+
+		photonView.RPC ("SetToMax", PhotonTargets.AllBuffered);
 	}
 
 	private void Die ()

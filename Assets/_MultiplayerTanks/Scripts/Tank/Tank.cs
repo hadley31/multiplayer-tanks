@@ -42,7 +42,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	#endregion
 
-	private void Awake ()
+	private void Start ()
 	{
 		Spawn ();
 	}
@@ -51,15 +51,24 @@ public class Tank : TankBase, IProjectileInteractive
 	{
 		if ( PhotonNetwork.isMasterClient )
 		{
-			Health.DecreaseHealthRPC (p.Damage);
-
-
+			Health.DecreaseRPC (p.Damage);
 			LastProjectileOwner = p.Owner;
 		}
 
 		p.DestroyObjectRPC ();
 	}
 
+	public void SpawnRPC ()
+	{
+		if ( photonView.isMine == false )
+		{
+			return;
+		}
+
+		photonView.RPC ("Spawn", PhotonTargets.All);
+	}
+
+	[PunRPC]
 	public void Spawn ()
 	{
 		IsAlive = true;
@@ -67,15 +76,26 @@ public class Tank : TankBase, IProjectileInteractive
 		onSpawn.Invoke ();
 	}
 
+	public void DestroyRPC ()
+	{
+		if ( photonView.isMine == false )
+		{
+			return;
+		}
+
+		photonView.RPC ("Destroy", PhotonTargets.All);
+	}
+
+	[PunRPC]
 	public void Destroy ()
 	{
 		IsAlive = false;
 
+		onDestroy.Invoke ();
+
 		if ( photonView.isMine )
 		{
-			Invoke ("Spawn", 5);
+			Invoke ("SpawnRPC", 5);
 		}
-
-		onDestroy.Invoke ();
 	}
 }

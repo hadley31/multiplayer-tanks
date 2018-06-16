@@ -14,7 +14,7 @@ public class TankInput : TankBase
 
 	private void Update ()
 	{
-		if (!photonView.isMine)
+		if (photonView.isMine == false)
 		{
 			return;
 		}

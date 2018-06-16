@@ -100,7 +100,7 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 
 				if ( h != null)
 				{
-					h.DecreaseHealth (Damage);
+					h.Decrease (Damage);
 					print ("Landmine damaged: " + h.gameObject.name);
 				}
 			}
@@ -116,7 +116,7 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 
 				if ( h != null )
 				{
-					h.DecreaseHealthRPC (Damage);
+					h.DecreaseRPC (Damage);
 					print ("Landmine damaged: " + h.gameObject.name);
 				}
 			}

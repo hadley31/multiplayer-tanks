@@ -9,6 +9,7 @@ public class TankVisuals : TankBase
 	[SerializeField]
 	private Color m_Color = Color.black;
 
+	public UnityEvent onColorChanged;
 	public UnityEvent onShow;
 	public UnityEvent onHide;
 
@@ -103,6 +104,8 @@ public class TankVisuals : TankBase
 
 		TopVisual.material.color = m_Color;
 		BottomVisual.material.color = m_Color;
+
+		onColorChanged.Invoke ();
 	}
 
 	[PunRPC]

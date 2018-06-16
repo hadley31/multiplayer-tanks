@@ -29,7 +29,7 @@ public class TankLandmine : TankBase
 
 	private void Update ()
 	{
-		if ( !photonView.isMine )
+		if ( photonView.isMine == false )
 		{
 			return;
 		}
@@ -50,7 +50,7 @@ public class TankLandmine : TankBase
 
 	public void Use ()
 	{
-		if ( !photonView.isMine )
+		if ( photonView.isMine == false )
 		{
 			return;
 		}

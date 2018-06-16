@@ -43,7 +43,7 @@ public class TankMovement : TankBase
 
 	public Vector3 TargetVelocity
 	{
-		get { return TargetDirection * m_speed; }
+		get { return TargetDirection.normalized * m_speed; }
 	}
 
 	public Quaternion TargetLook
