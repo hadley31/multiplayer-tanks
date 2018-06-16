@@ -31,8 +31,6 @@ public class TankNametag : TankBase
 		{
 			return;
 		}
-		
-		m_Text.transform.rotation = Camera.main.transform.rotation;
 	}
 
 	public void SetName (string name)

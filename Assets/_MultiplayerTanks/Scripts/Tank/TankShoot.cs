@@ -27,16 +27,9 @@ public class TankShoot : TankBase
 			return;
 		}
 
-		int id = photonView.viewID & ProjectileManager.GetNextID () << 8;
+		int id = ProjectileManager.GetNextID ();
 
-		if ( NetworkManager.OfflineMode )
-		{
-			ProjectileManager.Instance.SpawnNew (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
-		}
-		else
-		{
-			ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
-		}
+		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}

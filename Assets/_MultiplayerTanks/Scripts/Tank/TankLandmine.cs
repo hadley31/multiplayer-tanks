@@ -22,8 +22,6 @@ public class TankLandmine : TankBase
 	private float m_lastUseTime;
 	private float m_rechargeTimer;
 
-	private List<Landmine> m_Landmines = new List<Landmine> ();
-
 	private void Start ()
 	{
 		Landmines = maxLandmines;
@@ -64,14 +62,7 @@ public class TankLandmine : TankBase
 
 		int id = photonView.viewID & ProjectileManager.GetNextID () << 8;
 
-		if ( NetworkManager.OfflineMode )
-		{
-			LandmineManager.Instance.SpawnNew (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
-		}
-		else
-		{
-			LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
-		}
+		LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
 
 		Landmines--;
 		m_rechargeTimer = useCooldown;

@@ -69,7 +69,10 @@ public class LandmineManager : Photon.MonoBehaviour
 
 	public void DestroyRPC (int id)
 	{
-		photonView.RPC ("Destroy", PhotonTargets.All, id);
+		if (PhotonNetwork.isMasterClient)
+		{
+			photonView.RPC ("Destroy", PhotonTargets.All, id);
+		}
 	}
 
 	[PunRPC]
@@ -82,13 +85,13 @@ public class LandmineManager : Photon.MonoBehaviour
 
 		m_Landmines.RemoveAll (x => x == null);
 
-		Landmine projectile = m_Landmines.Find (x => x.ID == id);
+		Landmine landmine = m_Landmines.Find (x => x.ID == id);
 
 
-		if ( projectile != null )
+		if ( landmine != null )
 		{
-			m_Landmines.Remove (projectile);
-			m_Pool.Reserve (projectile.GetComponent<PooledObject> ());
+			m_Landmines.Remove (landmine);
+			m_Pool.Reserve (landmine.GetComponent<PooledObject> ());
 		}
 	}
 }

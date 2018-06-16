@@ -55,4 +55,5 @@ MonoBehaviour:
   - Destroy
   - SpawnNew
   - SetActiveGamemode
+  - SetColor
   DisableAutoOpenWizard: 1

@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-	private Queue<PooledObject> reserve = new Queue<PooledObject> ();
+	private readonly Queue<PooledObject> reserve = new Queue<PooledObject> ();
 
 	public PooledObject prefab;
 	public int reserveSize;
 
+
+	public int ReserveCount
+	{
+		get { return reserve.Count; }
+	}
 
 	public PooledObject Spawn ()
 	{

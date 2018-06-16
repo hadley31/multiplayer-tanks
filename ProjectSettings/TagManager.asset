@@ -16,12 +16,12 @@ TagManager:
   - Ground
   - Wall
   - Tank
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Tank AI
+  - Projectile
+  - Ignore Projectile
+  - Ignore Tank
+  - Ignore AI Projectile
+  - Ignore Tank AI
   - 
   - 
   - 

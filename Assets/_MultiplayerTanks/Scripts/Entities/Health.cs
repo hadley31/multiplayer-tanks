@@ -71,16 +71,7 @@ public class Health : Photon.MonoBehaviour, IDestroyable
 
 	private void Die ()
 	{
-		// This may look repetative but it is important to keep the logic separate 
-		// in case we decide to add more functionality later
-		if (NetworkManager.OfflineMode)
-		{
-			onDie.Invoke ();
-		}
-		else if (photonView.isMine)
-		{
-			onDie.Invoke ();
-		}
+		onDie.Invoke ();
 	}
 
 	public void DestroyObject ()

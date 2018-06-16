@@ -12,6 +12,11 @@ public interface IDestroyable
 	void DestroyObject ();
 }
 
+public interface IDestroyableRPC : IDestroyable
+{
+	void DestroyObjectRPC ();
+}
+
 public interface IPhotonSerializable
 {
 	string PhotonSerialize ();

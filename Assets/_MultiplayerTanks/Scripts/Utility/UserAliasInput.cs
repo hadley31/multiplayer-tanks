@@ -34,15 +34,15 @@ public class UserAliasInput : MonoBehaviour
 		}
 		else if ( alias == "AsDfGhJkL;" )
 		{
-			PhotonNetwork.playerName = "BiplaneDuck";
+			Player.Name = "BiplaneDuck";
 		}
 		else if ( alias.ToUpper () == "BIPLANEDUCK" )
 		{
-			PhotonNetwork.playerName = "Asshat";
+			Player.Name = "Asshat";
 		}
 		else
 		{
-			PhotonNetwork.playerName = alias;
+			Player.Name = alias;
 		}
 
 		m_Alias = alias;

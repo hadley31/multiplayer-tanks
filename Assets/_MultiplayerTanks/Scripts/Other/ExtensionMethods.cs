@@ -52,6 +52,21 @@ public static class ExtensionMethods
 		}
 	}
 
+	public static void SetTeam (this PhotonPlayer player, int team)
+	{
+		player.SetProperty (PlayerProperty.Team, team);
+	}
+
+	public static int GetTeam (this PhotonPlayer player)
+	{
+		return player.GetProperty<int> (PlayerProperty.Team);
+	}
+
+	public static Color GetTeamColor (this PhotonPlayer player)
+	{
+		return PhotonNetwork.room.GetTeamColor (player.GetTeam ());
+	}
+
 	#region Kills
 
 	public static void SetKills (this PhotonPlayer player, int kills)
@@ -99,14 +114,44 @@ public static class ExtensionMethods
 		room.SetCustomProperties (new Hashtable () { { key, obj } });
 	}
 
-	public static T GetProperty<T> (this Room room, string key, T onlineDefault = default (T))
+	public static T GetProperty<T> (this Room room, string key, T defaultValue = default (T))
 	{
 		object obj;
 		if ( room.CustomProperties.TryGetValue (key, out obj) && obj is T )
 		{
 			return (T) obj;
 		}
-		return onlineDefault;
+		return defaultValue;
+	}
+
+	public static void SetTeamName (this Room room, int team, string name)
+	{
+		if (!PhotonNetwork.isMasterClient)
+		{
+			Debug.LogWarning ("Attempting to change a team name when you are not the Master Client!");
+			return;
+		}
+		room.SetProperty (RoomProperty.Team_Name + team, name);
+	}
+
+	public static string GetTeamName (this Room room, int team)
+	{
+		return room.GetProperty<string> (RoomProperty.Team_Name + team);
+	}
+
+	public static void SetTeamColor (this Room room, int team, Color color)
+	{
+		if ( !PhotonNetwork.isMasterClient )
+		{
+			Debug.LogWarning ("Attempting to change a team color when you are not the Master Client!");
+			return;
+		}
+		room.SetProperty (RoomProperty.Team_Color + team, color.ToVector ());
+	}
+
+	public static Color GetTeamColor (this Room room, int team)
+	{
+		return room.GetProperty<Vector3> (RoomProperty.Team_Color + team).ToColor ();
 	}
 
 	#endregion

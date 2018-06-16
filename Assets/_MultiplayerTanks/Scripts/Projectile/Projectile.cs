@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
+public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyableRPC
 {
 	private const float m_interactCooldown = 0.01f;
 
@@ -46,7 +46,13 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		private set;
 	}
 
-	public Tank Owner
+	public PhotonPlayer Owner
+	{
+		get;
+		private set;
+	}
+
+	public Tank Sender
 	{
 		get;
 		private set;
@@ -118,18 +124,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 
 	public void OnProjectileInteraction (Projectile p)
 	{
-		if (NetworkManager.OfflineMode)
-		{
-			p.DestroyObject ();
-		}
-		else if (PhotonNetwork.isMasterClient)
-		{
-			p.DestroyObjectRPC ();
-		}
-		else
-		{
-			p.DestroyObject ();
-		}
+		p.DestroyObjectRPC ();
 	}
 
 	public void SetPosition (Vector3 position)
@@ -169,21 +164,29 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 	{
 		this.ID = id;
 
-		SetOwner (PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ());
+		Tank sender = PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ();
+
+		SetSender (sender);
+	//	SetOwner (sender.Owner); Saying sender is null!
 	}
 
-	private void SetOwner (Tank tank)
+	private void SetOwner (PhotonPlayer player)
 	{
-		this.Owner = tank;
+		this.Owner = player;
+	}
+
+	private void SetSender (Tank tank)
+	{
+		this.Sender = tank;
+	}
+
+	public void DestroyObject ()
+	{
+		ProjectileManager.Instance.Destroy (this.ID);
 	}
 
 	public void DestroyObjectRPC ()
 	{
 		ProjectileManager.Instance.DestroyRPC (this.ID);
-	}
-	
-	public void DestroyObject ()
-	{
-		ProjectileManager.Instance.Destroy (this.ID);
 	}
 }

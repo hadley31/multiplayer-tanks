@@ -4,14 +4,16 @@ using UnityEngine;
 
 public static class RoomProperty
 {
-	public static string Map = "mp";
-	public static string Gamemode = "gm";
-	public static string Flags = "fl";
+	public static readonly string Team_MaxPlayers = "tp";
+	public static readonly string Team_Name = "tn";
+	public static readonly string Team_Color = "tc";
+	public static readonly string Map = "mp";
+	public static readonly string Gamemode = "gm";
 }
 
 public static class PlayerProperty
 {
-	public static string Kills = "k";
-	public static string Deaths = "d";
-	public static string Team = "t";
+	public static readonly string Kills = "k";
+	public static readonly string Deaths = "d";
+	public static readonly string Team = "t";
 }

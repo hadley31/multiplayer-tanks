@@ -65,7 +65,12 @@ public class TankMovement : TankBase
 
 	protected virtual void Update ()
 	{
-		if (!photonView.isMine)
+		if (photonView.isMine == false)
+		{
+			return;
+		}
+
+		if (Tank.IsAlive == false)
 		{
 			return;
 		}
@@ -76,7 +81,12 @@ public class TankMovement : TankBase
 
 	protected virtual void FixedUpdate ()
 	{
-		if (!photonView.isMine)
+		if (photonView.isMine == false)
+		{
+			return;
+		}
+
+		if (Tank.IsAlive == false)
 		{
 			return;
 		}

@@ -20,6 +20,11 @@ public class ProjectileManager : Photon.MonoBehaviour
 	private ObjectPool m_Pool;
 	private List<Projectile> m_Projectiles = new List<Projectile> ();
 
+	public int ProjectileCount
+	{
+		get { return m_Projectiles.Count; }
+	}
+
 	private void Awake ()
 	{
 		m_Pool = GetComponent<ObjectPool> ();
@@ -71,7 +76,14 @@ public class ProjectileManager : Photon.MonoBehaviour
 
 	public void DestroyRPC (int id)
 	{
-		photonView.RPC ("Destroy", PhotonTargets.All, id);
+		if (PhotonNetwork.isMasterClient)
+		{
+			photonView.RPC ("Destroy", PhotonTargets.All, id);
+		}
+		else
+		{
+			Destroy (id);
+		}
 	}
 
 	[PunRPC]
@@ -85,7 +97,6 @@ public class ProjectileManager : Photon.MonoBehaviour
 		m_Projectiles.RemoveAll (x => x == null);
 
 		Projectile projectile = m_Projectiles.Find (x => x.ID == id);
-
 
 		if ( projectile != null )
 		{

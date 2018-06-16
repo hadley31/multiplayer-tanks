@@ -2,10 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent (typeof (Health))]
 public class Tank : TankBase, IProjectileInteractive
 {
+	public UnityEvent onSpawn;
+	public UnityEvent onDestroy;
+
 	#region Properties
 
 	public bool IsAlive
@@ -30,38 +34,48 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return Owner?.NickName ?? string.Empty; }
 	}
 
+	public PhotonPlayer LastProjectileOwner
+	{
+		get;
+		set;
+	}
+
 	#endregion
+
+	private void Awake ()
+	{
+		Spawn ();
+	}
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
-		if (NetworkManager.OfflineMode)
+		if ( PhotonNetwork.isMasterClient )
 		{
-			GetComponent<Health> ().DecreaseHealth (p.Damage);
-			p.DestroyObject ();
+			Health.DecreaseHealthRPC (p.Damage);
+
+
+			LastProjectileOwner = p.Owner;
 		}
-		else if (PhotonNetwork.isMasterClient)
-		{
-			photonView.RPC ("DecreaseHealth", PhotonTargets.All, p.Damage);
-			p.DestroyObjectRPC ();
-		}
-		else
-		{
-			p.DestroyObject ();
-		}
+
+		p.DestroyObjectRPC ();
 	}
 
-	public void DestroyTank ()
+	public void Spawn ()
 	{
-		// Temporary... Eventually we want to just disable visuals so that some components still work
-		if ( NetworkManager.OfflineMode )
-		{
-			PhotonNetwork.Destroy (photonView);
-		}
-		else if ( photonView.isMine )
-		{
-			PhotonNetwork.Destroy (photonView);
+		IsAlive = true;
 
-			GameLevelControl.Current.SpawnLocalTank ();
+		onSpawn.Invoke ();
+	}
+
+	public void Destroy ()
+	{
+		IsAlive = false;
+
+		if ( photonView.isMine )
+		{
+			Invoke ("Spawn", 5);
 		}
+
+		onDestroy.Invoke ();
 	}
 }

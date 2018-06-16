@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using System.Collections.Generic;
+using UnityEngine;
 
 public static class ExtDebug
 {
@@ -49,6 +51,17 @@ public static class ExtDebug
 		Debug.DrawLine (box.frontTopRight, box.backTopRight, color);
 		Debug.DrawLine (box.frontBottomRight, box.backBottomRight, color);
 		Debug.DrawLine (box.frontBottomLeft, box.backBottomLeft, color);
+	}
+
+	public static void PrintList<T> (List<T> list)
+	{
+		StringBuilder sb = new StringBuilder ();
+		foreach (T element in list)
+		{
+			sb.Append (element.ToString () + '\n');
+		}
+
+		Debug.Log (sb.ToString ());
 	}
 
 	public struct Box
