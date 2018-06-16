@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent (typeof (Entity))]
-public class Health : Photon.MonoBehaviour, IDestroyable
+public class Health : Photon.MonoBehaviour
 {
 	public int maxHealth;
 

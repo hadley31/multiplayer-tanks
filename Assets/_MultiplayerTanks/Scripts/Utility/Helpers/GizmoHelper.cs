@@ -5,7 +5,6 @@ using UnityEngine;
 [System.Serializable]
 public abstract class GizmoHelper : MonoBehaviour
 {
-
 	protected virtual void OnEnable ()
 	{
 		if ( FindObjectOfType<GizmoHelperManager> () == null )

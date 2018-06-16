@@ -15,11 +15,11 @@ Pressing:
 
 
 
-
 Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
 	- Colliding bullets on non-master clients do not destroy for a good bit
 		-- consider "destroying" on local client and wait for confirmation by server
+	- Projectile Manager sometimes destroys wrong projectile
 
 
 
@@ -27,7 +27,7 @@ Issues:
 
 Ideas:
 	- Gamemodes:
-		-- Suicidal thoughts (new name? (! per Calie's request))
+		-- Save the Mad Tank
 		-- Soccer
 		-- Batte Royale
 		-- One in the chamber

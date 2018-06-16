@@ -4,21 +4,27 @@ using UnityEngine;
 
 public class TankInput : TankBase
 {
+	private const float Tank_Bottom_Height = 0.11f;
+
 	private Plane groundPlane;
 
 	private void Awake ()
 	{
-		groundPlane = new Plane (Vector3.up, Vector3.zero);
+		groundPlane = new Plane (Vector3.up, Vector3.up * Tank_Bottom_Height);
 	}
 
 
 	private void Update ()
 	{
-		if (photonView.isMine == false)
+		if ( photonView.isMine == false )
 		{
 			return;
 		}
 
+		if ( Tank.IsAlive == false )
+		{
+			return;
+		}
 
 		Movement.SetLookTarget (GetLookTarget ());
 		Movement.SetTargetDirection (GetTargetDirection ());

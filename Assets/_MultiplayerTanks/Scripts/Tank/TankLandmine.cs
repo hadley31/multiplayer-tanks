@@ -34,6 +34,11 @@ public class TankLandmine : TankBase
 			return;
 		}
 
+		if ( Tank.IsAlive == false )
+		{
+			return;
+		}
+
 		m_rechargeTimer -= Time.deltaTime;
 
 		if ( Landmines < maxLandmines )
@@ -51,6 +56,11 @@ public class TankLandmine : TankBase
 	public void Use ()
 	{
 		if ( photonView.isMine == false )
+		{
+			return;
+		}
+
+		if ( Tank.IsAlive == false )
 		{
 			return;
 		}

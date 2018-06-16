@@ -17,7 +17,12 @@ public class TankShoot : TankBase
 
 	public void Shoot ()
 	{
-		if (!photonView.isMine)
+		if ( photonView.isMine == false )
+		{
+			return;
+		}
+
+		if ( Tank.IsAlive == false )
 		{
 			return;
 		}
