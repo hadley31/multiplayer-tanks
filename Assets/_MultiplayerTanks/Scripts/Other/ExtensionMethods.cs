@@ -52,19 +52,33 @@ public static class ExtensionMethods
 		}
 	}
 
-	public static void SetTeam (this PhotonPlayer player, int team)
+	public static void SetTeam (this PhotonPlayer player, int teamNumber)
 	{
-		player.SetProperty (PlayerProperty.Team, team);
+		player.SetProperty (PlayerProperty.Team, teamNumber);
 	}
 
-	public static int GetTeam (this PhotonPlayer player)
+	public static Team GetTeam (this PhotonPlayer player)
+	{
+		string name = player.GetTeamName ();
+		int number = player.GetTeamNumber ();
+		Color color = player.GetTeamColor ();
+
+		return new Team (name, number, color);
+	}
+
+	public static int GetTeamNumber (this PhotonPlayer player)
 	{
 		return player.GetProperty<int> (PlayerProperty.Team);
 	}
 
+	public static string GetTeamName (this PhotonPlayer player)
+	{
+		return PhotonNetwork.room.GetTeamName (player.GetTeamNumber ());
+	}
+
 	public static Color GetTeamColor (this PhotonPlayer player)
 	{
-		return PhotonNetwork.room.GetTeamColor (player.GetTeam ());
+		return PhotonNetwork.room.GetTeamColor (player.GetTeamNumber ());
 	}
 
 	#region Kills

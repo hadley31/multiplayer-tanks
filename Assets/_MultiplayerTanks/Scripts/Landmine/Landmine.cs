@@ -36,10 +36,15 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 		private set;
 	}
 
-	public Tank Owner
+	public Tank Sender
 	{
 		get;
 		private set;
+	}
+
+	public PhotonPlayer Owner
+	{
+		get { return Sender.Owner; }
 	}
 
 	protected void Start ()
@@ -163,12 +168,10 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 	public void SetID (int id)
 	{
 		this.ID = id;
-
-		SetOwner (PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ());
 	}
 
-	private void SetOwner (Tank tank)
+	public void SetSender (int viewID)
 	{
-		this.Owner = tank;
+		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
 	}
 }

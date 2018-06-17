@@ -5,10 +5,11 @@ using UnityEngine;
 
 public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyableRPC
 {
-	private const float m_interactCooldown = 0.01f;
+	private const float Interaction_Cooldown = 0.01f;
 
-	private float m_interactTimer;
-	private float m_lifeTimer;
+	private float m_InteractTimer;
+	private float m_LifeTimer;
+	private float m_DistanceToNextHit;
 
 	public float LifeTime
 	{
@@ -46,16 +47,15 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		private set;
 	}
 
-	public PhotonPlayer Owner
+	public Tank Sender
 	{
 		get;
 		private set;
 	}
 
-	public Tank Sender
+	public PhotonPlayer Owner
 	{
-		get;
-		private set;
+		get { return Sender.Owner; }
 	}
 
 	public Rigidbody Rigidbody
@@ -85,10 +85,10 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 
 	protected void Update ()
 	{
-		m_interactTimer -= Time.deltaTime;
-		m_lifeTimer -= Time.deltaTime;
+		m_InteractTimer -= Time.deltaTime;
+		m_LifeTimer -= Time.deltaTime;
 
-		if (m_lifeTimer <= 0)
+		if (m_LifeTimer <= 0)
 		{
 			DestroyObject ();
 		}
@@ -96,7 +96,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 
 	protected void OnTriggerEnter (Collider col)
 	{
-		if (m_interactTimer > 0)
+		if (m_InteractTimer > 0)
 			return;
 
 		IProjectileInteractive interaction = col.GetComponent<IProjectileInteractive> ();
@@ -105,7 +105,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 			interaction.OnProjectileInteraction (this);
 		}
 
-		m_interactTimer = m_interactCooldown;
+		m_InteractTimer = Interaction_Cooldown;
 	}
 
 	#endregion
@@ -140,7 +140,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 	public void SetLifeTime (float lifetime)
 	{
 		this.LifeTime = lifetime;
-		this.m_lifeTimer = LifeTime;
+		this.m_LifeTimer = LifeTime;
 	}
 
 	public void SetSpeed (float speed)
@@ -163,21 +163,11 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 	public void SetID (int id)
 	{
 		this.ID = id;
-
-		Tank sender = PhotonView.Find (id & 0xFF)?.GetComponent<Tank> ();
-
-		SetSender (sender);
-	//	SetOwner (sender.Owner); Saying sender is null!
 	}
 
-	private void SetOwner (PhotonPlayer player)
+	public void SetSender (int viewID)
 	{
-		this.Owner = player;
-	}
-
-	private void SetSender (Tank tank)
-	{
-		this.Sender = tank;
+		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
 	}
 
 	public void DestroyObject ()

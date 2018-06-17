@@ -50,13 +50,13 @@ public class ProjectileManager : Photon.MonoBehaviour
 		}
 	}
 	
-	public void SpawnNewRPC (Vector3 position, Vector3 direction, int bounces, int damage, float speed, int id, double createTime)
+	public void SpawnNewRPC (Vector3 position, Vector3 direction, int bounces, int damage, float speed, int viewID, int id, double createTime)
 	{
-		photonView.RPC ("SpawnNew", PhotonTargets.All, position, direction, bounces, damage, speed, id, createTime);
+		photonView.RPC ("SpawnNew", PhotonTargets.All, position, direction, bounces, damage, speed, viewID, id, createTime);
 	}
 
 	[PunRPC]
-	public void SpawnNew (Vector3 position, Vector3 direction, int bounces, int damage, float speed, int id, double createTime)
+	public void SpawnNew (Vector3 position, Vector3 direction, int bounces, int damage, float speed, int viewID, int id, double createTime)
 	{
 		Projectile p = m_Pool.Spawn<Projectile> ();
 
@@ -69,6 +69,7 @@ public class ProjectileManager : Photon.MonoBehaviour
 		p.SetBounces (bounces);
 		p.SetDamage (damage);
 		p.SetLifeTime (20);
+		p.SetSender (viewID);
 		p.SetID (id);
 
 		m_Projectiles.Add (p);

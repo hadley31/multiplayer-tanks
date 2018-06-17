@@ -583,7 +583,7 @@ Prefab:
       objectReference: {fileID: 2100000, guid: 0a8249c78ad60e44a929ba94f7f73c64, type: 2}
     - target: {fileID: 1237983152669834, guid: 8487b214b30b27a4c956a71f0ae7fdf6, type: 2}
       propertyPath: m_Name
-      value: Tank_Passive (1)
+      value: Tank_Passive
       objectReference: {fileID: 0}
     - target: {fileID: 114753622279635764, guid: 8487b214b30b27a4c956a71f0ae7fdf6,
         type: 2}
@@ -3568,7 +3568,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1237983152669834, guid: 8487b214b30b27a4c956a71f0ae7fdf6, type: 2}
       propertyPath: m_Name
-      value: Tank_Passive (2)
+      value: Tank_Passive
       objectReference: {fileID: 0}
     - target: {fileID: 114753622279635764, guid: 8487b214b30b27a4c956a71f0ae7fdf6,
         type: 2}

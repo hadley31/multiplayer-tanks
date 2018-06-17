@@ -19,9 +19,11 @@ public class GameLevelControl : ControlElement
 	{
 		Current = this;
 
-		PhotonNetwork.room.SetTeamColor (0, Color.red + Color.yellow);
-		Player.Local.SetTeam (0);
+		PhotonNetwork.room.SetTeamName (1, "Blue Team");
+		PhotonNetwork.room.SetTeamColor (1, Color.blue);
+		Player.Local.SetTeam (1);
 
+		print (Player.Local.GetTeam ().ToString ());
 		ExtDebug.PrintList (Player.AllNames);
 
 		SpawnLocalTank ();

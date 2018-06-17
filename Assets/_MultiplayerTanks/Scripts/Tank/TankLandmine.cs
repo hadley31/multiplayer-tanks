@@ -70,9 +70,9 @@ public class TankLandmine : TankBase
 			return;
 		}
 
-		int id = photonView.viewID & ProjectileManager.GetNextID () << 8;
+		int id = LandmineManager.GetNextID ();
 
-		LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, id, PhotonNetwork.time);
+		LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, photonView.viewID, id, PhotonNetwork.time);
 
 		Landmines--;
 		m_rechargeTimer = useCooldown;

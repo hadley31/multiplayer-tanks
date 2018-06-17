@@ -34,7 +34,7 @@ public class TankShoot : TankBase
 
 		int id = ProjectileManager.GetNextID ();
 
-		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, id, PhotonNetwork.time);
+		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, photonView.viewID, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}

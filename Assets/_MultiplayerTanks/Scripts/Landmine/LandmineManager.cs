@@ -45,13 +45,13 @@ public class LandmineManager : Photon.MonoBehaviour
 		}
 	}
 
-	public void SpawnNewRPC (Vector3 position, float fuse, int damage, float radius, int id, double createTime)
+	public void SpawnNewRPC (Vector3 position, float fuse, int damage, float radius, int viewID, int mineID, double createTime)
 	{
-		photonView.RPC ("SpawnNew", PhotonTargets.All, position, fuse, damage, radius, id, createTime);
+		photonView.RPC ("SpawnNew", PhotonTargets.All, position, fuse, damage, radius, viewID, mineID, createTime);
 	}
 
 	[PunRPC]
-	public void SpawnNew (Vector3 position, float fuse, int damage, float radius, int id, double createTime)
+	public void SpawnNew (Vector3 position, float fuse, int damage, float radius, int viewID, int mineID, double createTime)
 	{
 		Landmine landmine = m_Pool.Spawn<Landmine> ();
 
@@ -62,7 +62,8 @@ public class LandmineManager : Photon.MonoBehaviour
 		landmine.SetDamage (damage);
 		landmine.SetFuse (fuse);
 		landmine.SetRadius (radius);
-		landmine.SetID (id);
+		landmine.SetSender (viewID);
+		landmine.SetID (mineID);
 
 		m_Landmines.Add (landmine);
 	}
