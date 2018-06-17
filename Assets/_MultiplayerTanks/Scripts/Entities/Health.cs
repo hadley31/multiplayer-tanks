@@ -7,8 +7,7 @@ using UnityEngine.Events;
 public class Health : Photon.MonoBehaviour
 {
 	public int maxHealth;
-
-	[Space (10)]
+	
 	public UnityEvent onHealthChanged;
 	public UnityEvent onDie;
 
@@ -39,7 +38,10 @@ public class Health : Photon.MonoBehaviour
 
 	public void SetRPC (int value)
 	{
-		photonView.RPC ("Set", PhotonTargets.AllBuffered, value);
+		if (PhotonNetwork.isMasterClient)
+		{
+			photonView.RPC ("Set", PhotonTargets.AllBuffered, value);
+		}
 	}
 
 	[PunRPC]

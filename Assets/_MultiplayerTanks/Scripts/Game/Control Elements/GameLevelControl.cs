@@ -20,7 +20,7 @@ public class GameLevelControl : ControlElement
 		Current = this;
 
 		PhotonNetwork.room.SetTeamName (1, "Blue Team");
-		PhotonNetwork.room.SetTeamColor (1, Color.blue);
+	//	PhotonNetwork.room.SetTeamColor (1, Color.blue);
 		Player.Local.SetTeam (1);
 
 		print (Player.Local.GetTeam ().ToString ());

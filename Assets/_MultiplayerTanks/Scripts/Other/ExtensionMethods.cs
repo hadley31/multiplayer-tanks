@@ -6,6 +6,11 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public static class ExtensionMethods
 {
+	private static Vector3 Default_Tank_Color
+	{
+		get { return new Vector3 (0.85f, 0.85f, 0.85f); }
+	}
+
 	#region Transform
 
 	public static void DestroyChildren (this Transform t)
@@ -165,7 +170,7 @@ public static class ExtensionMethods
 
 	public static Color GetTeamColor (this Room room, int team)
 	{
-		return room.GetProperty<Vector3> (RoomProperty.Team_Color + team).ToColor ();
+		return room.GetProperty (RoomProperty.Team_Color + team, Default_Tank_Color).ToColor ();
 	}
 
 	#endregion
