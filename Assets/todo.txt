@@ -1,4 +1,6 @@
 Todo:
+	- Create New Tank Model
+	- Reorganize Models, Materials, Textures
 	- Add sounds
 		-- Bullet-Wall
 		-- Tank explode
@@ -17,9 +19,7 @@ Pressing:
 
 Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
-	- Colliding bullets on non-master clients do not destroy for a good bit
-		-- consider "destroying" on local client and wait for confirmation by server
-	- Projectile Manager sometimes destroys wrong projectile
+	- Projectile Manager needs better ID distribution system
 
 
 
@@ -27,7 +27,7 @@ Issues:
 
 Ideas:
 	- Gamemodes:
-		-- Save the Mad Tank
+		-- Save the Tank
 		-- Soccer
 		-- Batte Royale
 		-- One in the chamber

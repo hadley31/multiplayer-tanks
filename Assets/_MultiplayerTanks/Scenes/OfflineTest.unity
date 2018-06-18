@@ -1242,8 +1242,8 @@ GameObject:
   - component: {fileID: 1807963472}
   - component: {fileID: 1807963471}
   - component: {fileID: 1807963470}
-  m_Layer: 0
-  m_Name: Cube
+  m_Layer: 17
+  m_Name: Trigger Hurt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
