@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class OfflineMode : MonoBehaviour
 {
-	public bool onlyIfNotConnected = true;
 	public bool createRoomOnAwake = true;
 
 	private void Awake ()

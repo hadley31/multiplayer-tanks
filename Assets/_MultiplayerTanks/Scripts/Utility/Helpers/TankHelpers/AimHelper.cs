@@ -46,9 +46,5 @@ public class AimHelper : GizmoHelper
 				Gizmos.DrawLine (points[i - 1], points[i]);
 			}
 		}
-        else
-        {
-            enabled = false;
-        }
 	}
 }

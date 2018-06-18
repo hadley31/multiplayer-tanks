@@ -57,4 +57,7 @@ MonoBehaviour:
   - SetActiveGamemode
   - SetColor
   - Spawn
+  - SetMaxValue
+  - SetValue
+  - SetValueToMax
   DisableAutoOpenWizard: 1

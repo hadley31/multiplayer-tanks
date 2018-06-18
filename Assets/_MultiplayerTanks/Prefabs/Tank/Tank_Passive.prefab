@@ -51,6 +51,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4303712584103684}
+  - component: {fileID: 114472266499640540}
   - component: {fileID: 114022908413008488}
   - component: {fileID: 114160490716848130}
   - component: {fileID: 114392977336755618}
@@ -420,6 +421,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 114780562718699570}
+        m_MethodName: SetValueToMaxRPC
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onDestroy:
@@ -447,6 +459,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114022908413008488}
+        m_MethodName: Respawn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114043867496659194
@@ -467,6 +490,7 @@ MonoBehaviour:
   landmineRechargeCooldown: 20
   fuse: 8
   damage: 1000
+  health: 1
   radius: 2
 --- !u!114 &114102421309663414
 MonoBehaviour:
@@ -474,7 +498,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1237983152669834}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba9b9c5650ecf104db42f1d3e8380393, type: 3}
   m_Name: 
@@ -482,7 +506,7 @@ MonoBehaviour:
   barrel: {fileID: 0}
   reflectCount: 1
   castRadius: 0.075
-  helperColor: {r: 0, g: 1, b: 0, a: 1}
+  helperColor: {r: 0.8018868, g: 0, b: 0.01620558, a: 1}
 --- !u!114 &114157310382591278
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -509,6 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2f21b05171cc9743ba9047a064a2b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveRandomness: 10
   lookSpeed: 270
 --- !u!114 &114392977336755618
 MonoBehaviour:
@@ -529,6 +554,17 @@ MonoBehaviour:
   maxBoost: 1
   boostUseSpeed: 3
   boostRegainSpeed: 0.2
+--- !u!114 &114472266499640540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1237983152669834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2446834529c0a544eb7904d6e82baf31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114753622279635764
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -566,7 +602,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d862d0c8e3c3f74696f23ec449d20a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  m_MaxHealth: 100
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -603,9 +639,10 @@ MonoBehaviour:
     type: 2}
   spawnPoint: {fileID: 4998847772345826}
   fireRate: 0.7
-  projectileBounces: 2
-  projectileDamage: 50
-  projectileSpeed: 6
+  bounces: 1
+  damage: 100
+  health: 1
+  speed: 5
 --- !u!114 &114904901883161542
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -617,7 +654,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c6b2e9bc53086f42923f64a138621ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Color: {r: 0.8584906, g: 0.028346404, b: 0.028346404, a: 1}
+  m_Color: {r: 0.85882354, g: 0.06771657, b: 0.027450979, a: 1}
+  onColorChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onShow:
     m_PersistentCalls:
       m_Calls: []

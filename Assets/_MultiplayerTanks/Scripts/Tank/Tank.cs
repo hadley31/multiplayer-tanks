@@ -55,7 +55,15 @@ public class Tank : TankBase, IProjectileInteractive
 			LastProjectileOwner = p.Owner;
 		}
 
-		p.DestroyObjectRPC ();
+		p.DestroyRPC ();
+	}
+
+	[PunRPC]
+	public void Spawn ()
+	{
+		IsAlive = true;
+
+		onSpawn.Invoke ();
 	}
 
 	public void SpawnRPC ()
@@ -68,12 +76,22 @@ public class Tank : TankBase, IProjectileInteractive
 		photonView.RPC ("Spawn", PhotonTargets.All);
 	}
 
-	[PunRPC]
-	public void Spawn ()
+	public void Respawn (int delay = 0)
 	{
-		IsAlive = true;
+		if ( photonView.isMine == false || IsAlive )
+		{
+			return;
+		}
 
-		onSpawn.Invoke ();
+		Invoke ("SpawnRPC", delay);
+	}
+
+	[PunRPC]
+	public void Destroy ()
+	{
+		IsAlive = false;
+
+		onDestroy.Invoke ();
 	}
 
 	public void DestroyRPC ()
@@ -84,18 +102,5 @@ public class Tank : TankBase, IProjectileInteractive
 		}
 
 		photonView.RPC ("Destroy", PhotonTargets.All);
-	}
-
-	[PunRPC]
-	public void Destroy ()
-	{
-		IsAlive = false;
-
-		onDestroy.Invoke ();
-
-		if ( photonView.isMine )
-		{
-			Invoke ("SpawnRPC", 5);
-		}
 	}
 }

@@ -9,8 +9,11 @@ public class TankLandmine : TankBase
 	public float useCooldown = 5;
 	public float landmineRechargeCooldown = 20;
 
+	[Space (10)]
+	[Header ("Landmine Info")]
 	public float fuse = 8;
 	public int damage = 1000;
+	public int health = 1;
 	public float radius = 2;
 
 	public int Landmines
@@ -72,7 +75,7 @@ public class TankLandmine : TankBase
 
 		int id = LandmineManager.GetNextID ();
 
-		LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, radius, photonView.viewID, id, PhotonNetwork.time);
+		LandmineManager.Instance.SpawnNewRPC (transform.position, fuse, damage, health, radius, photonView.viewID, id, PhotonNetwork.time);
 
 		Landmines--;
 		m_rechargeTimer = useCooldown;

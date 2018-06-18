@@ -37,15 +37,15 @@ public class UserAliasInput : MonoBehaviour
 		}
 		else if ( alias == "AsDfGhJkL;" )
 		{
-			Player.Name = "BiplaneDuck";
+			Player.LocalName = "BiplaneDuck";
 		}
 		else if ( Regex.IsMatch (alias.ToUpper (), BIPLANE_REGEX) )
 		{
-			Player.Name = "Asshat";
+			Player.LocalName = "Asshat";
 		}
 		else
 		{
-			Player.Name = alias;
+			Player.LocalName = alias;
 		}
 
 		m_Alias = alias;
@@ -66,7 +66,7 @@ public class UserAliasInput : MonoBehaviour
 
 	private string GetCurrentName ()
 	{
-		return string.IsNullOrWhiteSpace (Player.Name) ? GetRandomName () : Player.Name;
+		return string.IsNullOrWhiteSpace (Player.LocalName) ? GetRandomName () : Player.LocalName;
 	}
 
 	private string GetRandomName ()

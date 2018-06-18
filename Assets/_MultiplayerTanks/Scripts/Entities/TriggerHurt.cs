@@ -7,49 +7,55 @@ public class TriggerHurt : Trigger
 	public int damage = 0;
 	public float hurtInterval = 1;
 
-	protected float hurtTimer = 0;
-	protected List<Health> hurtList;
+	protected float m_HurtTimer = 0;
+	protected List<Health> m_HurtList;
 
 	protected override void OnTriggerEnterEnt (Entity ent)
 	{
-		base.OnTriggerEnterEnt (ent);
 		Add (ent.GetComponent<Health> ());
+		base.OnTriggerEnterEnt (ent);
 	}
 
 	protected override void OnTriggerStayEnt (Entity ent)
 	{
-		if (hurtList != null && hurtList.Count > 0)
+		if ( m_HurtList != null && m_HurtList.Count > 0 )
 		{
-			hurtTimer += Time.deltaTime;
-			if (hurtTimer >= hurtInterval)
+			m_HurtTimer += Time.deltaTime;
+			if ( m_HurtTimer >= hurtInterval )
 			{
-				foreach (Health h in hurtList)
+				for ( int i = m_HurtList.Count - 1; i >= 0; i-- )
 				{
-					if (h != null)
-						h.Decrease (damage);
+					Health h = m_HurtList[i];
+					if ( h != null )
+						h.DecreaseRPC (damage);
 				}
+				m_HurtTimer = 0;
 			}
 		}
 	}
 
 	protected override void OnTriggerExitEnt (Entity ent)
 	{
-		base.OnTriggerEnterEnt (ent);
 		Remove (ent.GetComponent<Health> ());
+		base.OnTriggerEnterEnt (ent);
 	}
 
 	protected virtual void Add (Health h)
 	{
-		if (h != null) {
-			if (hurtList == null)
-				hurtList = new List<Health> ();
+		if ( h != null )
+		{
+			if ( m_HurtList == null )
+				m_HurtList = new List<Health> ();
 
-			hurtList.Add (h);
+			if ( m_HurtList.Contains (h) == false )
+			{
+				m_HurtList.Add (h);
+			}
 		}
 	}
 
 	protected virtual void Remove (Health h)
 	{
-		hurtList?.Remove (h);
+		m_HurtList?.RemoveAll (x => x == h);
 	}
 }

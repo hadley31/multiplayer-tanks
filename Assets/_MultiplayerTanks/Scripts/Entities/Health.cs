@@ -6,14 +6,21 @@ using UnityEngine.Events;
 [RequireComponent (typeof (Entity))]
 public class Health : Photon.MonoBehaviour
 {
-	public int maxHealth;
+	[SerializeField]
+	private int m_MaxHealth;
 	
-	public UnityEvent onHealthChanged;
+	public IntUnityEvent onHealthChanged;
 	public UnityEvent onDie;
 
 	protected int m_health;
 
-	public int Value
+	public virtual int Max
+	{
+		get { return m_MaxHealth; }
+		set { m_MaxHealth = value; }
+	}
+
+	public virtual int Value
 	{
 		get
 		{
@@ -21,8 +28,8 @@ public class Health : Photon.MonoBehaviour
 		}
 		private set
 		{
-			m_health = Mathf.Clamp (value, 0, maxHealth);
-			onHealthChanged.Invoke ();
+			m_health = Mathf.Clamp (value, 0, m_MaxHealth);
+			onHealthChanged.Invoke (m_health);
 			if ( m_health <= 0 )
 			{
 				Die ();
@@ -30,58 +37,86 @@ public class Health : Photon.MonoBehaviour
 		}
 	}
 
+	protected virtual void Start ()
+	{
+		SetValueToMax ();
+	}
+
 	[PunRPC]
-	public void Set (int value)
+	public virtual void SetValue (int value)
 	{
 		Value = value;
 	}
 
-	public void SetRPC (int value)
-	{
-		if (PhotonNetwork.isMasterClient)
-		{
-			photonView.RPC ("Set", PhotonTargets.AllBuffered, value);
-		}
-	}
-
-	[PunRPC]
-	public void Decrease (int amount)
-	{
-		Set (Value - amount);
-	}
-
-	public void DecreaseRPC (int amount)
+	public virtual void SetValueRPC (int value)
 	{
 		if ( PhotonNetwork.isMasterClient == false )
 		{
 			return;
 		}
 
-		SetRPC (Value - amount);
+		photonView.RPC ("SetValue", PhotonTargets.AllBuffered, value);
 	}
 
 	[PunRPC]
-	public void SetToMax ()
+	public virtual void Decrease (int amount)
 	{
-		Set (maxHealth);
+		SetValue (Value - amount);
 	}
 
-	public void SetToMaxRPC ()
+	public virtual void DecreaseRPC (int amount)
 	{
 		if ( PhotonNetwork.isMasterClient == false )
 		{
 			return;
 		}
 
-		photonView.RPC ("SetToMax", PhotonTargets.AllBuffered);
+		SetValueRPC (Value - amount);
 	}
 
-	private void Die ()
+	[PunRPC]
+	public virtual void SetValueToMax ()
+	{
+		SetValue (m_MaxHealth);
+	}
+
+	public virtual void SetValueToMaxRPC ()
+	{
+		if ( PhotonNetwork.isMasterClient == false )
+		{
+			return;
+		}
+
+		photonView.RPC ("SetValueToMax", PhotonTargets.AllBuffered);
+	}
+
+	[PunRPC]
+	public virtual void SetMaxValue (int maxValue, bool setValueToMax = false)
+	{
+		Max = maxValue;
+
+		if (setValueToMax)
+		{
+			Value = Max;
+		}
+	}
+
+	public virtual void SetMaxValueRPC (int maxValue, bool setValueToMax = false)
+	{
+		if ( PhotonNetwork.isMasterClient == false )
+		{
+			return;
+		}
+
+		photonView.RPC ("SetMaxValue", PhotonTargets.All, maxValue, setValueToMax);
+	}
+
+	protected virtual void Die ()
 	{
 		onDie.Invoke ();
 	}
 
-	public void DestroyObject ()
+	public virtual void Destroy ()
 	{
 		Destroy (gameObject);
 	}

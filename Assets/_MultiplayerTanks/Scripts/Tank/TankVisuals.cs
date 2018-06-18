@@ -9,7 +9,7 @@ public class TankVisuals : TankBase
 	[SerializeField]
 	private Color m_Color = Color.black;
 
-	public UnityEvent onColorChanged;
+	public ColorUnityEvent onColorChanged;
 	public UnityEvent onShow;
 	public UnityEvent onHide;
 
@@ -53,11 +53,6 @@ public class TankVisuals : TankBase
 
 	public void SetVisible (bool value)
 	{
-		if ( IsVisible == value )
-		{
-			return;
-		}
-
 		if ( IsVisible = value )
 		{
 			Show ();
@@ -100,12 +95,17 @@ public class TankVisuals : TankBase
 
 	public void SetColor (Color color)
 	{
+		if (m_Color == color)
+		{
+			return;
+		}
+
 		this.m_Color = color;
 
 		TopVisual.material.color = m_Color;
 		BottomVisual.material.color = m_Color;
 
-		onColorChanged.Invoke ();
+		onColorChanged.Invoke (m_Color);
 	}
 
 	[PunRPC]
@@ -118,7 +118,7 @@ public class TankVisuals : TankBase
 	{
 		if (PhotonNetwork.inRoom)
 		{
-			SetColorRPC (Player.Local.GetTeamColor ());
+			SetColorRPC (Player.Local.Photon.GetTeamColor ());
 		}
 	}
 }

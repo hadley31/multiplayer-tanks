@@ -2,66 +2,115 @@
 using System.Linq;
 using UnityEngine;
 
-public static class Player
+public class Player
 {
-	public static string Name
+	#region Statics
+
+	public static Player Local
+	{
+		get { return new Player (PhotonNetwork.player); }
+	}
+
+	public static List<Player> All
+	{
+		get { return PhotonNetwork.playerList.Select (x => new Player (x)).ToList (); }
+	}
+
+	public static List<Player> Others
+	{
+		get { return PhotonNetwork.otherPlayers.Select (x => new Player (x)).ToList (); }
+	}
+
+	public static string LocalName
 	{
 		get { return PhotonNetwork.playerName; }
 		set { PhotonNetwork.playerName = value; }
 	}
 
-	public static PhotonPlayer Local
+	public static List<string> AllNames
 	{
-		get { return PhotonNetwork.player; }
-	}
-
-	public static List<PhotonPlayer> All
-	{
-		get { return PhotonNetwork.playerList.ToList (); }
-	}
-
-	public static List<PhotonPlayer> Others
-	{
-		get { return PhotonNetwork.otherPlayers.ToList (); }
+		get { return All.Select (x => x.Name).ToList (); }
 	}
 
 	public static List<string> OtherNames
 	{
-		get { return Others.Select (x => x.NickName).ToList (); }
+		get { return Others.Select (x => x.Name).ToList (); }
 	}
 
-	public static List<string> AllNames
+	public static Player Find (int id)
 	{
-		get { return All.Select (x => x.NickName).ToList (); }
+		return new Player (PhotonPlayer.Find (id));
 	}
 
-	public static PhotonPlayer Find (int id)
+	public static Player Find (string name)
 	{
-		return PhotonPlayer.Find (id);
+		return All.Find (x => x.Name == name);
 	}
 
-	public static PhotonPlayer Find (string name)
-	{
-		return All.Find (x => x.NickName == name);
-	}
-
-	public static PhotonPlayer Find (System.Predicate<PhotonPlayer> predicate)
+	public static Player Find (System.Predicate<Player> predicate)
 	{
 		return All.Find (predicate);
 	}
 
-	public static List<PhotonPlayer> FindAll (System.Predicate<PhotonPlayer> predicate)
+	public static List<Player> FindAll (System.Predicate<Player> predicate)
 	{
 		return All.FindAll (predicate);
 	}
 
-	public static PhotonPlayer FindInOthers (System.Predicate<PhotonPlayer> predicate)
+	public static Player FindInOthers (System.Predicate<Player> predicate)
 	{
 		return Others.Find (predicate);
 	}
 
-	public static List<PhotonPlayer> FindAllInOthers (System.Predicate<PhotonPlayer> predicate)
+	public static List<Player> FindAllInOthers (System.Predicate<Player> predicate)
 	{
 		return Others.FindAll (predicate);
+	}
+
+	#endregion
+
+	#region Properties
+
+	public PhotonPlayer Photon
+	{
+		get;
+	}
+
+	public string Name
+	{
+		get { return Photon.NickName; }
+	}
+
+	public bool IsLocal
+	{
+		get { return Photon.IsLocal; }
+	}
+
+	public bool IsMasterClient
+	{
+		get { return Photon.IsMasterClient; }
+	}
+
+	public int ID
+	{
+		get { return Photon.ID; }
+	}
+
+	public int Ping
+	{
+		get { return Photon.GetPing (); }
+	}
+
+	public Team Team
+	{
+		get { return Photon.GetTeam (); }
+		set { Photon.SetTeam (value); }
+	}
+
+	#endregion
+
+	public Player (PhotonPlayer photonPlayer)
+	{
+		this.Photon = photonPlayer;
 	}
 }

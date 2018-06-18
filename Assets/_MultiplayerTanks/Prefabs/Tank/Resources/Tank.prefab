@@ -273,7 +273,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674659365865050}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4557420026592182}
@@ -536,7 +536,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 114357885377584908}
-        m_MethodName: SetToMaxRPC
+        m_MethodName: SetValueToMaxRPC
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -573,6 +573,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 114295742659909230}
+        m_MethodName: Respawn
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114326414294758354
@@ -605,7 +616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d862d0c8e3c3f74696f23ec449d20a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  m_MaxHealth: 100
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -851,9 +862,10 @@ MonoBehaviour:
     type: 2}
   spawnPoint: {fileID: 4463067625149264}
   fireRate: 0.018
-  projectileBounces: 1
-  projectileDamage: 100
-  projectileSpeed: 5
+  bounces: 1
+  damage: 100
+  health: 1
+  speed: 5
 --- !u!114 &114990592527650200
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -872,6 +884,7 @@ MonoBehaviour:
   landmineRechargeCooldown: 20
   fuse: 8
   damage: 1000
+  health: 1
   radius: 2
 --- !u!222 &222833843336866384
 CanvasRenderer:

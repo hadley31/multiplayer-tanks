@@ -6,23 +6,27 @@ using UnityEngine.Events;
 [RequireComponent(typeof (Rigidbody)), RequireComponent (typeof (BoxCollider))]
 public class Trigger : Photon.MonoBehaviour
 {
+	public bool fireOnce = false;
+
 	public UnityEvent onTriggerEnter;
 	public UnityEvent onTriggerStay;
 	public UnityEvent onTriggerExit;
 
-	protected new Collider collider;
-	protected new Rigidbody rigidbody;
+	protected bool m_Fired = false;
+
+	protected Collider m_Collider;
+	protected Rigidbody m_Rigidbody;
 
 	#region Monobehaviours
 
 	protected void Awake ()
 	{
-		collider = GetComponent<Collider> ();
-		rigidbody = GetComponent<Rigidbody> ();
+		m_Collider = GetComponent<Collider> ();
+		m_Rigidbody = GetComponent<Rigidbody> ();
 
-		collider.isTrigger = true;
-		rigidbody.isKinematic = true;
-		rigidbody.useGravity = false;
+		m_Collider.isTrigger = true;
+		m_Rigidbody.isKinematic = true;
+		m_Rigidbody.useGravity = false;
 	}
 
 	protected void OnTriggerEnter (Collider other)
@@ -71,25 +75,16 @@ public class Trigger : Photon.MonoBehaviour
 
 	protected virtual void InvokeOnTriggerEnter ()
 	{
-		if (onTriggerEnter != null)
-		{
-			onTriggerEnter.Invoke ();
-		}
+		onTriggerEnter.Invoke ();
 	}
 
 	protected virtual void InvokeOnTriggerStay ()
 	{
-		if (onTriggerStay != null)
-		{
-			onTriggerStay.Invoke ();
-		}
+		onTriggerStay.Invoke ();
 	}
 
 	protected virtual void InvokeOnTriggerExit ()
 	{
-		if (onTriggerExit != null)
-		{
-			onTriggerExit.Invoke ();
-		}
+		onTriggerExit.Invoke ();
 	}
 }

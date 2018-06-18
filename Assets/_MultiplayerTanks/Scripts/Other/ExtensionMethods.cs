@@ -41,6 +41,12 @@ public static class ExtensionMethods
 
 	public static void SetProperty (this PhotonPlayer player, string key, object obj)
 	{
+		if ( player.IsLocal == false && PhotonNetwork.isMasterClient == false )
+		{
+			Debug.LogWarning ($"Attempting to set a player property ({key}) when you are not the master client nor the local player!");
+			return;
+		}
+
 		player.SetCustomProperties (new Hashtable () { { key, obj } });
 	}
 
@@ -57,6 +63,22 @@ public static class ExtensionMethods
 		}
 	}
 
+	#region Ping
+
+	public static void UpdatePing (this PhotonPlayer player)
+	{
+		player.SetProperty (PlayerProperty.Ping, PhotonNetwork.GetPing ());
+	}
+
+	public static int GetPing (this PhotonPlayer player)
+	{
+		return player.GetProperty<int> (PlayerProperty.Ping);
+	}
+
+	#endregion
+
+	#region Team
+
 	public static void SetTeam (this PhotonPlayer player, int teamNumber)
 	{
 		player.SetProperty (PlayerProperty.Team, teamNumber);
@@ -64,11 +86,7 @@ public static class ExtensionMethods
 
 	public static Team GetTeam (this PhotonPlayer player)
 	{
-		string name = player.GetTeamName ();
-		int number = player.GetTeamNumber ();
-		Color color = player.GetTeamColor ();
-
-		return new Team (name, number, color);
+		return Team.Get (player.GetTeamNumber ());
 	}
 
 	public static int GetTeamNumber (this PhotonPlayer player)
@@ -85,6 +103,8 @@ public static class ExtensionMethods
 	{
 		return PhotonNetwork.room.GetTeamColor (player.GetTeamNumber ());
 	}
+
+	#endregion
 
 	#region Kills
 
@@ -130,6 +150,12 @@ public static class ExtensionMethods
 
 	public static void SetProperty (this Room room, string key, object obj)
 	{
+		if ( PhotonNetwork.isMasterClient == false )
+		{
+			Debug.LogWarning ($"Attempting to set a room property ({key}) when you are not the master client!");
+			return;
+		}
+
 		room.SetCustomProperties (new Hashtable () { { key, obj } });
 	}
 
@@ -143,13 +169,48 @@ public static class ExtensionMethods
 		return defaultValue;
 	}
 
+	public static T GetProperty<T> (this RoomInfo room, string key, T defaultValue = default (T))
+	{
+		object obj;
+		if ( room.CustomProperties.TryGetValue (key, out obj) && obj is T )
+		{
+			return (T) obj;
+		}
+		return defaultValue;
+	}
+
+	#region Map
+
+	public static void SetMap (this Room room, string map)
+	{
+		room.SetProperty (RoomProperty.Map, map);
+	}
+
+	public static string GetMap (this Room room)
+	{
+		return room.GetProperty (RoomProperty.Map, string.Empty);
+	}
+
+	#endregion
+
+	#region Gamemode
+
+	public static void SetGamemode (this Room room, string gamemode)
+	{
+		room.SetProperty (RoomProperty.Gamemode, gamemode);
+	}
+
+	public static string GetGamemode (this Room room)
+	{
+		return room.GetProperty (RoomProperty.Gamemode, string.Empty);
+	}
+
+	#endregion
+
+	#region Team
+
 	public static void SetTeamName (this Room room, int team, string name)
 	{
-		if (!PhotonNetwork.isMasterClient)
-		{
-			Debug.LogWarning ("Attempting to change a team name when you are not the Master Client!");
-			return;
-		}
 		room.SetProperty (RoomProperty.Team_Name + team, name);
 	}
 
@@ -158,13 +219,18 @@ public static class ExtensionMethods
 		return room.GetProperty<string> (RoomProperty.Team_Name + team);
 	}
 
+	public static void SetTeamSize (this Room room, int size)
+	{
+		room.SetProperty (RoomProperty.Team_MaxSize, size);
+	}
+
+	public static int GetTeamSize (this Room room)
+	{
+		return room.GetProperty<int> (RoomProperty.Team_MaxSize);
+	}
+
 	public static void SetTeamColor (this Room room, int team, Color color)
 	{
-		if ( !PhotonNetwork.isMasterClient )
-		{
-			Debug.LogWarning ("Attempting to change a team color when you are not the Master Client!");
-			return;
-		}
 		room.SetProperty (RoomProperty.Team_Color + team, color.ToVector ());
 	}
 
@@ -172,6 +238,8 @@ public static class ExtensionMethods
 	{
 		return room.GetProperty (RoomProperty.Team_Color + team, Default_Tank_Color).ToColor ();
 	}
+
+	#endregion
 
 	#endregion
 }

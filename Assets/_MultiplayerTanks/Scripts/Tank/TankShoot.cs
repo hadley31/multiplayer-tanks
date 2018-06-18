@@ -8,9 +8,12 @@ public class TankShoot : TankBase
 	public Transform spawnPoint;
 	public float fireRate = 0.018f;
 
-	public int projectileBounces = 1;
-	public int projectileDamage = 100;
-	public float projectileSpeed = 5;
+	[Space (10)]
+	[Header ("Projectile Info")]
+	public int bounces = 1;
+	public int damage = 100;
+	public int health = 1;
+	public float speed = 5;
 
 
 	private float m_LastShootTime = 0;
@@ -34,7 +37,7 @@ public class TankShoot : TankBase
 
 		int id = ProjectileManager.GetNextID ();
 
-		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, projectileBounces, projectileDamage, projectileSpeed, photonView.viewID, id, PhotonNetwork.time);
+		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, bounces, damage, health, speed, photonView.viewID, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}

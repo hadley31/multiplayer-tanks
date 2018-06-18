@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestructibleWall : Wall, IDestroyable
+[RequireComponent (typeof (Health))]
+public class DestructibleWall : Wall
 {
-	public void DestroyObject ()
+	public void Destroy ()
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
 			PhotonNetwork.Destroy (gameObject);
 		}
+
+		
 	}
 }

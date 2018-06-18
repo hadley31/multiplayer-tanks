@@ -3,14 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyable
+[RequireComponent (typeof (LandmineHealth))]
+public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 {
-//	public GameObject explosion;
+	// public GameObject explosion;
 
-	protected Material material;
-	protected float fuseTimer;
-	protected float colorSwitchTime, colorSwitchTimer;
-	protected bool isColoredRed;
+	#region Private Fields
+
+	private Material m_Material;
+	private float m_FuseTimer;
+	private float m_ColorSwitchTime, m_ColorSwitchTimer;
+	private bool m_IsColoredRed;
+	private bool m_HasExploded;
+
+	#endregion
+
+	#region Properties
 
 	public int Damage
 	{
@@ -47,103 +55,87 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 		get { return Sender.Owner; }
 	}
 
-	protected void Start ()
+	public LandmineHealth Health
 	{
-		this.fuseTimer = Fuse;
-		this.material = GetComponent<Renderer> ().material;
+		get;
+		private set;
 	}
 
-	protected void Update ()
+	#endregion
+
+	#region Monobehaviours
+
+	private void Awake ()
 	{
-		fuseTimer -= Time.deltaTime;
-		colorSwitchTimer -= Time.deltaTime;
+		this.m_Material = GetComponentInChildren<Renderer> ().material;
+		this.Health = GetComponent<LandmineHealth> ();
+	}
 
-		if ( colorSwitchTimer <= 0 )
+	private void Update ()
+	{
+		m_FuseTimer -= Time.deltaTime;
+		m_ColorSwitchTimer -= Time.deltaTime;
+
+		if ( m_ColorSwitchTimer <= 0 )
 		{
-			isColoredRed = !isColoredRed;
-			material.color = isColoredRed ? Color.red : Color.yellow;
+			m_IsColoredRed = !m_IsColoredRed;
+			m_Material.color = m_IsColoredRed ? Color.red : Color.yellow;
 
-			colorSwitchTime = fuseTimer / 10;
-			colorSwitchTimer = colorSwitchTime;
+			m_ColorSwitchTime = m_FuseTimer / 10;
+			m_ColorSwitchTimer = m_ColorSwitchTime;
 		}
 
-		if ( fuseTimer <= 0 )
+		if ( m_FuseTimer <= 0 )
 		{
 			Explode ();
 		}
 	}
+
+	#endregion
 
 	public void OnProjectileInteraction (Projectile p)
 	{
-		if (NetworkManager.OfflineMode)
+		if (PhotonNetwork.isMasterClient)
 		{
-			// Destroy the landmine
-			Explode ();
-
-			// Destroy the projectile
-			p.DestroyObject ();
-		}
-		else if (PhotonNetwork.isMasterClient)
-		{
-			Explode ();
-			p.DestroyObjectRPC ();
-		}
-		else
-		{
-			p.DestroyObject ();
+			Explode ();	
 		}
 	}
 
-	private void Explode ()
+	public void Explode ()
 	{
-		if ( NetworkManager.OfflineMode )
+		if ( PhotonNetwork.isMasterClient == false )
 		{
-			Collider[] colliders = Physics.OverlapSphere (transform.position, Radius);
-			foreach ( Collider c in colliders )
+			return;
+		}
+
+		if ( m_HasExploded == true )
+		{
+			return;
+		}
+
+		m_HasExploded = true;
+
+		Collider[] colliders = Physics.OverlapSphere (transform.position, Radius);
+		foreach ( Collider c in colliders )
+		{
+			Health h = c.GetComponent<Health> ();
+
+			if ( h != null )
 			{
-				Health h = c.GetComponent<Health> ();
-
-				if ( h != null)
-				{
-					h.Decrease (Damage);
-					print ("Landmine damaged: " + h.gameObject.name);
-				}
+				h.DecreaseRPC (Damage);
+				print ("Landmine damaged: " + h.gameObject.name);
 			}
-
-			DestroyObject ();
 		}
-		else if ( PhotonNetwork.isMasterClient )
-		{
-			Collider[] colliders = Physics.OverlapSphere (transform.position, Radius);
-			foreach ( Collider c in colliders )
-			{
-				Health h = c.GetComponent<Health> ();
 
-				if ( h != null )
-				{
-					h.DecreaseRPC (Damage);
-					print ("Landmine damaged: " + h.gameObject.name);
-				}
-			}
-
-			DestroyObjectRPC ();
-		}
-	}
-
-	public void DestroyObjectRPC ()
-	{
-		LandmineManager.Instance.DestroyRPC (this.ID);
-	}
-
-	public void DestroyObject ()
-	{
-		LandmineManager.Instance.Destroy (this.ID);
+		DestroyRPC ();
 	}
 
 	private void SpawnExplosion ()
 	{
 		// Spawn explosion
 	}
+
+	#region Property Setters
 
 	public void SetPosition (Vector3 position)
 	{
@@ -153,6 +145,9 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 	public void SetFuse (float time)
 	{
 		this.Fuse = time;
+
+		this.m_FuseTimer = Fuse;
+		this.m_HasExploded = false;
 	}
 
 	public void SetDamage (int damage)
@@ -174,4 +169,20 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive, IDestroyab
 	{
 		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
 	}
+
+	#endregion
+
+	#region Destroy
+
+	public void Destroy ()
+	{
+		LandmineManager.Instance.Destroy (this.ID);
+	}
+
+	public void DestroyRPC ()
+	{
+		LandmineManager.Instance.DestroyRPC (this.ID);
+	}
+
+	#endregion
 }

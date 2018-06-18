@@ -3,13 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroyableRPC
+[RequireComponent (typeof(ProjectileHealth))]
+public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 {
 	private const float Interaction_Cooldown = 0.01f;
 
+	#region Private Fields
+
 	private float m_InteractTimer;
 	private float m_LifeTimer;
-	private float m_DistanceToNextHit;
+	private float m_SqrDistanceToNextHit;
+	private ProjectileHealth m_Health;
+
+	#endregion
+
+	#region Properties
 
 	public float LifeTime
 	{
@@ -47,23 +55,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		private set;
 	}
 
-	public Tank Sender
-	{
-		get;
-		private set;
-	}
-
-	public PhotonPlayer Owner
-	{
-		get { return Sender.Owner; }
-	}
-
-	public Rigidbody Rigidbody
-	{
-		get;
-		private set;
-	}
-
 	public Vector3 Direction
 	{
 		get
@@ -76,11 +67,37 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		}
 	}
 
+	public Tank Sender
+	{
+		get;
+		private set;
+	}
+
+	public PhotonPlayer Owner
+	{
+		get { return Sender?.Owner; }
+	}
+
+	public Rigidbody Rigidbody
+	{
+		get;
+		private set;
+	}
+
+	public ProjectileHealth Health
+	{
+		get;
+		private set;
+	}
+
+	#endregion
+
 	#region Monobehaviors
 
 	protected void Awake ()
 	{
-		Rigidbody = GetComponent<Rigidbody> ();
+		this.Rigidbody = GetComponent<Rigidbody> ();
+		this.Health = GetComponent<ProjectileHealth> ();
 	}
 
 	protected void Update ()
@@ -90,7 +107,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 
 		if (m_LifeTimer <= 0)
 		{
-			DestroyObject ();
+			Destroy ();
 		}
 	}
 
@@ -110,11 +127,16 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 
 	#endregion
 
+	public void OnProjectileInteraction (Projectile p)
+	{
+		DestroyRPC ();
+	}
+
 	public void Bounce (Vector3 normal)
 	{
 		if ( normal == Vector3.zero || Vector3.Dot (normal, Direction) > 0 || Bounces <= 0 )
 		{
-			DestroyObject ();
+			DestroyRPC ();
 			return;
 		}
 
@@ -122,10 +144,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		Bounces--;
 	}
 
-	public void OnProjectileInteraction (Projectile p)
-	{
-		p.DestroyObjectRPC ();
-	}
+	#region Property Setters
 
 	public void SetPosition (Vector3 position)
 	{
@@ -170,13 +189,19 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive, IDestroy
 		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
 	}
 
-	public void DestroyObject ()
+	#endregion
+
+	#region Destroy
+
+	public void Destroy ()
 	{
 		ProjectileManager.Instance.Destroy (this.ID);
 	}
 
-	public void DestroyObjectRPC ()
+	public void DestroyRPC ()
 	{
 		ProjectileManager.Instance.DestroyRPC (this.ID);
 	}
+
+	#endregion
 }

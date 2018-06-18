@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 using Photon;
-using ExitGames.Client.Photon;
+using System.Collections;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class NetworkManager : PunBehaviour
 {
@@ -24,6 +25,7 @@ public class NetworkManager : PunBehaviour
 	}
 
 	public int sendRate = 20;
+	public float pingRefeshRate = 5;
 
 	private void Awake ()
 	{
@@ -105,7 +107,7 @@ public class NetworkManager : PunBehaviour
 
 	private static void OfflineModeChanged (bool value)
 	{
-		if (PhotonNetwork.offlineMode == value)
+		if ( PhotonNetwork.offlineMode == value )
 		{
 			return;
 		}
@@ -114,7 +116,7 @@ public class NetworkManager : PunBehaviour
 
 		Debug.Log (value ? "Offline mode enabled." : "Offline mode disabled.");
 
-		if (OnOfflineModeChanged != null)
+		if ( OnOfflineModeChanged != null )
 		{
 			OnOfflineModeChanged.Invoke ();
 		}
@@ -122,7 +124,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnConnectedToMaster ()
 	{
-		if (OnConnectToMaster != null)
+		if ( OnConnectToMaster != null )
 		{
 			OnConnectToMaster.Invoke ();
 		}
@@ -130,7 +132,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnConnectedToPhoton ()
 	{
-		if (OnConnectToPhoton != null)
+		if ( OnConnectToPhoton != null )
 		{
 			OnConnectToPhoton.Invoke ();
 		}
@@ -138,7 +140,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnDisconnectedFromPhoton ()
 	{
-		if (OnDisconnectFromPhoton != null)
+		if ( OnDisconnectFromPhoton != null )
 		{
 			OnDisconnectFromPhoton.Invoke ();
 		}
@@ -146,7 +148,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnConnectionFail (DisconnectCause cause)
 	{
-		if (OnConnectionFailed != null)
+		if ( OnConnectionFailed != null )
 		{
 			OnConnectionFailed.Invoke (cause);
 		}
@@ -154,7 +156,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnFailedToConnectToPhoton (DisconnectCause cause)
 	{
-		if (OnConnectToPhotonFailed != null)
+		if ( OnConnectToPhotonFailed != null )
 		{
 			OnConnectToPhotonFailed.Invoke (cause);
 		}
@@ -180,7 +182,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnJoinedLobby ()
 	{
-		if (OnJoinLobby != null)
+		if ( OnJoinLobby != null )
 		{
 			OnJoinLobby.Invoke ();
 		}
@@ -188,7 +190,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnLeftLobby ()
 	{
-		if (OnLeaveLobby != null)
+		if ( OnLeaveLobby != null )
 		{
 			OnLeaveLobby.Invoke ();
 		}
@@ -196,7 +198,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnReceivedRoomListUpdate ()
 	{
-		if (OnRoomListUpdate != null)
+		if ( OnRoomListUpdate != null )
 		{
 			OnRoomListUpdate.Invoke ();
 		}
@@ -204,7 +206,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnLobbyStatisticsUpdate ()
 	{
-		if (OnLobbyStatUpdate != null)
+		if ( OnLobbyStatUpdate != null )
 		{
 			OnLobbyStatUpdate.Invoke ();
 		}
@@ -251,7 +253,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnCreatedRoom ()
 	{
-		if (OnRoomCreated != null)
+		if ( OnRoomCreated != null )
 		{
 			OnRoomCreated.Invoke ();
 		}
@@ -259,7 +261,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnPhotonCreateRoomFailed (object[] codeAndMsg)
 	{
-		if (OnCreateRoomFailed != null)
+		if ( OnCreateRoomFailed != null )
 		{
 			OnCreateRoomFailed.Invoke ();
 		}
@@ -267,15 +269,21 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnJoinedRoom ()
 	{
-		if (OnJoinRoom != null)
+		if ( OnJoinRoom != null )
 		{
 			OnJoinRoom.Invoke ();
+		}
+
+		if ( OfflineMode == false )
+		{
+			StopAllCoroutines ();
+			StartCoroutine (UpdatePlayerPing ());
 		}
 	}
 
 	public override void OnPhotonJoinRoomFailed (object[] codeAndMsg)
 	{
-		if (OnJoinRoomFailed != null)
+		if ( OnJoinRoomFailed != null )
 		{
 			OnJoinRoomFailed.Invoke ();
 		}
@@ -283,7 +291,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnPhotonRandomJoinFailed (object[] codeAndMsg)
 	{
-		if (OnJoinRandomRoomFailed != null)
+		if ( OnJoinRandomRoomFailed != null )
 		{
 			OnJoinRandomRoomFailed.Invoke ();
 		}
@@ -291,7 +299,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnLeftRoom ()
 	{
-		if (OnLeaveRoom != null)
+		if ( OnLeaveRoom != null )
 		{
 			OnLeaveRoom.Invoke ();
 		}
@@ -299,7 +307,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnPhotonCustomRoomPropertiesChanged (Hashtable propertiesThatChanged)
 	{
-		if (OnRoomPropertiesChanged != null)
+		if ( OnRoomPropertiesChanged != null )
 		{
 			OnRoomPropertiesChanged.Invoke (propertiesThatChanged);
 		}
@@ -307,7 +315,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnPhotonPlayerConnected (PhotonPlayer newPlayer)
 	{
-		if (OnOtherPlayerConnect != null)
+		if ( OnOtherPlayerConnect != null )
 		{
 			OnOtherPlayerConnect.Invoke (newPlayer);
 		}
@@ -315,7 +323,7 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnPhotonPlayerDisconnected (PhotonPlayer otherPlayer)
 	{
-		if (OnOtherPlayerDisconnect != null)
+		if ( OnOtherPlayerDisconnect != null )
 		{
 			OnOtherPlayerDisconnect.Invoke (otherPlayer);
 		}
@@ -323,11 +331,21 @@ public class NetworkManager : PunBehaviour
 
 	public override void OnMasterClientSwitched (PhotonPlayer newMasterClient)
 	{
-		if (OnNewMasterClient != null)
+		if ( OnNewMasterClient != null )
 		{
 			OnNewMasterClient.Invoke (newMasterClient);
 		}
 	}
 
 	#endregion
+
+	private IEnumerator UpdatePlayerPing ()
+	{
+		while ( PhotonNetwork.inRoom && !PhotonNetwork.offlineMode )
+		{
+			Player.Local.Photon.UpdatePing ();
+
+			yield return new WaitForSeconds (pingRefeshRate);
+		}
+	}
 }
