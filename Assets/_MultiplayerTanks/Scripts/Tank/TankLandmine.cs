@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class TankLandmine : TankBase
 {
+	[Header ("Spawn Info")]
 	public Landmine landminePrefab;
+
+	[Header ("Use Info")]
 	public int maxLandmines = 2;
 	public float useCooldown = 5;
 	public float landmineRechargeCooldown = 20;
 
-	[Space (10)]
 	[Header ("Landmine Info")]
 	public float fuse = 8;
 	public int damage = 1000;

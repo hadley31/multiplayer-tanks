@@ -93,6 +93,7 @@ public class TankMovement : TankBase
 
 		Rotate ();
 		Move ();
+		Look ();
 	}
 
 	protected virtual void UpdateSpeed ()
@@ -138,9 +139,9 @@ public class TankMovement : TankBase
 		TargetDirection = direction;
 	}
 
-	public void SetLookTarget (float target)
+	public void SetLookTarget (float targetAngle)
 	{
-		TargetLook = Quaternion.Euler (0, target, 0);
+		TargetLook = Quaternion.Euler (0, targetAngle, 0);
 	}
 
 	public void SetLookTarget (Vector3 target)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public delegate void EntityDelegate (Entity e);
 
+[System.Serializable]
 public class Entity : Photon.MonoBehaviour
 {
 	private Health m_Health;

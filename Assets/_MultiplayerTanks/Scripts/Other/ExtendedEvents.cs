@@ -17,3 +17,6 @@ public class BoolUnityEvent : UnityEvent<bool> { }
 
 [System.Serializable]
 public class ColorUnityEvent : UnityEvent<Color> { }
+
+[System.Serializable]
+public class EntUnityEvent : UnityEvent<Entity> { }

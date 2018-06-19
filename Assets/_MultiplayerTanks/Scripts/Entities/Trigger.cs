@@ -4,22 +4,18 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof (Rigidbody)), RequireComponent (typeof (BoxCollider))]
-public class Trigger : Photon.MonoBehaviour
+public sealed class Trigger : Photon.MonoBehaviour
 {
-	public bool fireOnce = false;
+	public EntUnityEvent onTriggerEnter;
+	public EntUnityEvent onTriggerStay;
+	public EntUnityEvent onTriggerExit;
 
-	public UnityEvent onTriggerEnter;
-	public UnityEvent onTriggerStay;
-	public UnityEvent onTriggerExit;
-
-	protected bool m_Fired = false;
-
-	protected Collider m_Collider;
-	protected Rigidbody m_Rigidbody;
+	private Collider m_Collider;
+	private Rigidbody m_Rigidbody;
 
 	#region Monobehaviours
 
-	protected void Awake ()
+	private void Awake ()
 	{
 		m_Collider = GetComponent<Collider> ();
 		m_Rigidbody = GetComponent<Rigidbody> ();
@@ -29,62 +25,32 @@ public class Trigger : Photon.MonoBehaviour
 		m_Rigidbody.useGravity = false;
 	}
 
-	protected void OnTriggerEnter (Collider other)
+	private void OnTriggerEnter (Collider other)
 	{
 		Entity ent = other.GetComponent<Entity> ();
 		if (ent != null)
 		{
-			OnTriggerEnterEnt (ent);
+			onTriggerEnter.Invoke (ent);
 		}
 	}
 
-	protected void OnTriggerStay (Collider other)
+	private void OnTriggerStay (Collider other)
 	{
 		Entity ent = other.GetComponent<Entity> ();
 		if (ent != null)
 		{
-			OnTriggerStayEnt (ent);
+			onTriggerStay.Invoke (ent);
 		}
 	}
 
-	protected void OnTriggerExit (Collider other)
+	private void OnTriggerExit (Collider other)
 	{
 		Entity ent = other.GetComponent<Entity> ();
 		if (ent != null)
 		{
-			OnTriggerExitEnt (ent);
+			onTriggerExit.Invoke (ent);
 		}
 	}
 
 	#endregion
-
-	protected virtual void OnTriggerEnterEnt (Entity ent)
-	{
-		InvokeOnTriggerEnter ();
-	}
-
-	protected virtual void OnTriggerStayEnt (Entity ent)
-	{
-		InvokeOnTriggerStay ();
-	}
-
-	protected virtual void OnTriggerExitEnt (Entity ent)
-	{
-		InvokeOnTriggerExit ();
-	}
-
-	protected virtual void InvokeOnTriggerEnter ()
-	{
-		onTriggerEnter.Invoke ();
-	}
-
-	protected virtual void InvokeOnTriggerStay ()
-	{
-		onTriggerStay.Invoke ();
-	}
-
-	protected virtual void InvokeOnTriggerExit ()
-	{
-		onTriggerExit.Invoke ();
-	}
 }

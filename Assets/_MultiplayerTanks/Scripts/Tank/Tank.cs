@@ -78,7 +78,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public void Respawn (int delay = 0)
 	{
-		if ( photonView.isMine == false || IsAlive )
+		if ( photonView.isMine == false || IsAlive == true )
 		{
 			return;
 		}

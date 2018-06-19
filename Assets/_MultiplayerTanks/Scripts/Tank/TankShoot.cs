@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class TankShoot : TankBase
 {
+	[Header ("Spawn Info")]
 	public Projectile projectilePrefab;
 	public Transform spawnPoint;
+
+	[Header ("Use Info")]
 	public float fireRate = 0.018f;
 
-	[Space (10)]
 	[Header ("Projectile Info")]
 	public int bounces = 1;
 	public int damage = 100;

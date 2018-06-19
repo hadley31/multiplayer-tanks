@@ -45,7 +45,7 @@ public class TankVisuals : TankBase
 	private void Awake ()
 	{
 		TopVisual = transform.Find ("Top/Visual").GetComponent<Renderer> ();
-		BottomVisual = transform.Find ("Bottom/Visual").GetComponent<Renderer> ();
+		BottomVisual = transform.Find ("Base/Visual").GetComponent<Renderer> ();
 		BarrelVisual = transform.Find ("Top/Barrel").GetComponent<Renderer> ();
 
 		SetColor (m_Color);
@@ -95,15 +95,15 @@ public class TankVisuals : TankBase
 
 	public void SetColor (Color color)
 	{
+		TopVisual.material.color = color;
+		BottomVisual.material.color = color;
+
 		if (m_Color == color)
 		{
 			return;
 		}
 
 		this.m_Color = color;
-
-		TopVisual.material.color = m_Color;
-		BottomVisual.material.color = m_Color;
 
 		onColorChanged.Invoke (m_Color);
 	}
