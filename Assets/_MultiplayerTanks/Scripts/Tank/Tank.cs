@@ -7,6 +7,12 @@ using UnityEngine.Events;
 [RequireComponent (typeof (Health))]
 public class Tank : TankBase, IProjectileInteractive
 {
+	public static Tank Local
+	{
+		get;
+		private set;
+	}
+
 	public UnityEvent onSpawn;
 	public UnityEvent onDestroy;
 
@@ -16,6 +22,11 @@ public class Tank : TankBase, IProjectileInteractive
 	{
 		get;
 		private set;
+	}
+
+	public bool IsPlayer
+	{
+		get { return TankInput != null; }
 	}
 
 	public int Team
@@ -42,6 +53,25 @@ public class Tank : TankBase, IProjectileInteractive
 
 	#endregion
 
+	private void Awake ()
+	{
+		if (photonView.isMine && this.IsPlayer)
+		{
+			Local = this;
+			TankFollowCameraRig.Instance.OnlyFollow (this);
+		}
+	}
+
+	private void OnDestroy ()
+	{
+		if (this == Local)
+		{
+			Local = null;
+		}
+
+		TankFollowCameraRig.Instance?.StopFollowing (this);
+	}
+
 	private void Start ()
 	{
 		Spawn ();
@@ -57,6 +87,8 @@ public class Tank : TankBase, IProjectileInteractive
 
 		p.DestroyRPC ();
 	}
+
+	#region Spawn / Destroy
 
 	[PunRPC]
 	public void Spawn ()
@@ -103,4 +135,6 @@ public class Tank : TankBase, IProjectileInteractive
 
 		photonView.RPC ("Destroy", PhotonTargets.All);
 	}
+
+	#endregion
 }

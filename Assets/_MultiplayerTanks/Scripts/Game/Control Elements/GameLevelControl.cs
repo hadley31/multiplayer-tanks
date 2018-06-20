@@ -11,7 +11,7 @@ public class GameLevelControl : ControlElement
 	}
 
 	public Transform spawnpoint;
-	public CameraTankFollow cameraRigPrefab;
+	public TankFollowCameraRig cameraRigPrefab;
 
 	private Tank tank;
 
@@ -19,8 +19,8 @@ public class GameLevelControl : ControlElement
 	{
 		Current = this;
 
-		PhotonNetwork.room.SetTeamName (1, "Green Team");
-		PhotonNetwork.room.SetTeamColor (1, Color.green);
+		PhotonNetwork.room.SetTeamName (1, "Blue Team");
+		PhotonNetwork.room.SetTeamColor (1, new Color (0.3137f, 0.2627f, 0.8588f));
 		Player.Local.Photon.SetTeam (1);
 
 		print (Player.Local.Photon.GetTeam ().ToString ());
@@ -31,6 +31,11 @@ public class GameLevelControl : ControlElement
 
 	public void SpawnLocalTank ()
 	{
+		if ( TankFollowCameraRig.Instance == null )
+		{
+			Instantiate (cameraRigPrefab);
+		}
+
 		if ( tank == null )
 		{
 			tank = PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0).GetComponent<Tank> ();
@@ -38,10 +43,6 @@ public class GameLevelControl : ControlElement
 			tank.name = "Tank_" + Player.LocalName;
 
 			tank.Visuals.RevertToTeamColor ();
-
-			CameraTankFollow rig = Instantiate (cameraRigPrefab);
-
-			rig.Prime (tank);
 		}
 	}
 

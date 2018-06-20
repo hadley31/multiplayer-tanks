@@ -21,4 +21,12 @@ public class OfflineMode : MonoBehaviour
 			NetworkManager.CreateRoom ("Offline_Room");
 		}
 	}
+
+	private void OnDestroy ()
+	{
+		if (NetworkManager.OfflineMode && NetworkManager.InRoom)
+		{
+			NetworkManager.LeaveRoom ();
+		}
+	}
 }

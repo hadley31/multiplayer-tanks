@@ -6,6 +6,7 @@ using UnityEngine;
 [RequireComponent (typeof(ProjectileHealth))]
 public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 {
+	public const float Radius = 0.075f;
 	private const float Interaction_Cooldown = 0.01f;
 
 	#region Private Fields

@@ -37,10 +37,39 @@ public class TankShoot : TankBase
 			return;
 		}
 
+		if (TooCloseToWall () == true)
+		{
+			return;
+		}
+
 		int id = ProjectileManager.GetNextID ();
 
 		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, bounces, damage, health, speed, photonView.viewID, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
+	}
+
+	public bool TooCloseToWall ()
+	{
+		Vector3 start = transform.position;
+		Vector3 direction = spawnPoint.position - start;
+
+		start.y += direction.y;
+		direction.y = 0;
+
+		float distance = direction.magnitude + Projectile.Radius * 5;
+
+		RaycastHit hitInfo;
+		if ( Physics.Raycast (start, direction, out hitInfo, distance) == false)
+		{
+			return false;
+		}
+
+		if ( hitInfo.transform.gameObject.layer == LayerMask.NameToLayer ("Wall") )
+		{
+			return true;
+		}
+
+		return false;
 	}
 }

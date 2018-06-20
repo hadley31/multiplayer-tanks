@@ -5,7 +5,6 @@ using TMPro;
 
 public class TankNametag : TankBase
 {
-	public Tank tank;
 	public bool localNametag;
 	private TextMeshPro m_Text;
 
@@ -16,9 +15,9 @@ public class TankNametag : TankBase
 
 	private void OnEnable ()
 	{
-		if (tank.photonView.isMine && !localNametag)
+		if (Tank.photonView.isMine && !localNametag)
 		{
-			this.gameObject.SetActive(false);
+			this.enabled = false;
 			return;
 		}
 
@@ -27,7 +26,7 @@ public class TankNametag : TankBase
 
 	private void LateUpdate ()
 	{
-		if (tank == null)
+		if (Tank == null)
 		{
 			return;
 		}
@@ -45,6 +44,6 @@ public class TankNametag : TankBase
 
 	public void UpdateName ()
 	{
-		SetName (tank.OwnerAlias);
+		SetName (Tank.OwnerAlias);
 	}
 }

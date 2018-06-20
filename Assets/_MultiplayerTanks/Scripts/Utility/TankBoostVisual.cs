@@ -5,21 +5,26 @@ using UnityEngine.UI;
 
 public class TankBoostVisual : MonoBehaviour
 {
-	public Tank tank;
 	public Slider slider;
 
-	//private float oldValue = 0;
+	public float Value
+	{
+		get;
+		private set;
+	}
 
 	private void Update ()
 	{
-		//if ( tank != null )
-		//{
-		//	float newValue = tank.boost / tank.maxBoost;
-		//	if ( newValue != oldValue )
-		//	{
-		//		slider.value = newValue;
-		//		oldValue = newValue;
-		//	}
-		//}
+		Tank tank = TankFollowCameraRig.Instance?.MainTarget;
+
+		if ( tank != null )
+		{
+			float newValue = tank.Movement.Boost / tank.Movement.maxBoost;
+			if ( newValue != Value )
+			{
+				slider.value = newValue;
+				Value = newValue;
+			}
+		}
 	}
 }

@@ -55,12 +55,12 @@ public class UserAliasInput : MonoBehaviour
 
 	private string LoadAlias ()
 	{
-		return PlayerPrefs.GetString (PlayerPrefsKeys.User_Alias_Pref_Key, GetCurrentName ());
+		return PlayerPrefs.GetString (PlayerPrefsKeys.User_Alias, GetCurrentName ());
 	}
 
 	private void SaveAlias ()
 	{
-		PlayerPrefs.SetString (PlayerPrefsKeys.User_Alias_Pref_Key, m_Alias);
+		PlayerPrefs.SetString (PlayerPrefsKeys.User_Alias, m_Alias);
 		PlayerPrefs.Save ();
 	}
 

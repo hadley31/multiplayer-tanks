@@ -93,7 +93,6 @@ public class TankMovement : TankBase
 
 		Rotate ();
 		Move ();
-		Look ();
 	}
 
 	protected virtual void UpdateSpeed ()

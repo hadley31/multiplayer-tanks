@@ -14,6 +14,11 @@ public class NetworkManager : PunBehaviour
 		set { OfflineModeChanged (value); }
 	}
 
+	public static bool InRoom
+	{
+		get { return PhotonNetwork.inRoom; }
+	}
+
 	public static int SendRate
 	{
 		get { return PhotonNetwork.sendRate; }

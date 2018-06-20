@@ -11,3 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_MultiplayerTanks/Scenes/TestMap.unity
     guid: 1d5cac26c9cafec47930f185fc695e50
+  - enabled: 1
+    path: Assets/_MultiplayerTanks/Scenes/SaveTheTank.unity
+    guid: 4c248bad25befa942a3fdfaf550359f7
+  - enabled: 1
+    path: Assets/_MultiplayerTanks/Scenes/OfflineTest.unity
+    guid: c21127b83a58f964591edb7c9ad1c999
+  m_configObjects: {}
