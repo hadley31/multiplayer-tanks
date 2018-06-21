@@ -60,4 +60,8 @@ MonoBehaviour:
   - SetMaxValue
   - SetValue
   - SetValueToMax
+  - GetShortName
+  - OnRoundEnd
+  - OnRoundStart
+  - ToString
   DisableAutoOpenWizard: 1

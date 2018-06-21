@@ -7,6 +7,7 @@ public static class RoomProperty
 	public static readonly string Team_MaxSize = "tp";
 	public static readonly string Team_Name = "tn";
 	public static readonly string Team_Color = "tc";
+	public static readonly string Team_Score = "ts";
 	public static readonly string Map = "mp";
 	public static readonly string Gamemode = "gm";
 

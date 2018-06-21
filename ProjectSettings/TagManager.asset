@@ -23,8 +23,8 @@ TagManager:
   - Ignore AI Projectile
   - Ignore Tank AI
   - Trigger
-  - 
-  - 
+  - Block Tank
+  - Block Projectile
   - 
   - 
   - 

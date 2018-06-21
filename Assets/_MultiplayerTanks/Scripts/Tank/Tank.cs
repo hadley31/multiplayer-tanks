@@ -7,11 +7,19 @@ using UnityEngine.Events;
 [RequireComponent (typeof (Health))]
 public class Tank : TankBase, IProjectileInteractive
 {
+	public static Color Default_Color
+	{
+		get { return new Color (0.85f, 0.85f, 0.85f); }
+	}
+
 	public static Tank Local
 	{
 		get;
 		private set;
 	}
+	public static readonly List<Tank> All = new List<Tank> ();
+	public static readonly List<Tank> AllAlive = new List<Tank> ();
+	public static readonly List<Tank> AllDead = new List<Tank> ();
 
 	public UnityEvent onSpawn;
 	public UnityEvent onDestroy;
@@ -29,10 +37,10 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return TankInput != null; }
 	}
 
-	public int Team
+	public Team Team
 	{
-		get;
-		private set;
+		get { return Owner.GetTeam (); }
+		set { Owner.SetTeam (value); }
 	}
 
 	public PhotonPlayer Owner
@@ -40,12 +48,17 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return photonView.owner; }
 	}
 
+	public int ID
+	{
+		get { return photonView.viewID; }
+	}
+
 	public string OwnerAlias
 	{
 		get { return Owner?.NickName ?? string.Empty; }
 	}
 
-	public PhotonPlayer LastProjectileOwner
+	public int LastHitID
 	{
 		get;
 		set;
@@ -53,13 +66,31 @@ public class Tank : TankBase, IProjectileInteractive
 
 	#endregion
 
+	#region Monobehaviours
+
 	private void Awake ()
 	{
-		if (photonView.isMine && this.IsPlayer)
+		if ( photonView.isMine && this.IsPlayer )
 		{
 			Local = this;
+		}
+
+		if ( All.Contains (this) == false )
+		{
+			All.Add (this);
+		}
+
+		print (All.Count);
+	}
+
+	private void Start ()
+	{
+		if ( photonView.isMine && this.IsPlayer )
+		{
 			TankFollowCameraRig.Instance.OnlyFollow (this);
 		}
+
+		Spawn ();
 	}
 
 	private void OnDestroy ()
@@ -69,20 +100,27 @@ public class Tank : TankBase, IProjectileInteractive
 			Local = null;
 		}
 
+		All.Remove (this);
+		AllAlive.Remove (this);
+		AllDead.Remove (this);
+
 		TankFollowCameraRig.Instance?.StopFollowing (this);
 	}
 
-	private void Start ()
-	{
-		Spawn ();
-	}
+	#endregion
 
 	public virtual void OnProjectileInteraction (Projectile p)
 	{
+		if ( p.Sender.ID == this.ID && p.HasBounced == false )
+		{
+			return;
+		}
+
 		if ( PhotonNetwork.isMasterClient )
 		{
+
 			Health.DecreaseRPC (p.Damage);
-			LastProjectileOwner = p.Owner;
+			LastHitID = p.Sender.ID;
 		}
 
 		p.DestroyRPC ();
@@ -94,6 +132,8 @@ public class Tank : TankBase, IProjectileInteractive
 	public void Spawn ()
 	{
 		IsAlive = true;
+
+		UpdateList ();
 
 		onSpawn.Invoke ();
 	}
@@ -115,13 +155,15 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		Invoke ("SpawnRPC", delay);
+		TankSpawner.Instance.Spawn (this);
 	}
 
 	[PunRPC]
 	public void Destroy ()
 	{
 		IsAlive = false;
+
+		UpdateList ();
 
 		onDestroy.Invoke ();
 	}
@@ -137,4 +179,26 @@ public class Tank : TankBase, IProjectileInteractive
 	}
 
 	#endregion
+
+	private void UpdateList ()
+	{
+		if (IsAlive)
+		{
+			AllDead.Remove (this);
+
+			if (AllAlive.Contains (this) == false)
+			{
+				AllAlive.Add (this);
+			}
+		}
+		else
+		{
+			AllAlive.Remove (this);
+
+			if ( AllDead.Contains (this) == false )
+			{
+				AllDead.Add (this);
+			}
+		}
+	}
 }

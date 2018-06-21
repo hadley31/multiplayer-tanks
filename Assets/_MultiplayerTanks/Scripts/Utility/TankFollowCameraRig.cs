@@ -125,20 +125,25 @@ public class TankFollowCameraRig : MonoBehaviour
 		transform.position = Vector3.Lerp (transform.position, m_TargetPosition, Time.deltaTime * followSpeed);
 	}
 
-	public void OnlyFollow (params Tank[] tank)
+	public void OnlyFollow (params Tank[] tanks)
 	{
+		print ("Only Follow");
+
 		m_Tanks.Clear ();
-		m_Tanks.AddRange (tank);
+
+		Follow (tanks);
 	}
 
-	public void Follow (Tank tank)
+	public void Follow (params Tank[] tanks)
 	{
-		if ( m_Tanks.Contains (tank) )
+		foreach (Tank t in tanks)
 		{
-			return;
+			if (m_Tanks.Contains (t) == false)
+			{
+				m_Tanks.Add (t);
+			}
 		}
-
-		m_Tanks.Add (tank);
+		
 	}
 
 	public void StopFollowing (Tank tank)

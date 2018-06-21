@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class Server : MonoBehaviour
+public class Server
 {
 	#region Statics
 

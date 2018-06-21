@@ -14,7 +14,9 @@ public class SceneLoader : MonoBehaviour
 			NetworkManager.LeaveRoom ();
 		}
 
-		SceneManager.LoadScene (scene);
+		print ($"Loading scene: {scene}");
+
+		SceneManager.LoadScene (scene, LoadSceneMode.Single);
 	}
 
 	public void NetworkLoadScene (string scene)

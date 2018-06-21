@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TankMovement : TankBase
 {
+	private static readonly Vector3 Horizontal = new Vector3 (1, 0, 1);
+
 	public Transform top;
 
 	public float moveSpeed = 4;
@@ -54,8 +56,13 @@ public class TankMovement : TankBase
 
 	public Vector3 Velocity
 	{
-		get { return Rigidbody.velocity; }
+		get { return Vector3.Scale(Rigidbody.velocity, Horizontal); }
 		private set { Rigidbody.velocity = value; }
+	}
+
+	public Vector3 ActualVelocity
+	{
+		get { return Rigidbody.velocity; }
 	}
 
 	protected virtual void Awake ()
@@ -97,9 +104,11 @@ public class TankMovement : TankBase
 
 	protected virtual void UpdateSpeed ()
 	{
+		IsBoosting = false;
 		m_speed = moveSpeed;
 		if ( Input.GetKey (KeyCode.Space) )
 		{
+			IsBoosting = true;
 			m_speed = moveSpeed + moveSpeed * boostSpeedMultiplier * Boost;
 			Boost -= Time.deltaTime * boostUseSpeed;
 		}

@@ -50,7 +50,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		private set;
 	}
 
-	public int ID
+	public int P_ID
 	{
 		get;
 		private set;
@@ -89,6 +89,11 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 	{
 		get;
 		private set;
+	}
+
+	public bool HasBounced
+	{
+		get { return Bounces < MaxBounces; }
 	}
 
 	#endregion
@@ -182,7 +187,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 
 	public void SetID (int id)
 	{
-		this.ID = id;
+		this.P_ID = id;
 	}
 
 	public void SetSender (int viewID)
@@ -196,12 +201,12 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 
 	public void Destroy ()
 	{
-		ProjectileManager.Instance.Destroy (this.ID);
+		ProjectileManager.Instance.Destroy (this.P_ID);
 	}
 
 	public void DestroyRPC ()
 	{
-		ProjectileManager.Instance.DestroyRPC (this.ID);
+		ProjectileManager.Instance.DestroyRPC (this.P_ID);
 	}
 
 	#endregion

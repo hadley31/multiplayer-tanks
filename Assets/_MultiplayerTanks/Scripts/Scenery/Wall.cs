@@ -3,17 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent (typeof(Collider))]
 public class Wall : MonoBehaviour, IProjectileInteractive
 {
 	public Bounds Bounds
 	{
+		get { return Collider.bounds; }
+	}
+
+	public Collider Collider
+	{
 		get;
-		protected set;
+		private set;
 	}
 
 	protected virtual void Awake ()
 	{
-		Bounds = new Bounds (transform.position, transform.lossyScale);
+		Collider = GetComponent<Collider> ();
 	}
 
 	public virtual void OnProjectileInteraction (Projectile p)

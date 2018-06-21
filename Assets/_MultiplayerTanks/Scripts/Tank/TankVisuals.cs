@@ -85,7 +85,7 @@ public class TankVisuals : TankBase
 
 	public void SetColorRPC (Color color)
 	{
-		if (!photonView.isMine)
+		if (photonView.isMine == false && PhotonNetwork.isMasterClient == false)
 		{
 			return;
 		}

@@ -117,7 +117,7 @@ public class ProjectileManager : Photon.MonoBehaviour
 
 		m_Projectiles.RemoveAll (x => x == null);
 
-		Projectile projectile = m_Projectiles.Find (x => x.ID == id);
+		Projectile projectile = m_Projectiles.Find (x => x.P_ID == id);
 
 		if ( projectile != null )
 		{

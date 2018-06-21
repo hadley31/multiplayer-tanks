@@ -8,6 +8,11 @@ public class NetworkManager : PunBehaviour
 {
 	public static NetworkManager Instance;
 
+	public static bool IsConnected
+	{
+		get { return PhotonNetwork.connected; }
+	}
+
 	public static bool OfflineMode
 	{
 		get { return PhotonNetwork.offlineMode; }

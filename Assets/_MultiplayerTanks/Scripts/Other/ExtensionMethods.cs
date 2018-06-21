@@ -6,10 +6,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public static class ExtensionMethods
 {
-	private static Vector3 Default_Tank_Color
-	{
-		get { return new Vector3 (0.85f, 0.85f, 0.85f); }
-	}
+	
 
 	#region Transform
 
@@ -108,12 +105,12 @@ public static class ExtensionMethods
 
 	#region Kills
 
-	public static void SetKills (this PhotonPlayer player, int kills)
+	public static void SetKills (this PhotonPlayer player, int amount)
 	{
-		player.SetProperty (PlayerProperty.Kills, kills);
+		player.SetProperty (PlayerProperty.Kills, amount);
 	}
 
-	public static void AddKill (this PhotonPlayer player)
+	public static void IncreaseKills (this PhotonPlayer player, int amount = 1)
 	{
 		player.SetProperty (PlayerProperty.Kills, player.GetKills () + 1);
 	}
@@ -127,12 +124,12 @@ public static class ExtensionMethods
 
 	#region Deaths
 
-	public static void SetDeaths (this PhotonPlayer player, int deaths)
+	public static void SetDeaths (this PhotonPlayer player, int amount)
 	{
-		player.SetProperty (PlayerProperty.Deaths, deaths);
+		player.SetProperty (PlayerProperty.Deaths, amount);
 	}
 
-	public static void AddDeath (this PhotonPlayer player)
+	public static void IncreaseDeaths (this PhotonPlayer player, int amount = 1)
 	{
 		player.SetProperty (PlayerProperty.Deaths, player.GetDeaths () + 1);
 	}
@@ -236,7 +233,22 @@ public static class ExtensionMethods
 
 	public static Color GetTeamColor (this Room room, int team)
 	{
-		return room.GetProperty (RoomProperty.Team_Color + team, Default_Tank_Color).ToColor ();
+		return room.GetProperty (RoomProperty.Team_Color + team, Tank.Default_Color.ToVector ()).ToColor ();
+	}
+
+	public static void SetTeamScore (this Room room, int team, int amount)
+	{
+		room.SetProperty (RoomProperty.Team_Score + team, amount);
+	}
+
+	public static int GetTeamScore (this Room room, int team)
+	{
+		return room.GetProperty<int> (RoomProperty.Team_Score + team);
+	}
+
+	public static void IncreaseTeamScore (this Room room, int team, int amount)
+	{
+		room.SetTeamScore (team, room.GetTeamScore (team) + amount);
 	}
 
 	#endregion

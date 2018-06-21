@@ -16,6 +16,7 @@ public class TankShoot : TankBase
 	public int damage = 100;
 	public int health = 1;
 	public float speed = 5;
+	public float relativeSpeedEffect = 0.5f;
 
 
 	private float m_LastShootTime = 0;
@@ -44,7 +45,9 @@ public class TankShoot : TankBase
 
 		int id = ProjectileManager.GetNextID ();
 
-		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, bounces, damage, health, speed, photonView.viewID, id, PhotonNetwork.time);
+		float projectileSpeed = this.speed + Vector3.Dot (Movement.Velocity, spawnPoint.forward) * relativeSpeedEffect;
+
+		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, bounces, damage, health, projectileSpeed, photonView.viewID, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}

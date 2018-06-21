@@ -100,12 +100,4 @@ public class NetworkTank : TankBase
 			return estimatedPosition;
 		}
 	}
-
-	public void NetworkDestroy ()
-	{
-		if (photonView.isMine)
-		{
-			PhotonNetwork.Destroy (this.gameObject);
-		}
-	}
 }

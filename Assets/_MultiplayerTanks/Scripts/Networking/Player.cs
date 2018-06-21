@@ -13,12 +13,12 @@ public class Player
 
 	public static List<Player> All
 	{
-		get { return PhotonNetwork.playerList.Select (x => new Player (x)).ToList (); }
+		get { return PhotonNetwork.playerList.Select (x => Get (x)).ToList (); }
 	}
 
 	public static List<Player> Others
 	{
-		get { return PhotonNetwork.otherPlayers.Select (x => new Player (x)).ToList (); }
+		get { return PhotonNetwork.otherPlayers.Select (x => Get (x)).ToList (); }
 	}
 
 	public static string LocalName
@@ -109,8 +109,18 @@ public class Player
 
 	#endregion
 
-	public Player (PhotonPlayer photonPlayer)
+	private Player (PhotonPlayer photonPlayer)
 	{
 		this.Photon = photonPlayer;
+	}
+
+	public static Player Get (PhotonPlayer player)
+	{
+		return new Player (player);
+	}
+
+	public static implicit operator Player (PhotonPlayer player)
+	{
+		return new Player (player);
 	}
 }
