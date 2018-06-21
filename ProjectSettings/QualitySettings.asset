@@ -100,7 +100,7 @@ QualitySettings:
     Standalone: 2
     Tizen: 0
     Web: 2
-    WebGL: 0
+    WebGL: 2
     WiiU: 2
     Windows Store Apps: 2
     XboxOne: 2
