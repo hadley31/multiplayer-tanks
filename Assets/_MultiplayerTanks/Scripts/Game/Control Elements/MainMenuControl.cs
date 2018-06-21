@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuControl : ControlElement
 {
+	private string map;
+
 	public override void OnGainControl ()
 	{
 		if ( NetworkManager.IsConnected )
@@ -39,13 +41,14 @@ public class MainMenuControl : ControlElement
 	{
 		NetworkManager.OfflineMode = false;
 		GetComponent<CanvasGroup> ().interactable = false;
+		this.map = level;
 		NetworkManager.Connect ();
 	}
 
 
 	private void OnConnectedToLobby ()
 	{
-		NetworkManager.JoinOrCreateRoom ("OD");
+		NetworkManager.JoinOrCreateRoom (map);
 	}
 
 	private void OnJoinRoom ()
@@ -56,7 +59,7 @@ public class MainMenuControl : ControlElement
 		}
 		else
 		{
-			PhotonNetwork.LoadLevel ("TestMap");
+			PhotonNetwork.LoadLevel (map);
 		}
 	}
 

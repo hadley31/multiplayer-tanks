@@ -79,14 +79,13 @@ public class Tank : TankBase, IProjectileInteractive
 		{
 			All.Add (this);
 		}
-
-		print (All.Count);
 	}
 
 	private void Start ()
 	{
 		if ( photonView.isMine && this.IsPlayer )
 		{
+			print ("only follow");
 			TankFollowCameraRig.Instance.OnlyFollow (this);
 		}
 
@@ -155,7 +154,7 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		TankSpawner.Instance.Spawn (this);
+		Invoke ("SpawnRPC", 3);
 	}
 
 	[PunRPC]

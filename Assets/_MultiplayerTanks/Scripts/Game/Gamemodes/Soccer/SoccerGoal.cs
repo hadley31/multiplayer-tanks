@@ -43,7 +43,5 @@ public class SoccerGoal : MonoBehaviour
 		onScore.Invoke ();
 
 		ball.ResetPosition ();
-
-		print ($"Team {team} Goals: " + Server.Current.Photon.GetTeamScore (this.team));
 	}
 }

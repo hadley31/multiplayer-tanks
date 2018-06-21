@@ -1,15 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class SoccerGoalTextDisplay : MonoBehaviour
 {
 	public float duration = 1.5f;
 
-	public Text goalText;
-	public Text team1Score;
-	public Text team2Score;
+	public TextMeshProUGUI goalText;
+	public TextMeshProUGUI team1Score;
+	public TextMeshProUGUI team2Score;
 
 	private void Awake ()
 	{
@@ -40,8 +40,6 @@ public class SoccerGoalTextDisplay : MonoBehaviour
 
 	public void Display ()
 	{
-		print ("Display");
-
 		gameObject.SetActive (true);
 		StartCoroutine (DisplayText ());
 	}

@@ -57,7 +57,7 @@ Transform:
   m_GameObject: {fileID: 1547861749309556}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1.34, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 4397267700027558}
   m_Father: {fileID: 0}
@@ -144,10 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24303995685409489b8e9a5b433d429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveLerpSpeed: 4
-  rotateLerpSpeed: 10
-  lookLerpSpeed: 25
-  maxPositionError: 2
+  moveLerpSpeed: 10
+  maxPositionError: 5
 --- !u!114 &114540187919931556
 MonoBehaviour:
   m_ObjectHideFlags: 1

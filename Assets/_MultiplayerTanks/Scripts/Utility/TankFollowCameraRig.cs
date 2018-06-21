@@ -120,6 +120,11 @@ public class TankFollowCameraRig : MonoBehaviour
 
 	private void FollowTank ()
 	{
+		if ( m_Tanks.Count == 0 || ( m_Tanks.Count == 1 && MainTarget.IsAlive == false ) )
+		{
+			return;
+		}
+
 		UpdateTargetPosition ();
 
 		transform.position = Vector3.Lerp (transform.position, m_TargetPosition, Time.deltaTime * followSpeed);

@@ -6,10 +6,8 @@ using UnityEngine;
 public class SoccerNetworkBall : Photon.MonoBehaviour
 {
 	public float moveLerpSpeed = 4;
-	public float rotateLerpSpeed = 10;
-	public float lookLerpSpeed = 25;
 
-	public float maxPositionError = 2;
+	public float maxPositionError = 10;
 
 	private SoccerBall m_Ball;
 	private Rigidbody m_Rigidbody;

@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_MultiplayerTanks/Scenes/OfflineTest.unity
     guid: c21127b83a58f964591edb7c9ad1c999
+  - enabled: 1
+    path: Assets/_MultiplayerTanks/Scenes/Soccer.unity
+    guid: 5cfd08d6df81b13479e7e516757dc352
   m_configObjects: {}
