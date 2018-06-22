@@ -26,8 +26,10 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 	{
 		if ( !photonView.isMine )
 		{
-			// Update this rigidbody's position
+			// Update this rigidbody's position and velocity
 			m_Rigidbody.MovePosition (GetLerpedPosition ());
+			m_Rigidbody.AddForce (m_NetworkVelocity - m_Rigidbody.velocity, ForceMode.Acceleration);
+		//	m_Rigidbody.velocity = m_NetworkVelocity;
 		}
 	}
 
@@ -57,6 +59,8 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 
 		// Add together to get the total time passed
 		float totalTimePassed = pingInSeconds + timeSinceLastUpdate;
+
+	//	m_NetworkVelocity += Physics.gravity * totalTimePassed;
 
 		// Estimate the position of the tank using linear approximation
 		Vector3 estimatedPosition = m_NetworkPosition + ( m_NetworkVelocity * totalTimePassed );

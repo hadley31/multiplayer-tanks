@@ -45,7 +45,7 @@ GameObject:
   m_IsActive: 0
 --- !u!1 &1441567815256500
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
@@ -57,6 +57,21 @@ GameObject:
   m_Layer: 0
   m_Name: Camera
   m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1455182122705572
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4060969177441742}
+  m_Layer: 0
+  m_Name: Main Camera Parent
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77,6 +92,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &4060969177441742
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1455182122705572}
+  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 4681971673395904}
+  m_Father: {fileID: 4611762300100652}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!4 &4107248732600474
 Transform:
   m_ObjectHideFlags: 1
@@ -113,7 +142,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4681971673395904}
+  - {fileID: 4060969177441742}
   - {fileID: 4107248732600474}
   - {fileID: 4173270920001684}
   m_Father: {fileID: 0}
@@ -125,13 +154,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1441567815256500}
-  m_LocalRotation: {x: 0.38268343, y: -0, z: -0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 10, z: -10}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4611762300100652}
+  m_Father: {fileID: 4060969177441742}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 12.6, y: 0.06, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &20419038055557584
 Camera:
   m_ObjectHideFlags: 1
@@ -177,7 +206,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.16251333, g: 0.3627406, b: 0.41509432, a: 0}
+  m_BackGroundColor: {r: 0.2240566, g: 0.75145143, b: 0.8962264, a: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -261,6 +290,8 @@ MonoBehaviour:
   crosshair: {fileID: 2800000, guid: eb611e4b17fe9e141a60447264a2fe6d, type: 3}
   scrollSpeed: 5
   followSpeed: 15
+  cameraZoomSpeed: 5
+  defaultCameraZoom: 5
 --- !u!124 &124020757889372950
 Behaviour:
   m_ObjectHideFlags: 1

@@ -26,7 +26,7 @@ public class SoccerGoal : MonoBehaviour
 		SoccerBall ball = ent.GetComponent<SoccerBall> ();
 
 
-		PhotonPlayer player = PhotonView.Find (ball.LastViewToTouch).owner;
+		PhotonPlayer player = Tank.All.Find (x => x.ID == ball.LastViewToTouch).Owner;
 
 		if ( player != null )
 		{

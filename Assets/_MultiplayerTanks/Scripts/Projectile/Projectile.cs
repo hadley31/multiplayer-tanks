@@ -192,7 +192,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 
 	public void SetSender (int viewID)
 	{
-		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
+		this.Sender = Tank.All.Find (x => x.ID == viewID);
 	}
 
 	#endregion

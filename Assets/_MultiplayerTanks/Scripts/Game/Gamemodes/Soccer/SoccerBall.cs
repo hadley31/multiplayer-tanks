@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (Rigidbody), typeof(Collider))]
-public class SoccerBall : MonoBehaviour, IProjectileInteractive
+public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 {
 	public float projectileHitForce = 100;
+	public float tankHitForce = 300;
 
 	public Rigidbody Rigidbody
 	{
@@ -48,10 +49,6 @@ public class SoccerBall : MonoBehaviour, IProjectileInteractive
 
 	public void OnCollisionEnter (Collision collision)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
-		{
-			return;
-		}
 		Tank tank = collision.collider.GetComponent<Tank> ();
 
 		if (tank == null)
@@ -59,15 +56,41 @@ public class SoccerBall : MonoBehaviour, IProjectileInteractive
 			return;
 		}
 
-		LastViewToTouch = tank.photonView.viewID;
+		Vector3 force = ( Rigidbody.position - tank.transform.position ) * tankHitForce;
+
+		AddForce (tank.ID, force, tank.transform.position);
+	}
+
+	public void AddForce (int id, Vector3 force, Vector3 position)
+	{
+		if (PhotonNetwork.isMasterClient)
+		{
+			AddForceRPC (id, force, position);
+			return;
+		}
+		else
+		{
+			Rigidbody.AddForceAtPosition (force, position, ForceMode.Acceleration);
+			photonView.RPC ("AddForceRPC", PhotonTargets.MasterClient, id, force, position);
+		}
+		
+	}
+
+	[PunRPC]
+	private void AddForceRPC (int id, Vector3 force, Vector3 position)
+	{
+		if (PhotonNetwork.isMasterClient)
+		{
+			Rigidbody.AddForceAtPosition (force, position, ForceMode.Acceleration);
+			LastViewToTouch = id;
+		}
 	}
 
 	public void OnProjectileInteraction (Projectile p)
 	{
-		if ( PhotonNetwork.isMasterClient == true )
+		if ( p.Sender.ID == Tank.Local.ID )
 		{
-			Rigidbody.AddForceAtPosition (p.Direction * projectileHitForce, p.Rigidbody.position, ForceMode.Acceleration);
-			LastViewToTouch = p.Sender.photonView.viewID;
+			AddForce (p.Sender.ID, p.Direction * projectileHitForce, p.Rigidbody.position);
 		}
 
 		p.DestroyRPC ();

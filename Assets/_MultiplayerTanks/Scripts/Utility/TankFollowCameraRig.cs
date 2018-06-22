@@ -16,10 +16,13 @@ public class TankFollowCameraRig : MonoBehaviour
 
 	[Header ("Follow Tank")]
 	public float followSpeed = 15.0f;
+	public float cameraZoomSpeed = 5.0f;
+	public float defaultCameraZoom = 5f;
 
 	private readonly List<Tank> m_Tanks = new List<Tank> ();
 
 	private Vector3 m_TargetPosition;
+	private float m_TargetCameraDistance;
 	private bool m_TankWasNull = true;
 
 	#region Properties
@@ -53,7 +56,7 @@ public class TankFollowCameraRig : MonoBehaviour
 
 	private void Awake ()
 	{
-		Camera = transform.Find ("Camera").GetComponent<Camera> ();
+		Camera = transform.Find ("Main Camera Parent/Camera").GetComponent<Camera> ();
 		MinimapCamera = transform.Find ("Minimap").GetComponent<Camera> ();
 		Light = GetComponentInChildren<Light> ();
 	}
@@ -127,13 +130,17 @@ public class TankFollowCameraRig : MonoBehaviour
 
 		UpdateTargetPosition ();
 
+		Vector3 camPos = Camera.transform.localPosition;
+
+		camPos.z = Mathf.Lerp (camPos.z, -m_TargetCameraDistance - defaultCameraZoom, Time.deltaTime * cameraZoomSpeed);
+
+		Camera.transform.localPosition = camPos;
+
 		transform.position = Vector3.Lerp (transform.position, m_TargetPosition, Time.deltaTime * followSpeed);
 	}
 
 	public void OnlyFollow (params Tank[] tanks)
 	{
-		print ("Only Follow");
-
 		m_Tanks.Clear ();
 
 		Follow (tanks);
@@ -165,6 +172,13 @@ public class TankFollowCameraRig : MonoBehaviour
 			return;
 		}
 
+		if (aliveTanks.Count == 1)
+		{
+			m_TargetCameraDistance = 10;
+			m_TargetPosition = MainTarget.transform.position;
+			return;
+		}
+
 		Vector3 min = Vector3.positiveInfinity;
 		Vector3 max = Vector3.negativeInfinity;
 
@@ -174,6 +188,9 @@ public class TankFollowCameraRig : MonoBehaviour
 			max = Vector3.Max (max, tank.transform.position);
 		}
 
+		float maxDistance = Vector3.Magnitude (min - max);
+
+		m_TargetCameraDistance = ( maxDistance / 2 / Camera.aspect ) / Mathf.Tan (Camera.fieldOfView / 2);
 		m_TargetPosition = Vector3.Lerp (min, max, 0.5f);
 	}
 }

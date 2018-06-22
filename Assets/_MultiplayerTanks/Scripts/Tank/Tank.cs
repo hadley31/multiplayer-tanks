@@ -85,7 +85,6 @@ public class Tank : TankBase, IProjectileInteractive
 	{
 		if ( photonView.isMine && this.IsPlayer )
 		{
-			print ("only follow");
 			TankFollowCameraRig.Instance.OnlyFollow (this);
 		}
 

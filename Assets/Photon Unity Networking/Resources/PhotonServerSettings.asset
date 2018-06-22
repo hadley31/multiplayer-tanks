@@ -64,4 +64,6 @@ MonoBehaviour:
   - OnRoundEnd
   - OnRoundStart
   - ToString
+  - AddForceRPC
+  - SetPositionAndVelocity
   DisableAutoOpenWizard: 1

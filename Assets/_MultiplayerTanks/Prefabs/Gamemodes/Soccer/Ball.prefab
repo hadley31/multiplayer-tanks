@@ -126,7 +126,7 @@ Rigidbody:
   m_GameObject: {fileID: 1547861749309556}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0.2
+  m_Drag: 1
   m_AngularDrag: 0.2
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24303995685409489b8e9a5b433d429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveLerpSpeed: 10
+  moveLerpSpeed: 1.2
   maxPositionError: 5
 --- !u!114 &114540187919931556
 MonoBehaviour:
@@ -194,7 +194,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce68a6bfe0fd1ae4c89818d27363f3f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileHitForce: 300
+  projectileHitForce: 200
+  tankHitForce: 80
 --- !u!135 &135012857558489298
 SphereCollider:
   m_ObjectHideFlags: 1

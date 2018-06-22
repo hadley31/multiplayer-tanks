@@ -21,7 +21,7 @@ Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
 	- Projectile Manager needs better ID distribution system
 
-
+	- Soccer ball rigidbody needs to be synced better across the network (still no idea how to fix)
 
 
 
