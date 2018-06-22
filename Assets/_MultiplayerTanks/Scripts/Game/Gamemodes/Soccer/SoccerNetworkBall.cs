@@ -29,7 +29,6 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 			// Update this rigidbody's position and velocity
 			m_Rigidbody.MovePosition (GetLerpedPosition ());
 			m_Rigidbody.AddForce (m_NetworkVelocity - m_Rigidbody.velocity, ForceMode.Acceleration);
-		//	m_Rigidbody.velocity = m_NetworkVelocity;
 		}
 	}
 
