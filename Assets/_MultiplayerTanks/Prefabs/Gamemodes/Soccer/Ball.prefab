@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveLerpSpeed: 1.2
-  maxPositionError: 5
+  maxPositionError: 9
 --- !u!114 &114540187919931556
 MonoBehaviour:
   m_ObjectHideFlags: 1
