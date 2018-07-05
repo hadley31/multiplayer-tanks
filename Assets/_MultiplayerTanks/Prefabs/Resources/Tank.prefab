@@ -410,7 +410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41600821dcdbdc0478f37fb9e780e1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localNametag: 0
+  localNametag: 1
 --- !u!114 &114291954256589394
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -480,6 +480,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 114326414294758354}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   onDestroy:
@@ -542,7 +553,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbe525a6d30f148459ab211b538637ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  top: {fileID: 4557420026592182}
   moveSpeed: 4
   rotateSpeed: 8
   lookSpeed: 50
@@ -562,6 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_MaxHealth: 100
+  m_GodMode: 0
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 114540187919931556}
   - component: {fileID: 114870389636120888}
   - component: {fileID: 54579458060522980}
+  - component: {fileID: 135788107752315368}
   - component: {fileID: 135012857558489298}
   - component: {fileID: 114066126689798344}
   - component: {fileID: 114739061566646272}
@@ -128,7 +129,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 1
   m_AngularDrag: 0.2
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -144,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24303995685409489b8e9a5b433d429, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveLerpSpeed: 1.2
-  maxPositionError: 9
+  moveLerpSpeed: 4
+  maxPositionError: 47
 --- !u!114 &114540187919931556
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -195,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectileHitForce: 200
-  tankHitForce: 80
+  tankHitForce: 100
 --- !u!135 &135012857558489298
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -207,4 +208,16 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!135 &135788107752315368
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1547861749309556}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.7
   m_Center: {x: 0, y: 0, z: 0}

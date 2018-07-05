@@ -8,6 +8,11 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 	public float projectileHitForce = 100;
 	public float tankHitForce = 300;
 
+	public GameObject GameObject
+	{
+		get { return gameObject; }
+	}
+
 	public Rigidbody Rigidbody
 	{
 		get;
@@ -30,6 +35,13 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 	{
 		Rigidbody = GetComponent<Rigidbody> ();
 		Collider = GetComponent<Collider> ();
+
+		Rigidbody.useGravity = PhotonNetwork.isMasterClient;
+	}
+
+	public void OnMasterClientSwitched (PhotonPlayer newMasterClient)
+	{
+		Rigidbody.useGravity = PhotonNetwork.isMasterClient;
 	}
 
 	public void ResetPosition ()
@@ -47,9 +59,9 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 		Rigidbody.MovePosition (position);
 	}
 
-	public void OnCollisionEnter (Collision collision)
+	public void OnTriggerEnter (Collider other)
 	{
-		Tank tank = collision.collider.GetComponent<Tank> ();
+		Tank tank = other.GetComponent<Tank> ();
 
 		if (tank == null)
 		{
@@ -65,6 +77,7 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
+			Rigidbody.useGravity = true;
 			AddForceRPC (id, force, position);
 			return;
 		}

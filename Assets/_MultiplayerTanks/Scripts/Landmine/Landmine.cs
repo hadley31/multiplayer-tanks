@@ -20,6 +20,11 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 
 	#region Properties
 
+	public GameObject GameObject
+	{
+		get { return gameObject; }
+	}
+
 	public int Damage
 	{
 		get;

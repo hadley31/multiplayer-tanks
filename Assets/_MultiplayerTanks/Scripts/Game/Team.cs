@@ -4,6 +4,8 @@ using UnityEngine;
 
 public struct Team
 {
+	public static readonly Team None = new Team ("NONE", 0, Tank.Default_Color);
+
 	public static Team Get (int number)
 	{
 		string name = Server.Current.Photon.GetTeamName (number);

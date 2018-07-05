@@ -37,9 +37,14 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return TankInput != null; }
 	}
 
+	public GameObject GameObject
+	{
+		get { return gameObject; }
+	}
+
 	public Team Team
 	{
-		get { return Owner.GetTeam (); }
+		get { return Owner?.GetTeam () ?? Team.None; }
 		set { Owner.SetTeam (value); }
 	}
 
@@ -116,8 +121,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 		if ( PhotonNetwork.isMasterClient )
 		{
-
-			Health.DecreaseRPC (p.Damage);
+			Health.DecreaseRPC (p.Damage, "projectile");
 			LastHitID = p.Sender.ID;
 		}
 

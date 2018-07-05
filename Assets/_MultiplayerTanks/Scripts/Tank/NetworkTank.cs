@@ -53,7 +53,7 @@ public class NetworkTank : TankBase
 			stream.SendNext (Movement.Velocity);
 
 			stream.SendNext (Movement.Rigidbody.rotation.eulerAngles.y);
-			stream.SendNext (Movement.top.eulerAngles.y);
+			stream.SendNext (Movement.Top.eulerAngles.y);
 		}
 		else
 		{
@@ -71,7 +71,7 @@ public class NetworkTank : TankBase
 	{
 		// Rotate the top in update
 		Quaternion newTopRotation = Quaternion.Euler (0, m_NetworkTopRotation, 0);
-		Movement.top.rotation = Quaternion.Lerp (Movement.top.rotation, newTopRotation, Time.deltaTime * lookLerpSpeed);
+		Movement.Top.rotation = Quaternion.Lerp (Movement.Top.rotation, newTopRotation, Time.deltaTime * lookLerpSpeed);
 	}
 
 	private Vector3 GetLerpedPosition ()

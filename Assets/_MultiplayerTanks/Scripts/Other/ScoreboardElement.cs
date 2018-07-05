@@ -13,6 +13,8 @@ public class ScoreboardElement : MonoBehaviour
 	public TextMeshProUGUI scoreText;
 	public TextMeshProUGUI pingText;
 
+	public Image masterClientImage;
+
 	private CanvasGroup m_Group;
 
 	public Tank Tank
@@ -46,9 +48,11 @@ public class ScoreboardElement : MonoBehaviour
 		}
 
 		// if the tank is dead, we want the element to be a little transparent
-		m_Group.alpha = Tank.IsAlive ? 1 : 0.3f;
+		m_Group.alpha = Tank.IsAlive ? 1 : 0.4f;
 
 		playerNameText.text = Tank.OwnerAlias;
+
+		masterClientImage.gameObject.SetActive (Tank.Owner.IsMasterClient);
 
 		teamNameText.color = Tank.Team.Color;
 		teamNameText.text = Tank.Team.Name;

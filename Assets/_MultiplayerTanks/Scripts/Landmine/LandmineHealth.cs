@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LandmineHealth : Health
 {
-	public override void DecreaseRPC (int amount)
+	public override void DecreaseRPC (int amount, string damageType = "generic")
 	{
 		if ( PhotonNetwork.isMasterClient == false )
 		{

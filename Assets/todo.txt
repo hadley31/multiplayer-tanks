@@ -21,7 +21,7 @@ Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
 	- Projectile Manager needs better ID distribution system
 
-
+	- Nametags don't disappear when you die in soccer (the tanks are now seperate prefabs so it just needs to be updated)
 
 Ideas:
 	- Gamemodes:

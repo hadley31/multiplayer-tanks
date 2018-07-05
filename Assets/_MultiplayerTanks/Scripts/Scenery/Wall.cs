@@ -6,6 +6,11 @@ using UnityEngine;
 [RequireComponent (typeof(Collider))]
 public class Wall : MonoBehaviour, IProjectileInteractive
 {
+	public GameObject GameObject
+	{
+		get { return gameObject; }
+	}
+
 	public Bounds Bounds
 	{
 		get { return Collider.bounds; }

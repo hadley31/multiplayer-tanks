@@ -14,6 +14,7 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 
 	private Vector3 m_NetworkPosition;
 	private Vector3 m_NetworkVelocity;
+	private Vector3 m_NetworkAngularVelocity;
 	private double m_LastNetworkDataReceivedTime = 0;
 
 	private void Awake ()
@@ -29,6 +30,7 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 			// Update this rigidbody's position and velocity
 			m_Rigidbody.MovePosition (GetLerpedPosition ());
 			m_Rigidbody.AddForce (m_NetworkVelocity - m_Rigidbody.velocity, ForceMode.Acceleration);
+			m_Rigidbody.AddTorque (m_NetworkAngularVelocity - m_Rigidbody.angularVelocity, ForceMode.Acceleration);
 		}
 	}
 
@@ -38,11 +40,13 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 		{
 			stream.SendNext (m_Rigidbody.position);
 			stream.SendNext (m_Rigidbody.velocity);
+			stream.SendNext (m_Rigidbody.angularVelocity);
 		}
 		else
 		{
 			m_NetworkPosition = (Vector3) stream.ReceiveNext ();
 			m_NetworkVelocity = (Vector3) stream.ReceiveNext ();
+			m_NetworkAngularVelocity = (Vector3) stream.ReceiveNext ();
 
 			m_LastNetworkDataReceivedTime = info.timestamp;
 		}

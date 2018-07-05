@@ -8,6 +8,9 @@ public class Health : Photon.MonoBehaviour
 {
 	[SerializeField]
 	private int m_MaxHealth;
+
+	[SerializeField]
+	private bool m_GodMode;
 	
 	public IntUnityEvent onHealthChanged;
 	public UnityEvent onDie;
@@ -37,6 +40,12 @@ public class Health : Photon.MonoBehaviour
 		}
 	}
 
+	public virtual bool GodMode
+	{
+		get { return m_GodMode; }
+		private set { m_GodMode = value; }
+	}
+
 	protected virtual void Start ()
 	{
 		SetValueToMax ();
@@ -59,12 +68,12 @@ public class Health : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public virtual void Decrease (int amount)
+	public virtual void Decrease (int amount, string damageType = "generic")
 	{
 		SetValue (Value - amount);
 	}
 
-	public virtual void DecreaseRPC (int amount)
+	public virtual void DecreaseRPC (int amount, string damageType = "generic")
 	{
 		if ( PhotonNetwork.isMasterClient == false )
 		{

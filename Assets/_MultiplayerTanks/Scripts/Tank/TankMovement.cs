@@ -6,12 +6,12 @@ public class TankMovement : TankBase
 {
 	private static readonly Vector3 Horizontal = new Vector3 (1, 0, 1);
 
-	public Transform top;
-
+	[Header ("Move & Look Info")]
 	public float moveSpeed = 4;
 	public float rotateSpeed = 10;
 	public float lookSpeed = 50;
 
+	[Header ("Boost Info")]
 	public float boostSpeedMultiplier = 3;
 	public float maxBoost = 1;
 	public float boostUseSpeed = 3;
@@ -25,6 +25,16 @@ public class TankMovement : TankBase
 		private set;
 	}
 
+	public bool IsMoving
+	{
+		get { return Velocity != Vector3.zero; }
+	}
+
+	public bool IsGrounded
+	{
+		get { return Physics.Raycast (Collider.bounds.center, Physics.gravity.normalized, Collider.bounds.extents.y); }
+	}
+
 	public bool IsBoosting
 	{
 		get;
@@ -32,6 +42,18 @@ public class TankMovement : TankBase
 	}
 
 	public Rigidbody Rigidbody
+	{
+		get;
+		private set;
+	}
+
+	public Collider Collider
+	{
+		get;
+		private set;
+	}
+
+	public Transform Top
 	{
 		get;
 		private set;
@@ -68,6 +90,8 @@ public class TankMovement : TankBase
 	protected virtual void Awake ()
 	{
 		Rigidbody = GetComponent<Rigidbody> ();
+		Collider = GetComponent<Collider> ();
+		Top = transform.Find ("Top");
 	}
 
 	protected virtual void Update ()
@@ -106,7 +130,7 @@ public class TankMovement : TankBase
 	{
 		IsBoosting = false;
 		m_speed = moveSpeed;
-		if ( Input.GetKey (KeyCode.Space) )
+		if ( IsMoving && Input.GetKey (KeyCode.Space) )
 		{
 			IsBoosting = true;
 			m_speed = moveSpeed + moveSpeed * boostSpeedMultiplier * Boost;
@@ -119,8 +143,15 @@ public class TankMovement : TankBase
 		Boost = Mathf.Clamp (Boost, 0, maxBoost);
 	}
 
+	#region Movement
+
 	protected virtual void Move ()
 	{
+		if ( IsGrounded == false )
+		{
+			Rigidbody.AddForce (Physics.gravity * 9.81f);
+		}
+
 		Rigidbody.AddForce (TargetVelocity - Velocity, ForceMode.VelocityChange);
 	}
 
@@ -138,9 +169,12 @@ public class TankMovement : TankBase
 		if ( TargetLook == Quaternion.identity )
 			return;
 
-		top.rotation = Quaternion.Slerp (top.rotation, TargetLook, Time.deltaTime * lookSpeed);
+		Top.rotation = Quaternion.Slerp (Top.rotation, TargetLook, Time.deltaTime * lookSpeed);
 	}
 
+	#endregion
+
+	#region Target Setters
 
 	public void SetTargetDirection (Vector3 direction)
 	{
@@ -159,4 +193,25 @@ public class TankMovement : TankBase
 
 		TargetLook = Quaternion.LookRotation (targetDirection);
 	}
+
+	#endregion
+
+	#region Boost Setters
+
+	public void SetBoostToMin ()
+	{
+		Boost = 0;
+	}
+
+	public void SetBoostToMax ()
+	{
+		Boost = maxBoost;
+	}
+
+	public void SetBoost (float amount)
+	{
+		Boost = Mathf.Clamp (amount, 0, maxBoost);
+	}
+
+	#endregion
 }

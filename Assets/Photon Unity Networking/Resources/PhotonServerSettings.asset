@@ -66,4 +66,6 @@ MonoBehaviour:
   - ToString
   - AddForceRPC
   - SetPositionAndVelocity
+  - Display
+  - UpdateText
   DisableAutoOpenWizard: 1

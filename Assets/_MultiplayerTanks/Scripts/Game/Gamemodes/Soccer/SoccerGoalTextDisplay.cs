@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SoccerGoalTextDisplay : MonoBehaviour
+public class SoccerGoalTextDisplay : Photon.MonoBehaviour
 {
 	public float duration = 1.5f;
 
@@ -16,6 +16,7 @@ public class SoccerGoalTextDisplay : MonoBehaviour
 		gameObject.SetActive (false);
 	}
 
+	[PunRPC]
 	public void UpdateText (int team)
 	{
 		team1Score.color = GetColor (1);
@@ -38,6 +39,16 @@ public class SoccerGoalTextDisplay : MonoBehaviour
 		Display ();
 	}
 
+	public void UpdateTextRPC (int team)
+	{
+		if (PhotonNetwork.isMasterClient == false)
+		{
+			return;
+		}
+		photonView.RPC ("UpdateText", PhotonTargets.All, team);
+	}
+
+	
 	public void Display ()
 	{
 		gameObject.SetActive (true);

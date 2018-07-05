@@ -423,6 +423,11 @@ Prefab:
       propertyPath: fireRate
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114202015364617662, guid: 09e2abe5a9fdcae46ae702803640a23b,
+        type: 2}
+      propertyPath: localNametag
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 09e2abe5a9fdcae46ae702803640a23b, type: 2}
   m_IsPrefabParent: 0
