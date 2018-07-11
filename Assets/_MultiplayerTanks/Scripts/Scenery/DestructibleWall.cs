@@ -11,7 +11,5 @@ public class DestructibleWall : Wall
 		{
 			PhotonNetwork.Destroy (gameObject);
 		}
-
-		
 	}
 }

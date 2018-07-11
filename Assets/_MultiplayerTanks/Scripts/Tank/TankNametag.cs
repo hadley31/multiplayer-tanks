@@ -10,14 +10,14 @@ public class TankNametag : TankBase
 
 	private void Start ()
 	{
-		if ( photonView.isMine == true && localNametag == false )
-		{
-			return;
-		}
-
 		m_NametagObject = Instantiate (Resources.Load<Nametag> ("Nametag"), transform.position, Quaternion.identity);
 		m_NametagObject.Prime (transform);
 		RefreshTag ();
+
+		if ( photonView.isMine == true && localNametag == false )
+		{
+			Hide ();
+		}
 	}
 
 	private void OnDestroy ()
@@ -43,7 +43,16 @@ public class TankNametag : TankBase
 	public void Show ()
 	{
 		RefreshTag ();
+
+		if (string.IsNullOrWhiteSpace (Tank.OwnerAlias))
+		{
+			Hide ();
+			return;
+		}
+
 		m_NametagObject?.SetVisible (true);
+
+		Debug.Log ($"Now showing nametag for tank: {Tank.OwnerAlias}");
 	}
 
 	public void Hide ()

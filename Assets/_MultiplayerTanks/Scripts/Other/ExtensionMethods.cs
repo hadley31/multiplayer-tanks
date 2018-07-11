@@ -32,6 +32,11 @@ public static class ExtensionMethods
 		return new Vector3 (a.r, a.g, a.b);
 	}
 
+	public static Vector3 Limit (this Vector3 a, float limit = 1)
+	{
+		return a.sqrMagnitude > limit ? a.normalized * limit : a;
+	}
+
 	#endregion
 
 	#region PhotonPlayer
@@ -58,6 +63,11 @@ public static class ExtensionMethods
 		{
 			return defaultValue;
 		}
+	}
+
+	public static void ClearProperty (this PhotonPlayer player, string key)
+	{
+		player.SetProperty (key, null);
 	}
 
 	#region Ping

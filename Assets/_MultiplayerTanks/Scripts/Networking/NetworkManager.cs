@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 using Photon;
 using System.Collections;
@@ -22,6 +23,11 @@ public class NetworkManager : PunBehaviour
 	public static bool InRoom
 	{
 		get { return PhotonNetwork.inRoom; }
+	}
+
+	public static bool IsMasterClient
+	{
+		get { return PhotonNetwork.isMasterClient; }
 	}
 
 	public static int SendRate
@@ -284,6 +290,10 @@ public class NetworkManager : PunBehaviour
 			OnJoinRoom.Invoke ();
 		}
 
+		Player.Local.Photon.ClearProperty (PlayerProperty.Deaths);
+		Player.Local.Photon.ClearProperty (PlayerProperty.Kills);
+		Player.Local.Photon.ClearProperty (PlayerProperty.Team);
+
 		if ( OfflineMode == false )
 		{
 			StopAllCoroutines ();
@@ -354,6 +364,13 @@ public class NetworkManager : PunBehaviour
 		while ( PhotonNetwork.inRoom && !PhotonNetwork.offlineMode )
 		{
 			Player.Local.Photon.UpdatePing ();
+
+			//if (IsMasterClient)
+			//{
+			//	Player minPing = Player.All.Aggregate ((currMin, x) => (currMin == null || x.Ping < currMin.Ping) ? x : currMin);
+
+			//	PhotonNetwork.SetMasterClient (minPing.Photon);
+			//}
 
 			yield return new WaitForSeconds (pingRefeshRate);
 		}

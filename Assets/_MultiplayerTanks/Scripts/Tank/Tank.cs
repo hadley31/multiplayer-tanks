@@ -90,10 +90,10 @@ public class Tank : TankBase, IProjectileInteractive
 	{
 		if ( photonView.isMine && this.IsPlayer )
 		{
-			TankFollowCameraRig.Instance.OnlyFollow (this);
+			TankFollowCameraRig.Instance?.Follow (this);
 		}
 
-		Spawn ();
+		SpawnRPC ();
 	}
 
 	private void OnDestroy ()
@@ -121,7 +121,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 		if ( PhotonNetwork.isMasterClient )
 		{
-			Health.DecreaseRPC (p.Damage, "projectile");
+			Health.DecreaseRPC (p.Damage);
 			LastHitID = p.Sender.ID;
 		}
 

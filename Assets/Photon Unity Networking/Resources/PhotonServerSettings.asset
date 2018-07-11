@@ -68,4 +68,5 @@ MonoBehaviour:
   - SetPositionAndVelocity
   - Display
   - UpdateText
+  - OnHit
   DisableAutoOpenWizard: 1

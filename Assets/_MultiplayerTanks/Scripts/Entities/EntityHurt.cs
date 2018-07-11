@@ -9,31 +9,50 @@ public class EntityHurt : MonoBehaviour
 
 	private float m_HurtTimer = 0;
 	private List<Health> m_HurtList;
-	private int m_LastExecutedFrame = 0;
+	private Trigger m_Trigger;
 
-	public void UpdateHurt ()
+	private void Awake ()
 	{
-		if ( m_LastExecutedFrame == Time.frameCount )
+		m_Trigger = GetComponent<Trigger> ();
+	}
+
+	private void Update ()
+	{
+		if ( m_HurtList == null )
 		{
 			return;
 		}
 
-		m_LastExecutedFrame = Time.frameCount;
-
-		if ( m_HurtList != null && m_HurtList.Count > 0 )
+		m_HurtTimer += Time.deltaTime;
+		if ( m_HurtTimer >= hurtInterval && m_HurtList.Count > 0 )
 		{
-			m_HurtTimer += Time.deltaTime;
-			if ( m_HurtTimer >= hurtInterval )
+			Hurt ();
+		}
+	}
+
+	private void Hurt ()
+	{
+		if (NetworkManager.IsMasterClient == false)
+		{
+			return;
+		}
+
+		RemoveAllInactive ();
+
+		if (m_HurtList.Count == 0)
+		{
+			return;
+		}
+
+		for ( int i = m_HurtList.Count - 1; i >= 0; i-- )
+		{
+			Health h = m_HurtList[i];
+			if ( h != null )
 			{
-				for ( int i = m_HurtList.Count - 1; i >= 0; i-- )
-				{
-					Health h = m_HurtList[i];
-					if ( h != null )
-						h.DecreaseRPC (damage);
-				}
-				m_HurtTimer = 0;
+				h.DecreaseRPC (damage);
 			}
 		}
+		m_HurtTimer = 0;
 	}
 
 	public virtual void Add (Entity e)
@@ -59,5 +78,10 @@ public class EntityHurt : MonoBehaviour
 	public virtual void Remove (Entity e)
 	{
 		m_HurtList?.RemoveAll (x => x == e.Health || x == null);
+	}
+
+	public virtual void RemoveAllInactive ()
+	{
+		m_HurtList?.RemoveAll (x => x == null || x.gameObject.activeSelf == false || x.GetComponent<Collider> ().enabled == false || x.GetComponent<Collider> ().bounds.Intersects (m_Trigger.Collider.bounds) == false);
 	}
 }

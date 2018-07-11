@@ -19,10 +19,12 @@ public class NetworkTank : TankBase
 	private float m_NetworkTopRotation;
 	private double m_LastNetworkDataReceivedTime = 0;
 
+
 	public PhotonPlayer Owner
 	{
 		get { return photonView.owner; }
 	}
+
 
 	private void Update ()
 	{
@@ -31,6 +33,7 @@ public class NetworkTank : TankBase
 			UpdateTop ();
 		}
 	}
+
 
 	private void FixedUpdate ()
 	{
@@ -44,6 +47,7 @@ public class NetworkTank : TankBase
 			Movement.Rigidbody.rotation = Quaternion.Lerp (transform.rotation, newRotation, Time.fixedDeltaTime * rotateLerpSpeed);
 		}
 	}
+
 
 	private void OnPhotonSerializeView (PhotonStream stream, PhotonMessageInfo info)
 	{
@@ -67,12 +71,14 @@ public class NetworkTank : TankBase
 		}
 	}
 
+
 	private void UpdateTop ()
 	{
 		// Rotate the top in update
 		Quaternion newTopRotation = Quaternion.Euler (0, m_NetworkTopRotation, 0);
 		Movement.Top.rotation = Quaternion.Lerp (Movement.Top.rotation, newTopRotation, Time.deltaTime * lookLerpSpeed);
 	}
+
 
 	private Vector3 GetLerpedPosition ()
 	{

@@ -14,6 +14,18 @@ public class Nametag : MonoBehaviour
 		get { return gameObject.GetActive (); }
 	}
 
+	public string Name
+	{
+		get { return m_Text.text; }
+		set { m_Text.text = value; }
+	}
+
+	public Color Color
+	{
+		get { return m_Text.color; }
+		set { m_Text.color = value; }
+	}
+
 	private void Awake ()
 	{
 		m_Text = GetComponentInChildren<TextMeshPro> ();
@@ -26,12 +38,12 @@ public class Nametag : MonoBehaviour
 
 	public void SetName (string name)
 	{
-		m_Text.text = name;
+		this.Name = name;
 	}
 
 	public void SetColor (Color color)
 	{
-		m_Text.color = color;
+		this.Color = color;
 	}
 
 	public void SetVisible (bool visible)

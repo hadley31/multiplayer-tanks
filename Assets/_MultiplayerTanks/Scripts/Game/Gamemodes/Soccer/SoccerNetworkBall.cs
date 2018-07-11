@@ -7,8 +7,6 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 {
 	public float moveLerpSpeed = 4;
 
-	public float maxPositionError = 10;
-
 	private SoccerBall m_Ball;
 	private Rigidbody m_Rigidbody;
 
@@ -63,21 +61,9 @@ public class SoccerNetworkBall : Photon.MonoBehaviour
 		// Add together to get the total time passed
 		float totalTimePassed = pingInSeconds + timeSinceLastUpdate;
 
-	//	m_NetworkVelocity += Physics.gravity * totalTimePassed;
-
 		// Estimate the position of the tank using linear approximation
 		Vector3 estimatedPosition = m_NetworkPosition + ( m_NetworkVelocity * totalTimePassed );
 
-		Vector3 lerpedPosition = Vector3.Lerp (m_Rigidbody.position, estimatedPosition, Time.deltaTime * moveLerpSpeed);
-
-
-		if ( Vector3.SqrMagnitude (lerpedPosition - estimatedPosition) < maxPositionError )
-		{
-			return lerpedPosition;
-		}
-		else
-		{
-			return estimatedPosition;
-		}
+		return Vector3.Lerp (m_Rigidbody.position, estimatedPosition, Time.deltaTime * moveLerpSpeed);
 	}
 }

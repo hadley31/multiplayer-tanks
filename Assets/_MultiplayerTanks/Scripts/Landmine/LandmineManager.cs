@@ -75,6 +75,7 @@ public class LandmineManager : Photon.MonoBehaviour
 		landmine.SetSender (viewID);
 		landmine.SetID (mineID);
 		landmine.Health.SetMaxValue (health, true);
+		landmine.transform.SetParent (transform);
 
 		m_Landmines.Add (landmine);
 	}

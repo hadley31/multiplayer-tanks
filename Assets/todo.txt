@@ -1,6 +1,6 @@
 Todo:
-	- Create New Tank Model
-	- Reorganize Models, Materials, Textures
+	- (Done) Create New Tank Model
+	- (Done) Reorganize Models, Materials, Textures
 	- Add sounds
 		-- Bullet-Wall
 		-- Tank explode
@@ -8,7 +8,7 @@ Todo:
 	- Add visuals
 		-- Tank explode
 		-- Landmine explode
-		-- New bullet trail (maybe multiple)
+		-- New bullet trail (maybe multiple?)
 
 
 
@@ -21,13 +21,23 @@ Issues:
 	- Bullets sometimes pass through walls or destroy themselves before bouncing (valve plz fix)
 	- Projectile Manager needs better ID distribution system
 
-	- Nametags don't disappear when you die in soccer (the tanks are now seperate prefabs so it just needs to be updated)
+	- ***new unity prefab workflow will fix this issue*** 
+		Nametags don't disappear when you die in soccer (the tanks are now seperate prefabs so it just needs to be updated) (could this actually be a feature?)
 
 Ideas:
 	- Gamemodes:
 		-- Save the Tank
 		-- Soccer
+		-- Capture the flag
 		-- Batte Royale
 		-- One in the chamber
+		-- kill confirmed?
+
+		-- Fun Ideas
+			-- Players can only die from landmines. Projectiles still explode landmines (maybe a short fuse?)
+			-- Can only kill from bankshots
+
 	- bullet shaped projectiles
 	- tank path tracks
+	- different camera perspectives (how to?)
+	- tutorial level at some point

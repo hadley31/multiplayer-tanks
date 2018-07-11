@@ -65,9 +65,15 @@ public class TankMovement : TankBase
 		private set;
 	}
 
+	public bool BoostHeld
+	{
+		get;
+		private set;
+	}
+
 	public Vector3 TargetVelocity
 	{
-		get { return TargetDirection.normalized * m_speed; }
+		get { return TargetDirection * m_speed; }
 	}
 
 	public Quaternion TargetLook
@@ -85,6 +91,11 @@ public class TankMovement : TankBase
 	public Vector3 ActualVelocity
 	{
 		get { return Rigidbody.velocity; }
+	}
+
+	public Vector3 Position
+	{
+		get { return Rigidbody.position; }
 	}
 
 	protected virtual void Awake ()
@@ -130,7 +141,7 @@ public class TankMovement : TankBase
 	{
 		IsBoosting = false;
 		m_speed = moveSpeed;
-		if ( IsMoving && Input.GetKey (KeyCode.Space) )
+		if ( IsMoving && BoostHeld )
 		{
 			IsBoosting = true;
 			m_speed = moveSpeed + moveSpeed * boostSpeedMultiplier * Boost;
@@ -178,7 +189,12 @@ public class TankMovement : TankBase
 
 	public void SetTargetDirection (Vector3 direction)
 	{
-		TargetDirection = direction;
+		TargetDirection = direction.Limit ();
+	}
+
+	public void SetBoostHeld (bool value)
+	{
+		BoostHeld = value;
 	}
 
 	public void SetLookTarget (float targetAngle)

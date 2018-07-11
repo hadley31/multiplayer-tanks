@@ -55,6 +55,11 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		private set;
 	}
 
+	public bool HasBounced
+	{
+		get { return Bounces < MaxBounces; }
+	}
+
 	public int P_ID
 	{
 		get;
@@ -94,11 +99,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 	{
 		get;
 		private set;
-	}
-
-	public bool HasBounced
-	{
-		get { return Bounces < MaxBounces; }
 	}
 
 	#endregion

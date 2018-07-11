@@ -68,12 +68,12 @@ public class Health : Photon.MonoBehaviour
 	}
 
 	[PunRPC]
-	public virtual void Decrease (int amount, string damageType = "generic")
+	public virtual void Decrease (int amount)
 	{
 		SetValue (Value - amount);
 	}
 
-	public virtual void DecreaseRPC (int amount, string damageType = "generic")
+	public virtual void DecreaseRPC (int amount)
 	{
 		if ( PhotonNetwork.isMasterClient == false )
 		{

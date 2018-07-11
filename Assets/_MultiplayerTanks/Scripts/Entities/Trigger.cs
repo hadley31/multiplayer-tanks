@@ -10,19 +10,27 @@ public sealed class Trigger : Photon.MonoBehaviour
 	public EntUnityEvent onTriggerStay;
 	public EntUnityEvent onTriggerExit;
 
-	private Collider m_Collider;
-	private Rigidbody m_Rigidbody;
+	public Collider Collider
+	{
+		get;
+		private set;
+	}
+	public Rigidbody Rigidbody
+	{
+		get;
+		private set;
+	}
 
 	#region Monobehaviours
 
 	private void Awake ()
 	{
-		m_Collider = GetComponent<Collider> ();
-		m_Rigidbody = GetComponent<Rigidbody> ();
+		Collider = GetComponent<Collider> ();
+		Rigidbody = GetComponent<Rigidbody> ();
 
-		m_Collider.isTrigger = true;
-		m_Rigidbody.isKinematic = true;
-		m_Rigidbody.useGravity = false;
+		Collider.isTrigger = true;
+		Rigidbody.isKinematic = true;
+		Rigidbody.useGravity = false;
 	}
 
 	private void OnTriggerEnter (Collider other)

@@ -110,7 +110,7 @@ public class TankFollowCameraRig : MonoBehaviour
 
 	private void Scroll ()
 	{
-		if ( m_Tanks.Count == 0 || m_TargetPosition == Vector3.zero )
+		if ( m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false) )
 		{
 			Vector3 direction = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized;
 

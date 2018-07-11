@@ -91,6 +91,7 @@ public class ProjectileManager : Photon.MonoBehaviour
 		p.SetSender (viewID);
 		p.SetID (id);
 		p.Health.SetMaxValue (health, true);
+		p.transform.SetParent (transform);
 
 		m_Projectiles.Add (p);
 	}

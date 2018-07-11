@@ -5,6 +5,7 @@ using UnityEngine;
 public class TankInput : TankBase
 {
 	private const float Tank_Bottom_Height = 0.11f;
+	private const float SQRT2 = 1.41421356237f;
 
 	private Plane groundPlane;
 
@@ -28,9 +29,9 @@ public class TankInput : TankBase
 
 		Movement.SetLookTarget (GetLookTarget ());
 		Movement.SetTargetDirection (GetTargetDirection ());
+		Movement.SetBoostHeld (Input.GetButton ("boost"));
 
-
-		if ( Input.GetKeyDown (KeyCode.Mouse0) )
+		if ( Input.GetButtonDown ("shoot") )
 		{
 			Shooting.Shoot ();
 		}
@@ -56,9 +57,19 @@ public class TankInput : TankBase
 
 	private Vector3 GetTargetDirection ()
 	{
+		// Keyboard friendly input
+
 		float vert = Input.GetAxisRaw ("Vertical");
 		float horiz = Input.GetAxisRaw ("Horizontal");
 
 		return new Vector3 (horiz, 0, vert).normalized;
+
+
+		// Controller friendly input
+
+		//float vert = Input.GetAxis ("Vertical");
+		//float horiz = Input.GetAxis ("Horizontal");
+
+		//return new Vector3 (horiz, 0, vert) / SQRT2;
 	}
 }
