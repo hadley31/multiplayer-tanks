@@ -78,6 +78,8 @@ public class LandmineManager : Photon.MonoBehaviour
 		landmine.transform.SetParent (transform);
 
 		m_Landmines.Add (landmine);
+
+		m_LandmineID = mineID + 1;
 	}
 
 	public void DestroyRPC (int id)
@@ -105,6 +107,8 @@ public class LandmineManager : Photon.MonoBehaviour
 
 		if ( landmine != null )
 		{
+			landmine.SpawnExplosion ();
+
 			m_Landmines.Remove (landmine);
 			m_Pool.Reserve (landmine.GetComponent<PooledObject> ());
 		}

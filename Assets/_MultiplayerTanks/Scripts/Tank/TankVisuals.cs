@@ -118,7 +118,7 @@ public class TankVisuals : TankBase
 	{
 		if (PhotonNetwork.inRoom)
 		{
-			SetColorRPC (Player.Local.Photon.GetTeamColor ());
+			SetColorRPC (Tank.Team.Color);
 		}
 	}
 }

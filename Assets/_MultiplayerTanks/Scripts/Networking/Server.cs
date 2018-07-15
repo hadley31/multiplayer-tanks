@@ -81,6 +81,70 @@ public class Server
 		{
 			return (T) obj;
 		}
+
 		return defaultValue;
 	}
+
+	public void ClearProperty (string key)
+	{
+		SetProperty (key, null);
+	}
+
+	#region Team
+
+
+	public void SetTeamName (int team, string name)
+	{
+		SetProperty (RoomProperty.Team_Name + team, name);
+	}
+
+
+	public string GetTeamName (int team)
+	{
+		return GetProperty<string> (RoomProperty.Team_Name + team);
+	}
+
+
+	public void SetTeamSize (int size)
+	{
+		SetProperty (RoomProperty.Team_MaxSize, size);
+	}
+
+
+	public int GetTeamSize ()
+	{
+		return GetProperty<int> (RoomProperty.Team_MaxSize);
+	}
+
+
+	public void SetTeamColor (int team, Color color)
+	{
+		SetProperty (RoomProperty.Team_Color + team, color.ToVector ());
+	}
+
+
+	public Color GetTeamColor (int team)
+	{
+		return GetProperty (RoomProperty.Team_Color + team, Tank.Default_Color.ToVector ()).ToColor ();
+	}
+
+
+	public void SetTeamScore (int team, int amount)
+	{
+		SetProperty (RoomProperty.Team_Score + team, amount);
+	}
+
+
+	public int GetTeamScore (int team)
+	{
+		return GetProperty<int> (RoomProperty.Team_Score + team);
+	}
+
+
+	public void IncreaseTeamScore (int team, int amount)
+	{
+		SetTeamScore (team, GetTeamScore (team) + amount);
+	}
+
+	#endregion
 }

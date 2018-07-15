@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class TankInput : TankBase
 {
-	private const float Tank_Bottom_Height = 0.11f;
+	private const float Tank_Bottom_Height = 0.333f;
 	private const float SQRT2 = 1.41421356237f;
 
-	private Plane groundPlane;
+	public static bool InputOverride = false;
+
+	private Plane m_GroundPlane;
+
+
+	public Vector3 CursorPosition
+	{
+		get;
+		set;
+	}
 
 	private void Awake ()
 	{
-		groundPlane = new Plane (Vector3.up, Vector3.up * Tank_Bottom_Height);
+		CursorPosition = new Vector3 (Screen.width / 2, Screen.height / 2);
+		m_GroundPlane = new Plane (Vector3.up, Vector3.up * Tank_Bottom_Height);
 	}
 
 
@@ -26,6 +36,13 @@ public class TankInput : TankBase
 		{
 			return;
 		}
+
+		if (InputOverride == true)
+		{
+			return;
+		}
+
+		UpdateCursorPosition ();
 
 		Movement.SetLookTarget (GetLookTarget ());
 		Movement.SetTargetDirection (GetTargetDirection ());
@@ -42,12 +59,25 @@ public class TankInput : TankBase
 		}
 	}
 
-	private Vector3 GetLookTarget ()
+	private void UpdateCursorPosition ()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		Vector3 tempCursorPosition = CursorPosition;
+
+		tempCursorPosition.x += Input.GetAxis ("Mouse X") * 20f;
+		tempCursorPosition.y += Input.GetAxis ("Mouse Y") * 20f;
+
+		tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
+		tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);
+
+		CursorPosition = tempCursorPosition;
+	}
+
+	public Vector3 GetLookTarget ()
+	{
+		Ray ray = Camera.main.ScreenPointToRay (CursorPosition);
 
 		float enterPoint;
-		if ( groundPlane.Raycast (ray, out enterPoint) )
+		if ( m_GroundPlane.Raycast (ray, out enterPoint) )
 		{
 			return ray.GetPoint (enterPoint);
 		}

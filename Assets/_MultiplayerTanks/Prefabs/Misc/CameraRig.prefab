@@ -287,11 +287,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: 2800000, guid: eb611e4b17fe9e141a60447264a2fe6d, type: 3}
   scrollSpeed: 5
   followSpeed: 15
   cameraZoomSpeed: 5
-  defaultCameraZoom: 5
+  defaultCameraZoom: 8
+  cursorPrefab: {fileID: 114311163479895748, guid: a4ea66ec255737f40815b493dfa5f6f5,
+    type: 2}
 --- !u!124 &124020757889372950
 Behaviour:
   m_ObjectHideFlags: 1

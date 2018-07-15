@@ -58,12 +58,12 @@ public class ScoreboardElement : MonoBehaviour
 		teamNameText.text = Tank.Team.Name;
 
 
-		killsText.text = Tank.Owner.GetKills ().ToString ();
-		deathsText.text = Tank.Owner.GetDeaths ().ToString ();
-		scoreText.text = Tank.Owner.GetScore ().ToString ();
+		killsText.text = Tank.Kills.ToString ();
+		deathsText.text = Tank.Deaths.ToString ();
+		scoreText.text = Tank.Score.ToString ();
 
 		// get the ping of the player
-		int ping = Tank.Owner.GetPing ();
+		int ping = Tank.Owner.Ping;
 
 		// set the ping color to an interactive value
 		pingText.color = GetPingColor (ping);

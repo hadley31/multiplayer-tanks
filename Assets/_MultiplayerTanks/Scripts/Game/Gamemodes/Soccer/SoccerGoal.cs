@@ -26,19 +26,19 @@ public class SoccerGoal : MonoBehaviour
 		SoccerBall ball = ent.GetComponent<SoccerBall> ();
 
 
-		PhotonPlayer player = Tank.All.Find (x => x.ID == ball.LastViewToTouch).Owner;
+		Tank tank = Tank.All.Find (x => x.ID == ball.LastViewToTouch);
 
-		if ( player != null )
+		if ( tank != null )
 		{
 			int reward = playerPointsPerGoal;
-			if ( player.GetTeamNumber () != team )
+			if ( tank.Team.Number != team )
 			{
 				reward = -reward;
 			}
-			player.AddScore (reward);
+			tank.Kills++;
 		}
 
-		Server.Current.Photon.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
+		Server.Current.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
 
 		onScore.Invoke ();
 

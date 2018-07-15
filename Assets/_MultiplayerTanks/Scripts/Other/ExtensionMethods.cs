@@ -84,73 +84,6 @@ public static class ExtensionMethods
 
 	#endregion
 
-	#region Team
-
-	public static void SetTeam (this PhotonPlayer player, int teamNumber)
-	{
-		player.SetProperty (PlayerProperty.Team, teamNumber);
-	}
-
-	public static Team GetTeam (this PhotonPlayer player)
-	{
-		return Team.Get (player.GetTeamNumber ());
-	}
-
-	public static int GetTeamNumber (this PhotonPlayer player)
-	{
-		return player.GetProperty<int> (PlayerProperty.Team);
-	}
-
-	public static string GetTeamName (this PhotonPlayer player)
-	{
-		return PhotonNetwork.room.GetTeamName (player.GetTeamNumber ());
-	}
-
-	public static Color GetTeamColor (this PhotonPlayer player)
-	{
-		return PhotonNetwork.room.GetTeamColor (player.GetTeamNumber ());
-	}
-
-	#endregion
-
-	#region Kills
-
-	public static void SetKills (this PhotonPlayer player, int amount)
-	{
-		player.SetProperty (PlayerProperty.Kills, amount);
-	}
-
-	public static void IncreaseKills (this PhotonPlayer player, int amount = 1)
-	{
-		player.SetProperty (PlayerProperty.Kills, player.GetKills () + 1);
-	}
-
-	public static int GetKills (this PhotonPlayer player)
-	{
-		return player.GetProperty<int> (PlayerProperty.Kills);
-	}
-
-	#endregion
-
-	#region Deaths
-
-	public static void SetDeaths (this PhotonPlayer player, int amount)
-	{
-		player.SetProperty (PlayerProperty.Deaths, amount);
-	}
-
-	public static void IncreaseDeaths (this PhotonPlayer player, int amount = 1)
-	{
-		player.SetProperty (PlayerProperty.Deaths, player.GetDeaths () + 1);
-	}
-
-	public static int GetDeaths (this PhotonPlayer player)
-	{
-		return player.GetProperty<int> (PlayerProperty.Deaths);
-	}
-
-	#endregion
-
 	#endregion
 
 	#region Room
@@ -186,82 +119,20 @@ public static class ExtensionMethods
 		return defaultValue;
 	}
 
-	#region Map
-
-	public static void SetMap (this Room room, string map)
+	public static void ClearProperty (this Room room, string key)
 	{
-		room.SetProperty (RoomProperty.Map, map);
+		room.SetProperty (key, null);
 	}
 
-	public static string GetMap (this Room room)
+	public static void SetTankProperty (this Room room, string key, int tankID, object obj)
 	{
-		return room.GetProperty (RoomProperty.Map, string.Empty);
+		room.SetProperty (key + tankID, obj);
 	}
 
-	#endregion
-
-	#region Gamemode
-
-	public static void SetGamemode (this Room room, string gamemode)
+	public static T GetTankProperty<T> (this Room room, string key, int tankID, T defaultValue = default (T))
 	{
-		room.SetProperty (RoomProperty.Gamemode, gamemode);
+		return room.GetProperty<T> (key + tankID, defaultValue);
 	}
-
-	public static string GetGamemode (this Room room)
-	{
-		return room.GetProperty (RoomProperty.Gamemode, string.Empty);
-	}
-
-	#endregion
-
-	#region Team
-
-	public static void SetTeamName (this Room room, int team, string name)
-	{
-		room.SetProperty (RoomProperty.Team_Name + team, name);
-	}
-
-	public static string GetTeamName (this Room room, int team)
-	{
-		return room.GetProperty<string> (RoomProperty.Team_Name + team);
-	}
-
-	public static void SetTeamSize (this Room room, int size)
-	{
-		room.SetProperty (RoomProperty.Team_MaxSize, size);
-	}
-
-	public static int GetTeamSize (this Room room)
-	{
-		return room.GetProperty<int> (RoomProperty.Team_MaxSize);
-	}
-
-	public static void SetTeamColor (this Room room, int team, Color color)
-	{
-		room.SetProperty (RoomProperty.Team_Color + team, color.ToVector ());
-	}
-
-	public static Color GetTeamColor (this Room room, int team)
-	{
-		return room.GetProperty (RoomProperty.Team_Color + team, Tank.Default_Color.ToVector ()).ToColor ();
-	}
-
-	public static void SetTeamScore (this Room room, int team, int amount)
-	{
-		room.SetProperty (RoomProperty.Team_Score + team, amount);
-	}
-
-	public static int GetTeamScore (this Room room, int team)
-	{
-		return room.GetProperty<int> (RoomProperty.Team_Score + team);
-	}
-
-	public static void IncreaseTeamScore (this Room room, int team, int amount)
-	{
-		room.SetTeamScore (team, room.GetTeamScore (team) + amount);
-	}
-
-	#endregion
 
 	#endregion
 }

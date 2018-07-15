@@ -123,4 +123,18 @@ public abstract class TankBase : Photon.MonoBehaviour
 			return m_Health;
 		}
 	}
+
+	private NetworkTank m_NetworkTank;
+
+	public NetworkTank NetworkTank
+	{
+		get
+		{
+			if (m_NetworkTank == null)
+			{
+				m_NetworkTank = GetComponent<NetworkTank> ();
+			}
+			return m_NetworkTank;
+		}
+	}
 }

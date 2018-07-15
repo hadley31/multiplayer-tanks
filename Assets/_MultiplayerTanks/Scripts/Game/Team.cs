@@ -8,8 +8,13 @@ public struct Team
 
 	public static Team Get (int number)
 	{
-		string name = Server.Current.Photon.GetTeamName (number);
-		Color color = Server.Current.Photon.GetTeamColor (number);
+		if (number <= 0)
+		{
+			return None;
+		}
+
+		string name = Server.Current.GetTeamName (number);
+		Color color = Server.Current.GetTeamColor (number);
 
 		return new Team (name, number, color);
 	}

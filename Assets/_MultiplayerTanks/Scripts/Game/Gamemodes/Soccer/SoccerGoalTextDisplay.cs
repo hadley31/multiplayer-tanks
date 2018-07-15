@@ -64,16 +64,16 @@ public class SoccerGoalTextDisplay : Photon.MonoBehaviour
 
 	private string GetName (int team)
 	{
-		return Server.Current?.Photon.GetTeamName (team) ?? $"Team {team}";
+		return Server.Current?.GetTeamName (team) ?? $"Team {team}";
 	}
 
 	private int GetScore (int team)
 	{
-		return Server.Current?.Photon.GetTeamScore (team) ?? 0;
+		return Server.Current?.GetTeamScore (team) ?? 0;
 	}
 
 	private Color GetColor (int team)
 	{
-		return Server.Current?.Photon.GetTeamColor (team) ?? Tank.Default_Color;
+		return Server.Current?.GetTeamColor (team) ?? Tank.Default_Color;
 	}
 }

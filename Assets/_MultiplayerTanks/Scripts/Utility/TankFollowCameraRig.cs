@@ -1,29 +1,35 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Cinemachine;
 
 public class TankFollowCameraRig : MonoBehaviour
 {
+	public static readonly Color[] Colors = { Color.red, Color.blue, Color.green, Color.grey, Color.yellow, Color.magenta };
+
 	public static TankFollowCameraRig Instance
 	{
 		get;
 		private set;
 	}
-
-	public Texture2D crosshair;
+	
 	public float scrollSpeed = 5;
 
 	[Header ("Follow Tank")]
 	public float followSpeed = 15.0f;
-	public float cameraZoomSpeed = 5.0f;
-	public float defaultCameraZoom = 5f;
+	public float cameraZoomSpeed = 8.0f;
+	public float defaultCameraDistance = 15.0f;
+	
+	[Header ("Cursor")]
+	public Image cursorPrefab;
 
-	private readonly List<Tank> m_Tanks = new List<Tank> ();
+	[SerializeField]
+	private List<Tank> m_Tanks = new List<Tank> ();
+	private List<Image> m_TankCursors = new List<Image> ();
 
 	private Vector3 m_TargetPosition;
 	private float m_TargetCameraDistance;
-	private bool m_TankWasNull = true;
 
 	#region Properties
 
@@ -59,6 +65,8 @@ public class TankFollowCameraRig : MonoBehaviour
 		Camera = transform.Find ("Main Camera Parent/Camera").GetComponent<Camera> ();
 		MinimapCamera = transform.Find ("Minimap").GetComponent<Camera> ();
 		Light = GetComponentInChildren<Light> ();
+
+		m_TargetCameraDistance = defaultCameraDistance;
 	}
 
 	private void OnEnable ()
@@ -84,29 +92,16 @@ public class TankFollowCameraRig : MonoBehaviour
 
 	private void Update ()
 	{
-		UpdateCursor ();
 		Scroll ();
 	}
 
 	private void LateUpdate ()
 	{
+		UpdateCursors ();
 		FollowTank ();
 	}
 
 	#endregion
-
-	private void UpdateCursor ()
-	{
-		if ( m_Tanks.Count > 0 && m_TankWasNull )
-		{
-			Cursor.SetCursor (crosshair, new Vector2 (crosshair.width / 2, crosshair.height / 2), CursorMode.Auto);
-		}
-		else if ( m_Tanks.Count == 0 && !m_TankWasNull )
-		{
-			Cursor.SetCursor (null, Vector2.zero, CursorMode.Auto);
-		}
-		m_TankWasNull = m_Tanks.Count == 0;
-	}
 
 	private void Scroll ()
 	{
@@ -132,7 +127,7 @@ public class TankFollowCameraRig : MonoBehaviour
 
 		Vector3 camPos = Camera.transform.localPosition;
 
-		camPos.z = Mathf.Lerp (camPos.z, -m_TargetCameraDistance - defaultCameraZoom, Time.deltaTime * cameraZoomSpeed);
+		camPos.z = Mathf.Lerp (camPos.z, -m_TargetCameraDistance - defaultCameraDistance, Time.deltaTime * cameraZoomSpeed);
 
 		Camera.transform.localPosition = camPos;
 
@@ -169,13 +164,14 @@ public class TankFollowCameraRig : MonoBehaviour
 
 		if (aliveTanks.Count == 0)
 		{
+			m_TargetCameraDistance = 0;
 			return;
 		}
 
 		if (aliveTanks.Count == 1)
 		{
-			m_TargetCameraDistance = 10;
-			m_TargetPosition = MainTarget.transform.position;
+			m_TargetCameraDistance = 0;
+			m_TargetPosition = aliveTanks[0].transform.position;
 			return;
 		}
 
@@ -190,7 +186,43 @@ public class TankFollowCameraRig : MonoBehaviour
 
 		float maxDistance = Vector3.Magnitude (min - max);
 
-		m_TargetCameraDistance = ( maxDistance / 2 / Camera.aspect ) / Mathf.Tan (Camera.fieldOfView / 2);
+		m_TargetCameraDistance = ( maxDistance / 2 / Camera.aspect ) / Mathf.Tan (Camera.fieldOfView * Mathf.Deg2Rad / 2);
 		m_TargetPosition = Vector3.Lerp (min, max, 0.5f);
+	}
+
+	public void UpdateCursors ()
+	{
+		NormalizeCursorCount ();
+
+		for ( int i = 0; i < m_Tanks.Count; i++ )
+		{
+			if (m_Tanks[i].TankInput == null)
+			{
+				return;
+			}
+
+			m_TankCursors[i].color = Colors[i % Colors.Length];
+
+			Vector3 position = m_Tanks[i].photonView.isMine ?
+				m_Tanks[i].TankInput.CursorPosition : Camera.WorldToScreenPoint (m_Tanks[i].NetworkTank.CursorWorldPosition);
+			
+			m_TankCursors[i].rectTransform.position = position;
+		}
+	}
+
+	private void NormalizeCursorCount ()
+	{
+		while ( m_TankCursors.Count < m_Tanks.Count )
+		{
+			Image rt = Instantiate (cursorPrefab, CanvasPanel.Instance.transform);
+
+			m_TankCursors.Add (rt);
+		}
+
+		while (m_TankCursors.Count > m_Tanks.Count)
+		{
+			Destroy (m_TankCursors[0].gameObject);
+			m_TankCursors.RemoveAt (0);
+		}
 	}
 }

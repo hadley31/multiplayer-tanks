@@ -6,11 +6,6 @@ using UnityEngine;
 [RequireComponent (typeof(ProjectileHealth))]
 public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 {
-	public GameObject GameObject
-	{
-		get { return gameObject; }
-	}
-
 	public const float Radius = 0.075f;
 	private const float Interaction_Cooldown = 0.01f;
 
@@ -84,7 +79,7 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		private set;
 	}
 
-	public PhotonPlayer Owner
+	public Player Owner
 	{
 		get { return Sender?.Owner; }
 	}
@@ -130,7 +125,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		IProjectileInteractive interaction = col.GetComponent<IProjectileInteractive> ();
 		if ( interaction != null )
 		{
-			OnInteraction (interaction.GameObject);
 			interaction.OnProjectileInteraction (this);
 		}
 
@@ -138,11 +132,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 	}
 
 	#endregion
-
-	private void OnInteraction (GameObject obj)
-	{
-
-	}
 
 	public void OnProjectileInteraction (Projectile p)
 	{

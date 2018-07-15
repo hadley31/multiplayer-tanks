@@ -29,6 +29,19 @@ public abstract class Gamemode : Photon.MonoBehaviour
 	public abstract void OnRoundStart ();
 	[PunRPC]
 	public abstract void OnRoundEnd ();
+
+	public virtual bool ProjectileDoesDamage (Projectile p, Tank tank)
+	{
+		return p.Sender?.Team != tank?.Team;
+	}
+
+	public virtual bool LandmineDoesDamage (Landmine mine, Tank tank)
+	{
+		return true;
+	}
+
+
+
 	public abstract string GetShortName ();
 	public abstract override string ToString ();
 }

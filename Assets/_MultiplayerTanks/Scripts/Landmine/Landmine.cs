@@ -20,11 +20,6 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 
 	#region Properties
 
-	public GameObject GameObject
-	{
-		get { return gameObject; }
-	}
-
 	public int Damage
 	{
 		get;
@@ -55,9 +50,9 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 		private set;
 	}
 
-	public PhotonPlayer Owner
+	public Player Owner
 	{
-		get { return Sender.Owner; }
+		get { return Sender?.Owner; }
 	}
 
 	public LandmineHealth Health
@@ -102,7 +97,11 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			Explode ();	
+			Explode ();
+		}
+		else
+		{
+			p.Destroy ();
 		}
 	}
 
@@ -135,9 +134,10 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 		DestroyRPC ();
 	}
 
-	private void SpawnExplosion ()
+	public void SpawnExplosion ()
 	{
 		// Spawn explosion
+		Instantiate (LandmineExplosion.Get (0), transform.position, Quaternion.identity).Prime (Radius, 0.5f);
 	}
 
 	#region Property Setters

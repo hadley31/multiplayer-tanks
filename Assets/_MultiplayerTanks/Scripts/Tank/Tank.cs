@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[Serializable]
 [RequireComponent (typeof (Health))]
 public class Tank : TankBase, IProjectileInteractive
 {
@@ -37,18 +38,7 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return TankInput != null; }
 	}
 
-	public GameObject GameObject
-	{
-		get { return gameObject; }
-	}
-
-	public Team Team
-	{
-		get { return Owner?.GetTeam () ?? Team.None; }
-		set { Owner.SetTeam (value); }
-	}
-
-	public PhotonPlayer Owner
+	public Player Owner
 	{
 		get { return photonView.owner; }
 	}
@@ -60,13 +50,52 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public string OwnerAlias
 	{
-		get { return Owner?.NickName ?? string.Empty; }
+		get { return Owner?.Name ?? string.Empty; }
 	}
 
 	public int LastHitID
 	{
 		get;
 		set;
+	}
+
+	public int Score
+	{
+		get { return GetProperty (TankProperty.Score, 0); }
+		set { SetProperty (TankProperty.Score, value); }
+	}
+
+	public int Kills
+	{
+		get { return GetProperty (TankProperty.Kills, 0); }
+		set { SetProperty (TankProperty.Kills, value); }
+	}
+
+	public int Deaths
+	{
+		get { return GetProperty (TankProperty.Deaths, 0); }
+		set { SetProperty (TankProperty.Deaths, value); }
+	}
+
+	public Team Team
+	{
+		get { return Team.Get (GetProperty (TankProperty.Team, 0)); }
+		set { SetProperty (TankProperty.Team, (int) value); }
+	}
+
+	public void SetProperty (string key, object value)
+	{
+		Server.Current.SetProperty (key + this.ID, value);
+	}
+
+	public T GetProperty<T> (string key, T defaultValue = default(T))
+	{
+		return Server.Current.GetProperty<T> (key + this.ID, defaultValue);
+	}
+
+	public void ClearProperty (string key)
+	{
+		Server.Current.ClearProperty (key);
 	}
 
 	#endregion

@@ -13,14 +13,14 @@ public class SetTeamValues : MonoBehaviour
 		{
 			int index = i + 1;
 
-			Server.Current.Photon.SetTeamName (index, teamNames[i]);
+			Server.Current.SetTeamName (index, teamNames[i]);
 		}
 
 		for ( int i = 0; i < teamColors.Count; i++ )
 		{
 			int index = i + 1;
 
-			Server.Current.Photon.SetTeamColor (index, teamColors[i]);
+			Server.Current.SetTeamColor (index, teamColors[i]);
 		}
 	}
 }

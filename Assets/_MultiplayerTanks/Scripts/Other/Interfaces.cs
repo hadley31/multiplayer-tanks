@@ -2,11 +2,6 @@
 
 public interface IProjectileInteractive
 {
-	GameObject GameObject
-	{
-		get;
-	}
-
 	void OnProjectileInteraction (Projectile p);
 }
 

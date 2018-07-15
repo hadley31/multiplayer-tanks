@@ -290,9 +290,9 @@ public class NetworkManager : PunBehaviour
 			OnJoinRoom.Invoke ();
 		}
 
-		Player.Local.Photon.ClearProperty (PlayerProperty.Deaths);
-		Player.Local.Photon.ClearProperty (PlayerProperty.Kills);
-		Player.Local.Photon.ClearProperty (PlayerProperty.Team);
+		Player.Local.Photon.ClearProperty (TankProperty.Deaths);
+		Player.Local.Photon.ClearProperty (TankProperty.Kills);
+		Player.Local.Photon.ClearProperty (TankProperty.Team);
 
 		if ( OfflineMode == false )
 		{

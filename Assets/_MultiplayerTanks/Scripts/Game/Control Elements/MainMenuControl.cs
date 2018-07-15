@@ -9,6 +9,9 @@ public class MainMenuControl : ControlElement
 
 	public override void OnGainControl ()
 	{
+		Cursor.lockState = CursorLockMode.None;
+		Cursor.visible = true;
+
 		if ( NetworkManager.IsConnected )
 		{
 			NetworkManager.Disconnect ();

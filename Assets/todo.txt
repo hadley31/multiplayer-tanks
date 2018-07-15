@@ -1,14 +1,14 @@
 Todo:
 	- (Done) Create New Tank Model
 	- (Done) Reorganize Models, Materials, Textures
-	- Add sounds
+	- Add sounds (variation? unlockables?)
 		-- Bullet-Wall
 		-- Tank explode
 		-- Landmine explode
 	- Add visuals
-		-- Tank explode
-		-- Landmine explode
-		-- New bullet trail (maybe multiple?)
+		-- Tank explode (multiple designs? unlockable?)
+		-- Landmine explode (multiple designs? unlockable?)
+		-- New bullet trail (maybe multiple? unlockable?)
 
 
 
@@ -37,7 +37,7 @@ Ideas:
 			-- Players can only die from landmines. Projectiles still explode landmines (maybe a short fuse?)
 			-- Can only kill from bankshots
 
-	- bullet shaped projectiles
-	- tank path tracks
+	- bullet shaped projectiles (different shaped projectiles? unlockable?)
+	- tank path tracks (multiple?)
 	- different camera perspectives (how to?)
 	- tutorial level at some point

@@ -15,9 +15,17 @@ public class NetworkTank : TankBase
 
 	private Vector3 m_NetworkPosition;
 	private Vector3 m_NetworkVelocity;
+	private Vector3 m_TargetCursorWorldPos;
 	private float m_NetworkRotation;
 	private float m_NetworkTopRotation;
 	private double m_LastNetworkDataReceivedTime = 0;
+
+
+	public Vector3 CursorWorldPosition
+	{
+		get;
+		private set;
+	}
 
 
 	public PhotonPlayer Owner
@@ -31,6 +39,7 @@ public class NetworkTank : TankBase
 		if (!photonView.isMine)
 		{
 			UpdateTop ();
+			CursorWorldPosition = Vector3.Lerp (CursorWorldPosition, m_TargetCursorWorldPos, Time.deltaTime * 10);
 		}
 	}
 
@@ -58,6 +67,8 @@ public class NetworkTank : TankBase
 
 			stream.SendNext (Movement.Rigidbody.rotation.eulerAngles.y);
 			stream.SendNext (Movement.Top.eulerAngles.y);
+
+			stream.SendNext (TankInput.GetLookTarget ());
 		}
 		else
 		{
@@ -66,6 +77,8 @@ public class NetworkTank : TankBase
 
 			m_NetworkRotation = (float) stream.ReceiveNext ();
 			m_NetworkTopRotation = (float) stream.ReceiveNext ();
+
+			m_TargetCursorWorldPos = (Vector3) stream.ReceiveNext ();
 
 			m_LastNetworkDataReceivedTime = info.timestamp;
 		}

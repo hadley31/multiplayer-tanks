@@ -94,6 +94,8 @@ public class ProjectileManager : Photon.MonoBehaviour
 		p.transform.SetParent (transform);
 
 		m_Projectiles.Add (p);
+
+		m_ProjectileID = id + 1;
 	}
 
 	public void DestroyRPC (int id)

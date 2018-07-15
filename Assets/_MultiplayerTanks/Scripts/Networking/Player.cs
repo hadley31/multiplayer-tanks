@@ -78,36 +78,35 @@ public class Player
 
 	public string Name
 	{
-		get { return Photon.NickName; }
+		get { return Photon?.NickName; }
 	}
 
 	public bool IsLocal
 	{
-		get { return Photon.IsLocal; }
+		get { return Photon?.IsLocal ?? false; }
 	}
 
 	public bool IsMasterClient
 	{
-		get { return Photon.IsMasterClient; }
+		get { return Photon?.IsMasterClient ?? false; }
 	}
 
 	public int ID
 	{
-		get { return Photon.ID; }
+		get { return Photon?.ID ?? 0; }
 	}
 
 	public int Ping
 	{
-		get { return Photon.GetPing (); }
-	}
-
-	public Team Team
-	{
-		get { return Photon.GetTeam (); }
-		set { Photon.SetTeam (value); }
+		get { return Photon?.GetPing () ?? 0; }
 	}
 
 	#endregion
+
+	public Tank GetTank ()
+	{
+		return Tank.All.Find (x => x.Owner == this);
+	}
 
 	private Player (PhotonPlayer photonPlayer)
 	{

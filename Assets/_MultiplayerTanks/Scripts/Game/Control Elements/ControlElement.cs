@@ -16,11 +16,26 @@ public abstract class ControlElement : MonoBehaviour
 
 	protected virtual void OnEnable ()
 	{
+		GiveControl ();
+	}
+
+	protected virtual void OnDisable ()
+	{
+		RevokeControl ();
+	}
+
+	public virtual void GiveControl ()
+	{
+		if (this.gameObject.activeSelf == false || this.enabled == false)
+		{
+			return;
+		}
+
 		Universe.controls.Add (this);
 		Debug.Log (name + " has been added to controls");
 	}
 
-	protected virtual void OnDisable ()
+	public virtual void RevokeControl ()
 	{
 		Universe.controls.Remove (this);
 		Debug.Log (name + " has been removed from controls");
