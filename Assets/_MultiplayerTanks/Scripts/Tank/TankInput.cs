@@ -63,8 +63,8 @@ public class TankInput : TankBase
 	{
 		Vector3 tempCursorPosition = CursorPosition;
 
-		tempCursorPosition.x += Input.GetAxis ("Mouse X") * 5.0f;
-		tempCursorPosition.y += Input.GetAxis ("Mouse Y") * 5.0f;
+		tempCursorPosition.x += Input.GetAxis ("Mouse X");
+		tempCursorPosition.y += Input.GetAxis ("Mouse Y");
 
 		tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
 		tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);
