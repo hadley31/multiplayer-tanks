@@ -16,6 +16,7 @@ public class TankShoot : TankBase
 	public int damage = 100;
 	public int health = 1;
 	public float speed = 5;
+	public float radius = 0.075f;
 	public float relativeSpeedEffect = 0.5f;
 
 
@@ -23,7 +24,7 @@ public class TankShoot : TankBase
 
 	public void Shoot ()
 	{
-		if ( photonView.isMine == false )
+		if ( Tank.IsLocal == false )
 		{
 			return;
 		}
@@ -60,7 +61,7 @@ public class TankShoot : TankBase
 		start.y += direction.y;
 		direction.y = 0;
 
-		float distance = direction.magnitude + Projectile.Radius * 5;
+		float distance = direction.magnitude + radius * 5;
 
 		RaycastHit hitInfo;
 		if ( Physics.Raycast (start, direction, out hitInfo, distance) == false)

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TankBase : Photon.MonoBehaviour
+public abstract class TankBase : EntityBase
 {
 	private Tank m_Tank;
 
@@ -106,21 +106,6 @@ public abstract class TankBase : Photon.MonoBehaviour
 			}
 
 			return m_Visuals;
-		}
-	}
-
-	private Health m_Health;
-
-	public Health Health
-	{
-		get
-		{
-			if (m_Health == null)
-			{
-				m_Health = GetComponent<Health> ();
-			}
-
-			return m_Health;
 		}
 	}
 

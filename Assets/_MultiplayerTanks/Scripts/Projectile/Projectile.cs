@@ -4,17 +4,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(ProjectileHealth))]
-public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
+public class Projectile : EntityBase, IProjectileInteractive
 {
-	public const float Radius = 0.075f;
-	private const float Interaction_Cooldown = 0.01f;
+	public const float RADIUS = 0.075f;
+	private const float Interaction_Cooldown = 0.03f;
 
 	#region Private Fields
 
 	private float m_InteractTimer;
 	private float m_LifeTimer;
 	private float m_SqrDistanceToNextHit;
-	private ProjectileHealth m_Health;
 
 	#endregion
 
@@ -55,6 +54,11 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		get { return Bounces < MaxBounces; }
 	}
 
+	public float Radius
+	{
+		get { return RADIUS; }
+	}
+
 	public int P_ID
 	{
 		get;
@@ -90,12 +94,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 		private set;
 	}
 
-	public ProjectileHealth Health
-	{
-		get;
-		private set;
-	}
-
 	#endregion
 
 	#region Monobehaviors
@@ -103,7 +101,6 @@ public class Projectile : Photon.MonoBehaviour, IProjectileInteractive
 	protected void Awake ()
 	{
 		this.Rigidbody = GetComponent<Rigidbody> ();
-		this.Health = GetComponent<ProjectileHealth> ();
 	}
 
 	protected void Update ()

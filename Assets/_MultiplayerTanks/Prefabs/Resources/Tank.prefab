@@ -589,14 +589,12 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1674659365865050}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ba9b9c5650ecf104db42f1d3e8380393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  barrel: {fileID: 4463067625149264}
-  reflectCount: 1
-  castRadius: 0.075
+  reflectCount: 4
   helperColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114646138972735246
 MonoBehaviour:
@@ -699,6 +697,7 @@ MonoBehaviour:
   damage: 100
   health: 1
   speed: 5
+  radius: 0.075
   relativeSpeedEffect: 0.5
 --- !u!114 &114990592527650200
 MonoBehaviour:

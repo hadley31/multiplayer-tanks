@@ -5,23 +5,8 @@ using UnityEngine;
 public delegate void EntityDelegate (Entity e);
 
 [System.Serializable]
-public class Entity : Photon.MonoBehaviour
+public class Entity : EntityBase
 {
-	private Health m_Health;
-
-	public Health Health
-	{
-		get
-		{
-			if (!m_Health)
-			{
-				m_Health = GetComponent<Health> ();
-			}
-
-			return m_Health;
-		}
-	}
-
 	public bool Is<T> ()
 	{
 		return GetComponent<T> () != null;

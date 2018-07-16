@@ -34,7 +34,7 @@ public class TankLandmine : TankBase
 
 	private void Update ()
 	{
-		if ( photonView.isMine == false )
+		if ( Tank.IsLocal == false )
 		{
 			return;
 		}

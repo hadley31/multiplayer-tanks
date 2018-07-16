@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class TankNametag : TankBase
 {
@@ -14,7 +13,7 @@ public class TankNametag : TankBase
 		m_NametagObject.Prime (transform);
 		RefreshTag ();
 
-		if ( photonView.isMine == true && localNametag == false )
+		if ( Tank.IsLocal == true && localNametag == false )
 		{
 			Hide ();
 		}

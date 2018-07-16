@@ -1,12 +1,13 @@
 fileFormatVersion: 2
 guid: 889385c561a8a4f44ae60e04f476d59d
-timeCreated: 1527191944
-licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
-  executionOrder: 0
+  defaultReferences:
+  - spawnpoint: {instanceID: 0}
+  - cameraRigPrefab: {fileID: 114009223921399064, guid: eefa4a7489ecd5a4e90baf50b6cf6dd6,
+      type: 2}
+  executionOrder: 200
   icon: {instanceID: 0}
   userData: 
   assetBundleName: 

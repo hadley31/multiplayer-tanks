@@ -6,34 +6,46 @@ using UnityEngine;
 [System.Serializable]
 public class AimHelper : GizmoHelper
 {
-	public Transform barrel;
 	public int reflectCount;
-	public float castRadius;
 	public Color helperColor = Color.green;
+
+	private TankShoot m_Shoot;
+
+	private void Awake ()
+	{
+		m_Shoot = GetComponent<TankShoot> ();
+	}
 
 	public override void Draw ()
 	{
 		Gizmos.color = helperColor;
-		if ( barrel != null )
+		if ( m_Shoot?.spawnPoint != null && m_Shoot.Tank.IsAlive )
 		{
 			List<Vector3> points = new List<Vector3> ();
-			Vector3 position = barrel.position;
-			Vector3 direction = barrel.forward;
+			Vector3 position = m_Shoot.spawnPoint.position;
+			Vector3 direction = m_Shoot.spawnPoint.forward;
 
 			points.Add (position);
-			for ( int i = 0; i <= reflectCount; i++ )
+			for ( int i = 0; i <= m_Shoot.bounces; i++ )
 			{
 				RaycastHit hitInfo;
-				if ( Physics.SphereCast (position, castRadius, direction, out hitInfo, 1000, LayerMask.GetMask ("Wall", "Tank")) )
+				if ( Physics.SphereCast (position, m_Shoot.radius, direction, out hitInfo, 1000) )
 				{
-					points.Add (hitInfo.point);
+					IProjectileInteractive interactive = hitInfo.transform.GetComponent<IProjectileInteractive> ();
 
-					if ( hitInfo.transform.GetComponent<Tank> () != null )
+					if ( interactive == null )
 					{
 						break;
 					}
 
-					position = hitInfo.point + hitInfo.normal * castRadius;
+					points.Add (hitInfo.point);
+
+					if ( hitInfo.transform.GetComponent<Wall> () == null )
+					{
+						break;
+					}
+
+					position = hitInfo.point + hitInfo.normal * m_Shoot.radius;
 					direction = Vector3.Reflect (direction, hitInfo.normal);
 				}
 				else

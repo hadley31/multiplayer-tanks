@@ -9,6 +9,7 @@ Todo:
 		-- Tank explode (multiple designs? unlockable?)
 		-- Landmine explode (multiple designs? unlockable?)
 		-- New bullet trail (maybe multiple? unlockable?)
+		-- Tank skins? (at some point maybe)
 
 
 
@@ -34,8 +35,8 @@ Ideas:
 		-- kill confirmed?
 
 		-- Fun Ideas
-			-- Players can only die from landmines. Projectiles still explode landmines (maybe a short fuse?)
-			-- Can only kill from bankshots
+			--- Players can only die from landmines. Projectiles still explode landmines (maybe a short fuse?)
+			--- Can only kill from bankshots
 
 	- bullet shaped projectiles (different shaped projectiles? unlockable?)
 	- tank path tracks (multiple?)

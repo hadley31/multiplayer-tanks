@@ -107,7 +107,7 @@ public class TankMovement : TankBase
 
 	protected virtual void Update ()
 	{
-		if (photonView.isMine == false)
+		if (Tank.IsLocal == false)
 		{
 			return;
 		}
@@ -123,7 +123,7 @@ public class TankMovement : TankBase
 
 	protected virtual void FixedUpdate ()
 	{
-		if (photonView.isMine == false)
+		if (Tank.IsLocal == false)
 		{
 			return;
 		}

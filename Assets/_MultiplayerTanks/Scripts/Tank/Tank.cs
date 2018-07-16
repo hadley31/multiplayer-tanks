@@ -38,6 +38,11 @@ public class Tank : TankBase, IProjectileInteractive
 		get { return TankInput != null; }
 	}
 
+	public bool IsLocal
+	{
+		get { return photonView.isMine; }
+	}
+
 	public Player Owner
 	{
 		get { return photonView.owner; }
@@ -104,7 +109,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	private void Awake ()
 	{
-		if ( photonView.isMine && this.IsPlayer )
+		if ( IsLocal && IsPlayer )
 		{
 			Local = this;
 		}

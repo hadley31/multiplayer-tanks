@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent (typeof (Entity))]
-public class Health : Photon.MonoBehaviour
+public class Health : EntityBase
 {
 	[SerializeField]
 	private int m_MaxHealth;

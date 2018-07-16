@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (LandmineHealth))]
-public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
+public class Landmine : EntityBase, IProjectileInteractive
 {
-	// public GameObject explosion;
-
 	#region Private Fields
 
 	private Material m_Material;
@@ -55,12 +53,6 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 		get { return Sender?.Owner; }
 	}
 
-	public LandmineHealth Health
-	{
-		get;
-		private set;
-	}
-
 	#endregion
 
 	#region Monobehaviours
@@ -68,7 +60,6 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 	private void Awake ()
 	{
 		this.m_Material = GetComponentInChildren<Renderer> ().material;
-		this.Health = GetComponent<LandmineHealth> ();
 	}
 
 	private void Update ()
@@ -95,14 +86,9 @@ public class Landmine : Photon.MonoBehaviour, IProjectileInteractive
 
 	public void OnProjectileInteraction (Projectile p)
 	{
-		if (PhotonNetwork.isMasterClient)
-		{
-			Explode ();
-		}
-		else
-		{
-			p.Destroy ();
-		}
+		Health.DecreaseRPC (p.Damage);
+
+		p.DestroyRPC ();
 	}
 
 	public void Explode ()

@@ -27,7 +27,7 @@ public class TankInput : TankBase
 
 	private void Update ()
 	{
-		if ( photonView.isMine == false )
+		if ( Tank.IsLocal == false )
 		{
 			return;
 		}
@@ -46,14 +46,14 @@ public class TankInput : TankBase
 
 		Movement.SetLookTarget (GetLookTarget ());
 		Movement.SetTargetDirection (GetTargetDirection ());
-		Movement.SetBoostHeld (Input.GetButton ("boost"));
+		Movement.SetBoostHeld (Input.GetButton ("Boost"));
 
-		if ( Input.GetButtonDown ("shoot") )
+		if ( Input.GetButtonDown ("Shoot") )
 		{
 			Shooting.Shoot ();
 		}
 
-		if (Input.GetKeyDown (KeyCode.X))
+		if ( Input.GetButtonDown ("Landmine") )
 		{
 			TankLandmine.Use ();
 		}
@@ -63,8 +63,8 @@ public class TankInput : TankBase
 	{
 		Vector3 tempCursorPosition = CursorPosition;
 
-		tempCursorPosition.x += Input.GetAxis ("Mouse X") * 20f;
-		tempCursorPosition.y += Input.GetAxis ("Mouse Y") * 20f;
+		tempCursorPosition.x += Input.GetAxis ("Mouse X") * 5.0f;
+		tempCursorPosition.y += Input.GetAxis ("Mouse Y") * 5.0f;
 
 		tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
 		tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);

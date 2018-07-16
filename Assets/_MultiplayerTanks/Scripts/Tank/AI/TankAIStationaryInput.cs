@@ -97,7 +97,7 @@ public class TankAIStationaryInput : TankBase
 			return;
 		}
 
-		List<RaycastWallHit> wallhits = RaycastWallHit.GetWallHits (Movement.Position, 20, Projectile.Radius);
+		List<RaycastWallHit> wallhits = RaycastWallHit.GetWallHits (Movement.Position, 20, Shooting.radius);
 
 		Vector3 point = Vector3.zero;
 		float minAngle = Mathf.Infinity;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InfoPath : Photon.MonoBehaviour
+public class InfoPath : EntityBase
 {
 	public InfoPath nextPath;
 	public InfoPath branchPath;
