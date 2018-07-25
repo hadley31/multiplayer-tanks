@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Experimental.Input;
 
 public class TankInput : TankBase
 {
@@ -9,10 +10,19 @@ public class TankInput : TankBase
 
 	public static bool InputOverride = false;
 
+	public string inputType = "keyboard";
+	public float mouseSensitivity = 5.0f;
+
 	private Plane m_GroundPlane;
 
 
 	public Vector3 CursorPosition
+	{
+		get;
+		set;
+	}
+
+	public Vector3 TargetCursorPosition
 	{
 		get;
 		set;
@@ -46,60 +56,115 @@ public class TankInput : TankBase
 
 		Movement.SetLookTarget (GetLookTarget ());
 		Movement.SetTargetDirection (GetTargetDirection ());
-		Movement.SetBoostHeld (Input.GetButton ("Boost"));
 
-		if ( Input.GetButtonDown ("Shoot") )
-		{
-			Shooting.Shoot ();
-		}
 
-		if ( Input.GetButtonDown ("Landmine") )
+		if ( inputType == "keyboard" )
 		{
-			TankLandmine.Use ();
+			Movement.SetBoostHeld (Keyboard.current.spaceKey.isPressed);
+
+			if ( Mouse.current.leftButton.wasJustPressed )
+			{
+				Shooting.Shoot ();
+			}
+
+			if ( Mouse.current.rightButton.wasJustPressed )
+			{
+				TankLandmine.Use ();
+			}
 		}
+		else if ( inputType == "controller" )
+		{
+			Movement.SetBoostHeld (Gamepad.current.leftStickButton.isPressed);
+
+			if ( Gamepad.current.rightShoulder.wasJustPressed )
+			{
+				Shooting.Shoot ();
+			}
+
+			if ( Gamepad.current.leftShoulder.wasJustPressed )
+			{
+				TankLandmine.Use ();
+			}
+		}
+		
 	}
 
 	private void UpdateCursorPosition ()
 	{
-		Vector3 tempCursorPosition = CursorPosition;
+		if ( inputType == "keyboard" )
+		{
+			Vector3 tempCursorPosition = TargetCursorPosition;
 
-		tempCursorPosition.x += Input.GetAxis ("Mouse X");
-		tempCursorPosition.y += Input.GetAxis ("Mouse Y");
+			tempCursorPosition += (Vector3) Mouse.current.delta.ReadValue () * mouseSensitivity;
 
-		tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
-		tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);
+			tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
+			tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);
 
-		CursorPosition = tempCursorPosition;
+			TargetCursorPosition = tempCursorPosition;
+
+			CursorPosition =  Vector3.Lerp (CursorPosition, TargetCursorPosition, Time.deltaTime * 30.0f);
+		}
+		else if ( inputType == "controller" )
+		{
+			CursorPosition = Vector3.zero;
+		}
 	}
 
 	public Vector3 GetLookTarget ()
 	{
-		Ray ray = Camera.main.ScreenPointToRay (CursorPosition);
-
-		float enterPoint;
-		if ( m_GroundPlane.Raycast (ray, out enterPoint) )
+		if ( inputType == "keyboard" )
 		{
-			return ray.GetPoint (enterPoint);
+			Ray ray = Camera.main.ScreenPointToRay (CursorPosition);
+
+			float enterPoint;
+			if ( m_GroundPlane.Raycast (ray, out enterPoint) )
+			{
+				return ray.GetPoint (enterPoint);
+			}
 		}
+		else if ( inputType == "controller" )
+		{
+			Vector2 input = Gamepad.current.rightStick.ReadValue ();
+
+			return transform.position + new Vector3 (input.x, 0, input.y);
+		}
+		
 
 		return Vector3.zero;
 	}
 
 	private Vector3 GetTargetDirection ()
 	{
-		// Keyboard friendly input
+		if ( inputType == "keyboard" )
+		{
+			Vector3 input = Vector3.zero;
 
-		float vert = Input.GetAxisRaw ("Vertical");
-		float horiz = Input.GetAxisRaw ("Horizontal");
+			if (Keyboard.current.dKey.isPressed)
+			{
+				input.x++;
+			}
+			if (Keyboard.current.aKey.isPressed)
+			{
+				input.x--;
+			}
+			if (Keyboard.current.wKey.isPressed)
+			{
+				input.z++;
+			}
+			if (Keyboard.current.sKey.isPressed)
+			{
+				input.z--;
+			}
 
-		return new Vector3 (horiz, 0, vert).normalized;
+			return input.normalized;
+		}
+		else if ( inputType == "controller" )
+		{
+			Vector2 input = Gamepad.current.leftStick.ReadValue ();
 
+			return new Vector3 (input.x, 0, input.y);
+		}
 
-		// Controller friendly input
-
-		//float vert = Input.GetAxis ("Vertical");
-		//float horiz = Input.GetAxis ("Horizontal");
-
-		//return new Vector3 (horiz, 0, vert) / SQRT2;
+		return Vector3.zero;
 	}
 }
