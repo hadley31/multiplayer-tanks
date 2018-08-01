@@ -7,7 +7,7 @@ public abstract class Gamemode : Photon.MonoBehaviour
 {
 	public void OnRoundStartRPC ()
 	{
-		if (PhotonNetwork.isMasterClient == false)
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -17,7 +17,7 @@ public abstract class Gamemode : Photon.MonoBehaviour
 
 	public void OnRoundEndRPC ()
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -30,9 +30,25 @@ public abstract class Gamemode : Photon.MonoBehaviour
 	[PunRPC]
 	public abstract void OnRoundEnd ();
 
-	public virtual bool ProjectileDoesDamage (Projectile p, Tank tank)
+
+	public virtual bool ProjectileDoesDamage (Projectile p, Health h)
 	{
-		return p.Sender?.Team != tank?.Team;
+		if ( h.Entity.Is<Tank> () )
+		{
+			return p.Sender.Team != h.GetComponent<Tank> ().Team;
+		}
+
+		if ( h.Entity.Is<Landmine> () )
+		{
+			return true;
+		}
+
+		if ( h.Entity.Is<DestructibleWall> () )
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	public virtual bool LandmineDoesDamage (Landmine mine, Tank tank)

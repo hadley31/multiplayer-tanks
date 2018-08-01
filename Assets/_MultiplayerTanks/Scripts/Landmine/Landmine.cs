@@ -93,7 +93,7 @@ public class Landmine : EntityBase, IProjectileInteractive
 
 	public void Explode ()
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}

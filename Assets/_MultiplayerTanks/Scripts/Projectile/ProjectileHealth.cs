@@ -6,7 +6,7 @@ public class ProjectileHealth : Health
 {
 	public override void DecreaseRPC (int amount)
 	{
-		if (PhotonNetwork.isMasterClient == false)
+		if ( NetworkManager.IsMasterClient == false)
 		{
 			return;
 		}
@@ -16,7 +16,7 @@ public class ProjectileHealth : Health
 
 	public override void SetValueRPC (int value)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -26,7 +26,7 @@ public class ProjectileHealth : Health
 
 	public override void SetValueToMaxRPC ()
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}

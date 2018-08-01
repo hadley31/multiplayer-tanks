@@ -59,7 +59,7 @@ public class Health : EntityBase
 
 	public virtual void SetValueRPC (int value)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -75,7 +75,7 @@ public class Health : EntityBase
 
 	public virtual void DecreaseRPC (int amount)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -91,7 +91,7 @@ public class Health : EntityBase
 
 	public virtual void SetValueToMaxRPC ()
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
@@ -112,7 +112,7 @@ public class Health : EntityBase
 
 	public virtual void SetMaxValueRPC (int maxValue, bool setValueToMax = false)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}

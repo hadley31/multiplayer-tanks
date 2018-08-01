@@ -84,7 +84,7 @@ public class LandmineManager : Photon.MonoBehaviour
 
 	public void DestroyRPC (int id)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}

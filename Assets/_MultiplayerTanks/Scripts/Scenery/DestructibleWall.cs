@@ -3,13 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof (Health))]
-public class DestructibleWall : Wall
+public class DestructibleWall : EntityBase
 {
 	public void Destroy ()
 	{
-		if (PhotonNetwork.isMasterClient)
+		if ( NetworkManager.IsMasterClient )
 		{
-			PhotonNetwork.Destroy (gameObject);
+			photonView.RPC ("Hide", PhotonTargets.AllBufferedViaServer);
 		}
+	}
+
+	[PunRPC]
+	private void Hide ()
+	{
+		gameObject.SetActive (false);
 	}
 }

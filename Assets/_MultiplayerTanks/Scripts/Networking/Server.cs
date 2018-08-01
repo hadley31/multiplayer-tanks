@@ -65,10 +65,10 @@ public class Server
 
 	public void SetProperty (string key, object obj)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			Debug.LogWarning ($"Attempting to set a room property ({key}) when you are not the master client!");
-			return;
+			//return;
 		}
 
 		Photon.SetCustomProperties (new Hashtable () { { key, obj } });

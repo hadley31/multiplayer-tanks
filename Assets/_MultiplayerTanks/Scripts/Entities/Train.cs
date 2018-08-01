@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Train : Photon.MonoBehaviour
+public class Train : EntityBase
 {
 	public InfoPath startingPath;
 	public float moveSpeed = 1f;

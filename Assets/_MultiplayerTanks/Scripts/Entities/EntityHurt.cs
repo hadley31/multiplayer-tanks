@@ -2,19 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EntityHurt : MonoBehaviour
+public class EntityHurt : EntityBase
 {
 	public int damage = 0;
 	public float hurtInterval = 1;
 
 	private float m_HurtTimer = 0;
 	private List<Health> m_HurtList;
-	private Trigger m_Trigger;
-
-	private void Awake ()
-	{
-		m_Trigger = GetComponent<Trigger> ();
-	}
 
 	private void Update ()
 	{
@@ -37,9 +31,12 @@ public class EntityHurt : MonoBehaviour
 			return;
 		}
 
-		RemoveAllInactive ();
+		if ( m_HurtList.Count > 0 )
+		{
+			RemoveAllInactive ();
+		}
 
-		if (m_HurtList.Count == 0)
+		if ( m_HurtList.Count == 0 )
 		{
 			return;
 		}
@@ -82,6 +79,6 @@ public class EntityHurt : MonoBehaviour
 
 	public virtual void RemoveAllInactive ()
 	{
-		m_HurtList?.RemoveAll (x => x == null || x.gameObject.activeSelf == false || x.GetComponent<Collider> ().enabled == false || x.GetComponent<Collider> ().bounds.Intersects (m_Trigger.Collider.bounds) == false);
+		m_HurtList?.RemoveAll (x => x == null || x.gameObject.activeSelf == false || x.GetComponent<Collider> ().enabled == false || x.GetComponent<Collider> ().bounds.Intersects (Trigger.Collider.bounds) == false);
 	}
 }

@@ -1341,6 +1341,12 @@ namespace UnityEditor.SceneManagement
 
 namespace UnityEngine.SceneManagement
 {
+	public enum LoadSceneMode
+	{
+		Single,
+		Additive
+	}
+
     /// <summary>Minimal implementation of the SceneManager for older Unity, up to v5.2.</summary>
     public class SceneManager
     {
@@ -1353,6 +1359,25 @@ namespace UnityEngine.SceneManagement
         {
             Application.LoadLevel(buildIndex);
         }
+
+		public static AsyncOperation LoadSceneAsync(string name,LoadSceneMode mode =  LoadSceneMode.Single)
+		{
+			if (mode == UnityEngine.SceneManagement.LoadSceneMode.Single) {
+				return Application.LoadLevelAsync (name);
+			} else {
+				return Application.LoadLevelAdditiveAsync(name);
+			}
+		}
+
+		public static AsyncOperation LoadSceneAsync(int buildIndex,LoadSceneMode mode =  LoadSceneMode.Single)
+		{
+			if (mode == UnityEngine.SceneManagement.LoadSceneMode.Single) {
+				return Application.LoadLevelAsync (buildIndex);
+			} else {
+				return Application.LoadLevelAdditiveAsync(buildIndex);
+			}
+		}
+
     }
 }
 

@@ -15,6 +15,7 @@ public class GameLevelControl : ControlElement
 
 	public override void OnGainControl ()
 	{
+		Debug.Log ("GameLevelControl gained control");
 		Current = this;
 
 		SpawnLocalTank ();

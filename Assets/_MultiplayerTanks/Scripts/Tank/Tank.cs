@@ -95,7 +95,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public T GetProperty<T> (string key, T defaultValue = default(T))
 	{
-		return Server.Current.GetProperty<T> (key + this.ID, defaultValue);
+		return Server.Current.GetProperty (key + this.ID, defaultValue);
 	}
 
 	public void ClearProperty (string key)
@@ -181,7 +181,7 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		photonView.RPC ("Spawn", PhotonTargets.All);
+		photonView.RPC ("Spawn", PhotonTargets.AllBuffered);
 	}
 
 	public void Respawn (int delay = 0)
@@ -211,7 +211,7 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		photonView.RPC ("Destroy", PhotonTargets.All);
+		photonView.RPC ("Destroy", PhotonTargets.AllBuffered);
 	}
 
 	#endregion

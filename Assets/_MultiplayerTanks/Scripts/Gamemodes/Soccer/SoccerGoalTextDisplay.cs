@@ -41,7 +41,7 @@ public class SoccerGoalTextDisplay : Photon.MonoBehaviour
 
 	public void UpdateTextRPC (int team)
 	{
-		if (PhotonNetwork.isMasterClient == false)
+		if (NetworkManager.IsMasterClient == false)
 		{
 			return;
 		}

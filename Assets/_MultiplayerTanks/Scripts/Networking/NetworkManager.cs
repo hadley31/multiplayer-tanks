@@ -27,7 +27,7 @@ public class NetworkManager : PunBehaviour
 
 	public static bool IsMasterClient
 	{
-		get { return PhotonNetwork.isMasterClient; }
+		get { return PhotonNetwork.isMasterClient || OfflineMode; }
 	}
 
 	public static int SendRate

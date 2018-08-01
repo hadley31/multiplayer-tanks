@@ -36,30 +36,41 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 		Rigidbody = GetComponent<Rigidbody> ();
 		Collider = GetComponent<Collider> ();
 
-		Rigidbody.useGravity = PhotonNetwork.isMasterClient;
+		Rigidbody.useGravity = NetworkManager.IsMasterClient;
 	}
 
 	public void OnMasterClientSwitched (PhotonPlayer newMasterClient)
 	{
-		Rigidbody.useGravity = PhotonNetwork.isMasterClient;
+		Rigidbody.useGravity = NetworkManager.IsMasterClient;
 	}
 
 	public void ResetPosition ()
 	{
-		SetPosition (Vector3.up * 2);
+		if ( NetworkManager.IsMasterClient == false )
+		{
+			return;
+		}
+
+		SetPositionRPC (Vector3.up * 2);
 	}
 
-	public void SetPosition (Vector3 position)
+	public void SetPositionRPC (Vector3 position)
 	{
 		if (PhotonNetwork.isMasterClient == false)
 		{
 			return;
 		}
 
+		photonView.RPC ("SetPosition", PhotonTargets.All, position);
+	}
+
+	[PunRPC]
+	public void SetPosition (Vector3 position)
+	{
 		Rigidbody.MovePosition (position);
 	}
 
-	public void OnTriggerEnter (Collider other)
+	private void OnTriggerEnter (Collider other)
 	{
 		Tank tank = other.GetComponent<Tank> ();
 
@@ -73,9 +84,22 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 		AddForce (tank.ID, force, tank.transform.position);
 	}
 
+	private void Update ()
+	{
+		if (NetworkManager.IsMasterClient == false)
+		{
+			return;
+		}
+
+		if (Input.GetKeyDown (KeyCode.Backspace))
+		{
+			ResetPosition ();
+		}
+	}
+
 	public void AddForce (int id, Vector3 force, Vector3 position)
 	{
-		if (PhotonNetwork.isMasterClient)
+		if (NetworkManager.IsMasterClient)
 		{
 			Rigidbody.useGravity = true;
 			AddForceRPC (id, force, position);
@@ -92,7 +116,7 @@ public class SoccerBall : Photon.MonoBehaviour, IProjectileInteractive
 	[PunRPC]
 	private void AddForceRPC (int id, Vector3 force, Vector3 position)
 	{
-		if (PhotonNetwork.isMasterClient)
+		if (NetworkManager.IsMasterClient)
 		{
 			Rigidbody.AddForceAtPosition (force, position, ForceMode.Acceleration);
 			LastViewToTouch = id;

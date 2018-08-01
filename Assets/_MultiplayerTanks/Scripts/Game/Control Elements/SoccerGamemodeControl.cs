@@ -39,4 +39,9 @@ public class SoccerGamemodeControl : ControlElement
 	{
 
 	}
+
+	public void OnGoalScored (int team)
+	{
+
+	}
 }

@@ -5,27 +5,27 @@ using UnityEngine;
 public class KeybindToggle : MonoBehaviour
 {
 	public KeyCode key;
-	public bool toggled = false;
+	public bool startActive = false;
 	public bool hold = false;
 	public GameObject toggleObject;
 
+	public bool Toggled
+	{
+		get { return toggleObject.activeSelf; }
+		set { toggleObject.SetActive (value); }
+	}
+
+
 	private void Start ()
 	{
-		Toggle (toggled);
+		Toggled = startActive;
 	}
 
 	void Update ()
 	{
 		if ( hold )
 		{
-			if (Input.GetKey (key))
-			{
-				Toggle (true);
-			}
-			else
-			{
-				Toggle (false);
-			}
+			Toggled = Input.GetKey (key);
 		}
 		else if ( Input.GetKeyDown (key) )
 		{
@@ -35,13 +35,6 @@ public class KeybindToggle : MonoBehaviour
 
 	public void Toggle ()
 	{
-		toggled = !toggled;
-		toggleObject.SetActive (toggled);
-	}
-
-	public void Toggle (bool value)
-	{
-		toggled = value;
-		toggleObject.SetActive (toggled);
+		Toggled = !Toggled;
 	}
 }

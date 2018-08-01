@@ -13,7 +13,6 @@ public class Projectile : EntityBase, IProjectileInteractive
 
 	private float m_InteractTimer;
 	private float m_LifeTimer;
-	private float m_SqrDistanceToNextHit;
 
 	#endregion
 

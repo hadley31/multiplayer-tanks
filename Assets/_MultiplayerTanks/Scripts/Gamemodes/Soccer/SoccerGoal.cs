@@ -13,7 +13,7 @@ public class SoccerGoal : MonoBehaviour
 
 	public void OnEnter (Entity ent)
 	{
-		if ( PhotonNetwork.isMasterClient == false )
+		if ( NetworkManager.IsMasterClient == false )
 		{
 			return;
 		}
