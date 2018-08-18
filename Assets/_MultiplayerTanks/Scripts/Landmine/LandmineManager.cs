@@ -68,14 +68,15 @@ public class LandmineManager : Photon.MonoBehaviour
 		float dt = (float) ( PhotonNetwork.time - createTime );
 		fuse -= dt;
 
+		landmine.Health.SetMaxValue (health, true);
+		landmine.transform.SetParent (transform);
+
 		landmine.SetFuse (fuse);
 		landmine.SetPosition (position);
 		landmine.SetDamage (damage);
 		landmine.SetRadius (radius);
 		landmine.SetSender (viewID);
 		landmine.SetID (mineID);
-		landmine.Health.SetMaxValue (health, true);
-		landmine.transform.SetParent (transform);
 
 		m_Landmines.Add (landmine);
 

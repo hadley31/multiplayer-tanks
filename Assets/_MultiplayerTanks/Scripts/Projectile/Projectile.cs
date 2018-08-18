@@ -58,7 +58,7 @@ public class Projectile : EntityBase, IProjectileInteractive
 		get { return RADIUS; }
 	}
 
-	public int P_ID
+	public int ID
 	{
 		get;
 		private set;
@@ -183,7 +183,7 @@ public class Projectile : EntityBase, IProjectileInteractive
 
 	public void SetID (int id)
 	{
-		this.P_ID = id;
+		this.ID = id;
 	}
 
 	public void SetSender (int viewID)
@@ -207,12 +207,12 @@ public class Projectile : EntityBase, IProjectileInteractive
 
 	public void Destroy ()
 	{
-		ProjectileManager.Instance.Destroy (this.P_ID);
+		ProjectileManager.Instance.Destroy (this.ID);
 	}
 
 	public void DestroyRPC ()
 	{
-		ProjectileManager.Instance.DestroyRPC (this.P_ID);
+		ProjectileManager.Instance.DestroyRPC (this.ID);
 	}
 
 	#endregion

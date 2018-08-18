@@ -18,6 +18,7 @@ public class Tank : TankBase, IProjectileInteractive
 		get;
 		private set;
 	}
+
 	public static readonly List<Tank> All = new List<Tank> ();
 	public static readonly List<Tank> AllAlive = new List<Tank> ();
 	public static readonly List<Tank> AllDead = new List<Tank> ();
@@ -93,7 +94,7 @@ public class Tank : TankBase, IProjectileInteractive
 		Server.Current.SetProperty (key + this.ID, value);
 	}
 
-	public T GetProperty<T> (string key, T defaultValue = default(T))
+	public T GetProperty<T> (string key, T defaultValue = default (T))
 	{
 		return Server.Current.GetProperty (key + this.ID, defaultValue);
 	}
@@ -132,7 +133,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	private void OnDestroy ()
 	{
-		if (this == Local)
+		if ( this == Local )
 		{
 			Local = null;
 		}
@@ -218,11 +219,11 @@ public class Tank : TankBase, IProjectileInteractive
 
 	private void UpdateList ()
 	{
-		if (IsAlive)
+		if ( IsAlive )
 		{
 			AllDead.Remove (this);
 
-			if (AllAlive.Contains (this) == false)
+			if ( AllAlive.Contains (this) == false )
 			{
 				AllAlive.Add (this);
 			}
