@@ -1,5 +1,5 @@
 # Multiplayer Tanks
-A multiplayer remake of the "Wii Play" mini-game, "Tanks!"  
+A multiplayer tank game made with Unity, inspired by the "Wii Play" mini-game, "Tanks!"  
 
 See it in action [here](https://imgur.com/a/ehhf8ZT)!  
 
