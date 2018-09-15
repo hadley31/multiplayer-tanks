@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LobbyControl : MonoBehaviour {
+public class TankInputMethod : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

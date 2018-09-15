@@ -7,7 +7,7 @@ public class Gamemode_Soccer : Gamemode
 	[PunRPC]
 	public override void OnRoundStart ()
 	{
-		if (NetworkManager.IsMasterClient)
+		if ( NetworkManager.IsMasterClient )
 		{
 			PhotonNetwork.Instantiate ("SoccerBall", Vector3.up * 2, Quaternion.identity, 0);
 		}
@@ -16,22 +16,20 @@ public class Gamemode_Soccer : Gamemode
 	[PunRPC]
 	public override void OnRoundEnd ()
 	{
-		if (NetworkManager.IsMasterClient)
+		if ( NetworkManager.IsMasterClient )
 		{
-			foreach (SoccerBall go in FindObjectsOfType<SoccerBall>())
+			foreach ( SoccerBall go in FindObjectsOfType<SoccerBall> () )
 			{
 				PhotonNetwork.Destroy (go.gameObject);
 			}
 		}
 	}
 
-	[PunRPC]
 	public override string GetShortName ()
 	{
 		return "SCR";
 	}
 
-	[PunRPC]
 	public override string ToString ()
 	{
 		return "Soccer";

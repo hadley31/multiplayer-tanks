@@ -14,12 +14,12 @@ public class SoccerGamemodeControl : ControlElement
 			return;
 		}
 
-		if ( Tank.Local == null)
+		if ( Tank.Local == null )
 		{
 			Vector3 spawn = pickTeamControl.SelectedTeam == 1 ? new Vector3 (-18, 0, 0) : new Vector3 (18, 0, 0);
 			PhotonNetwork.Instantiate ("SoccerTank", spawn, Quaternion.identity, 0);
 
-			Tank.Local.Team = Team.Get(pickTeamControl.SelectedTeam);
+			Tank.Local.Team = Server.Current.GetTeam (pickTeamControl.SelectedTeam);
 
 			Tank.Local.Visuals.RevertToTeamColor ();
 		}

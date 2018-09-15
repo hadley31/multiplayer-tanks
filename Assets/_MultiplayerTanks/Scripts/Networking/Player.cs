@@ -21,7 +21,7 @@ public class Player
 		get { return PhotonNetwork.otherPlayers.Select (x => Get (x)).ToList (); }
 	}
 
-	public static string LocalName
+	public static string LocalAlias
 	{
 		get { return PhotonNetwork.playerName; }
 		set { PhotonNetwork.playerName = value; }

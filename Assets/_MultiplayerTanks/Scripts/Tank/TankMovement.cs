@@ -17,6 +17,9 @@ public class TankMovement : TankBase
 	public float boostUseSpeed = 3;
 	public float boostRegainSpeed = 0.2f;
 
+	[Header ("Other Info")]
+	public float gravityMultiplier = 1.0f;
+
 	private float m_speed;
 
 	public float Boost
@@ -84,7 +87,7 @@ public class TankMovement : TankBase
 
 	public Vector3 Velocity
 	{
-		get { return Vector3.Scale(Rigidbody.velocity, Horizontal); }
+		get { return Vector3.Scale (Rigidbody.velocity, Horizontal); }
 		private set { Rigidbody.velocity = value; }
 	}
 
@@ -107,12 +110,12 @@ public class TankMovement : TankBase
 
 	protected virtual void Update ()
 	{
-		if (Tank.IsLocal == false)
+		if ( Tank.IsLocal == false )
 		{
 			return;
 		}
 
-		if (Tank.IsAlive == false)
+		if ( Tank.IsAlive == false )
 		{
 			return;
 		}
@@ -123,12 +126,12 @@ public class TankMovement : TankBase
 
 	protected virtual void FixedUpdate ()
 	{
-		if (Tank.IsLocal == false)
+		if ( Tank.IsLocal == false )
 		{
 			return;
 		}
 
-		if (Tank.IsAlive == false)
+		if ( Tank.IsAlive == false )
 		{
 			return;
 		}
@@ -160,7 +163,7 @@ public class TankMovement : TankBase
 	{
 		if ( IsGrounded == false )
 		{
-			Rigidbody.AddForce (Physics.gravity * 9.81f);
+			Rigidbody.AddForce (Physics.gravity * 9.81f * 0.7f);
 		}
 
 		Rigidbody.AddForce (TargetVelocity - Velocity, ForceMode.VelocityChange);
@@ -171,7 +174,7 @@ public class TankMovement : TankBase
 		if ( TargetDirection.sqrMagnitude > Mathf.Epsilon )
 		{
 			Quaternion target = Quaternion.LookRotation (TargetDirection, Vector3.up);
-			Rigidbody.rotation = Quaternion.Slerp (transform.rotation, target, Time.fixedDeltaTime * rotateSpeed);
+			Rigidbody.rotation = Quaternion.Slerp (Rigidbody.rotation, target, Time.fixedDeltaTime * rotateSpeed);
 		}
 	}
 

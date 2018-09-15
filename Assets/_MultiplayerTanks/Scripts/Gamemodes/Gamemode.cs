@@ -31,6 +31,12 @@ public abstract class Gamemode : Photon.MonoBehaviour
 	public abstract void OnRoundEnd ();
 
 
+	public virtual void InstantiateTank ()
+	{
+		
+	}
+
+
 	public virtual bool ProjectileDoesDamage (Projectile p, Health h)
 	{
 		if ( h.Entity.Is<Tank> () )

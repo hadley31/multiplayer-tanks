@@ -35,9 +35,9 @@ public class GameLevelControl : ControlElement
 
 		if ( Tank.Local == null )
 		{
-			PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0).GetComponent<Tank> ();
+			PhotonNetwork.Instantiate ("Tank", spawnpoint.position, spawnpoint.rotation, 0);
 
-			Tank.Local.name = "Tank_" + Player.LocalName;
+			Tank.Local.name = "Tank_" + Player.LocalAlias;
 
 			Tank.Local.Visuals.RevertToTeamColor ();
 		}

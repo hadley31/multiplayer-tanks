@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TankShoot : TankBase
 {
@@ -63,8 +61,7 @@ public class TankShoot : TankBase
 
 		float distance = direction.magnitude + radius * 5;
 
-		RaycastHit hitInfo;
-		if ( Physics.Raycast (start, direction, out hitInfo, distance) == false)
+		if ( Physics.Raycast (start, direction, out RaycastHit hitInfo, distance) == false )
 		{
 			return false;
 		}

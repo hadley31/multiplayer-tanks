@@ -14,7 +14,7 @@ public class Server
 	}
 
 	#endregion
-	
+
 	#region Properties
 
 	public Room Photon
@@ -144,6 +144,27 @@ public class Server
 	public void IncreaseTeamScore (int team, int amount)
 	{
 		SetTeamScore (team, GetTeamScore (team) + amount);
+	}
+
+
+	public void SetTeam (int number, Team team)
+	{
+		SetTeamName (number, team);
+		SetTeamColor (number, team);
+	}
+
+
+	public Team GetTeam (int number)
+	{
+		if ( number <= 0 )
+		{
+			return Team.None;
+		}
+
+		string name = GetTeamName (number);
+		Color color = GetTeamColor (number);
+
+		return new Team (name, number, color);
 	}
 
 	#endregion

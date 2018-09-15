@@ -85,7 +85,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public Team Team
 	{
-		get { return Team.Get (GetProperty (TankProperty.Team, 0)); }
+		get { return Server.Current.GetTeam (GetProperty (TankProperty.Team, 0)); }
 		set { SetProperty (TankProperty.Team, (int) value); }
 	}
 
@@ -101,7 +101,7 @@ public class Tank : TankBase, IProjectileInteractive
 
 	public void ClearProperty (string key)
 	{
-		Server.Current.ClearProperty (key);
+		Server.Current.ClearProperty (key + this.ID);
 	}
 
 	#endregion
@@ -154,7 +154,7 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		if ( PhotonNetwork.isMasterClient )
+		if ( NetworkManager.IsMasterClient )
 		{
 			Health.DecreaseRPC (p.Damage);
 			LastHitID = p.Sender.ID;
@@ -192,7 +192,7 @@ public class Tank : TankBase, IProjectileInteractive
 			return;
 		}
 
-		Invoke ("SpawnRPC", 3);
+		Invoke ("SpawnRPC", delay);
 	}
 
 	[PunRPC]

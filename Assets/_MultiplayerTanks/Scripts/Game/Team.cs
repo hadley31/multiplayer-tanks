@@ -6,19 +6,6 @@ public struct Team
 {
 	public static readonly Team None = new Team ("NONE", 0, Tank.Default_Color);
 
-	public static Team Get (int number)
-	{
-		if (number <= 0)
-		{
-			return None;
-		}
-
-		string name = Server.Current.GetTeamName (number);
-		Color color = Server.Current.GetTeamColor (number);
-
-		return new Team (name, number, color);
-	}
-
 	public string Name
 	{
 		get;
