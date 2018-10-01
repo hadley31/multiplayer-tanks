@@ -5,223 +5,180 @@ using UnityEngine.UI;
 
 public class TankFollowCameraRig : MonoBehaviour
 {
-	public static readonly Color[] Colors = { Color.red, Color.blue, Color.green, Color.grey, Color.yellow, Color.magenta };
+    public static TankFollowCameraRig Instance
+    {
+        get;
+        private set;
+    }
 
-	public static TankFollowCameraRig Instance
-	{
-		get;
-		private set;
-	}
-	
-	public float scrollSpeed = 5;
+    public float scrollSpeed = 5;
 
-	[Header ("Follow Tank")]
-	public float followSpeed = 15.0f;
-	public float cameraZoomSpeed = 8.0f;
-	public float defaultCameraDistance = 15.0f;
-	
-	[Header ("Cursor")]
-	public Image cursorPrefab;
+    [Header("Follow Tank")]
+    public float followSpeed = 15.0f;
+    public float cameraZoomSpeed = 8.0f;
+    public float defaultCameraDistance = 15.0f;
 
-	[SerializeField]
-	private List<Tank> m_Tanks = new List<Tank> ();
-	private List<Image> m_TankCursors = new List<Image> ();
+    private Vector3 m_TargetPosition;
+    private float m_TargetCameraDistance;
 
-	private Vector3 m_TargetPosition;
-	private float m_TargetCameraDistance;
 
-	#region Properties
+    private List<Tank> m_Tanks = new List<Tank>();
 
-	public Camera Camera
-	{
-		get;
-		private set;
-	}
+    #region Properties
 
-	public Camera MinimapCamera
-	{
-		get;
-		private set;
-	}
+    public Camera Camera
+    {
+        get;
+        private set;
+    }
 
-	public Light Light
-	{
-		get;
-		set;
-	}
+    public Camera MinimapCamera
+    {
+        get;
+        private set;
+    }
 
-	public Tank MainTarget
-	{
-		get { return m_Tanks.Count > 0 ? m_Tanks[0] : null; }
-	}
+    public Light Light
+    {
+        get;
+        set;
+    }
 
-	#endregion
+    public Tank MainTarget
+    {
+        get { return m_Tanks.Count > 0 ? m_Tanks[0] : null; }
+    }
 
-	#region Monobehaviours
+    #endregion
 
-	private void Awake ()
-	{
-		Camera = transform.Find ("Main Camera Parent/Camera").GetComponent<Camera> ();
-		MinimapCamera = transform.Find ("Minimap").GetComponent<Camera> ();
-		Light = GetComponentInChildren<Light> ();
+    #region Monobehaviours
 
-		m_TargetCameraDistance = defaultCameraDistance;
-	}
+    private void Awake()
+    {
+        Camera = transform.Find("Main Camera Parent/Camera").GetComponent<Camera>();
+        MinimapCamera = transform.Find("Minimap").GetComponent<Camera>();
+        Light = GetComponentInChildren<Light>();
 
-	private void OnEnable ()
-	{
-		if ( Instance == null )
-		{
-			Instance = this;
-		}
-		else
-		{
-			Debug.LogWarning ("A camera rig is already active?!");
-			Destroy (this.gameObject);
-		}
-	}
+        m_TargetCameraDistance = defaultCameraDistance;
+    }
 
-	private void OnDisable ()
-	{
-		if (Instance == this)
-		{
-			Instance = null;
-		}
-	}
+    private void OnEnable()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Debug.LogWarning("A camera rig is already active?!");
+            Destroy(this.gameObject);
+        }
+    }
 
-	private void Update ()
-	{
-		Scroll ();
-	}
+    private void OnDisable()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
 
-	private void LateUpdate ()
-	{
-		UpdateCursors ();
-		FollowTank ();
-	}
+    private void Update()
+    {
+        Scroll();
+    }
 
-	#endregion
+    private void LateUpdate()
+    {
+        FollowTank();
+    }
 
-	private void Scroll ()
-	{
-		if ( m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false) )
-		{
-			Vector3 direction = new Vector3 (Input.GetAxisRaw ("Horizontal"), 0, Input.GetAxisRaw ("Vertical")).normalized;
+    #endregion
 
-			if ( direction != Vector3.zero )
-			{
-				transform.Translate (direction * Time.deltaTime * scrollSpeed, Space.World);
-			}
-		}
-	}
+    private void Scroll()
+    {
+        if (m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false))
+        {
+            Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
-	private void FollowTank ()
-	{
-		if ( m_Tanks.Count == 0 || ( m_Tanks.Count == 1 && MainTarget.IsAlive == false ) )
-		{
-			return;
-		}
+            if (direction != Vector3.zero)
+            {
+                transform.Translate(direction * Time.deltaTime * scrollSpeed, Space.World);
+            }
+        }
+    }
 
-		UpdateTargetPosition ();
+    private void FollowTank()
+    {
+        if (m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false))
+        {
+            return;
+        }
 
-		Vector3 camPos = Camera.transform.localPosition;
+        UpdateTargetPosition();
 
-		camPos.z = Mathf.Lerp (camPos.z, -m_TargetCameraDistance - defaultCameraDistance, Time.deltaTime * cameraZoomSpeed);
+        Vector3 camPos = Camera.transform.localPosition;
 
-		Camera.transform.localPosition = camPos;
+        camPos.z = Mathf.Lerp(camPos.z, -m_TargetCameraDistance - defaultCameraDistance, Time.deltaTime * cameraZoomSpeed);
 
-		transform.position = Vector3.Lerp (transform.position, m_TargetPosition, Time.deltaTime * followSpeed);
-	}
+        Camera.transform.localPosition = camPos;
 
-	public void OnlyFollow (params Tank[] tanks)
-	{
-		m_Tanks.Clear ();
+        transform.position = Vector3.Lerp(transform.position, m_TargetPosition, Time.deltaTime * followSpeed);
+    }
 
-		Follow (tanks);
-	}
+    public void OnlyFollow(params Tank[] tanks)
+    {
+        m_Tanks.Clear();
 
-	public void Follow (params Tank[] tanks)
-	{
-		foreach (Tank t in tanks)
-		{
-			if (m_Tanks.Contains (t) == false)
-			{
-				m_Tanks.Add (t);
-			}
-		}
-		
-	}
+        Follow(tanks);
+    }
 
-	public void StopFollowing (Tank tank)
-	{
-		m_Tanks.Remove (tank);
-	}
+    public void Follow(params Tank[] tanks)
+    {
+        foreach (Tank t in tanks)
+        {
+            if (m_Tanks.Contains(t) == false)
+            {
+                m_Tanks.Add(t);
+            }
+        }
 
-	private void UpdateTargetPosition ()
-	{
-		List<Tank> aliveTanks = m_Tanks.FindAll (x => x.IsAlive);
+    }
 
-		if (aliveTanks.Count == 0)
-		{
-			m_TargetCameraDistance = 0;
-			return;
-		}
+    public void StopFollowing(Tank tank)
+    {
+        m_Tanks.Remove(tank);
+    }
 
-		if (aliveTanks.Count == 1)
-		{
-			m_TargetCameraDistance = 0;
-			m_TargetPosition = aliveTanks[0].transform.position;
-			return;
-		}
+    private void UpdateTargetPosition()
+    {
+        List<Tank> aliveTanks = m_Tanks.FindAll(x => x.IsAlive);
 
-		Vector3 min = Vector3.positiveInfinity;
-		Vector3 max = Vector3.negativeInfinity;
+        if (aliveTanks.Count == 0)
+        {
+            m_TargetCameraDistance = 0;
+            return;
+        }
 
-		foreach (Tank tank in aliveTanks)
-		{
-			min = Vector3.Min (min, tank.transform.position);
-			max = Vector3.Max (max, tank.transform.position);
-		}
+        if (aliveTanks.Count == 1)
+        {
+            m_TargetCameraDistance = 0;
+            m_TargetPosition = aliveTanks[0].transform.position;
+            return;
+        }
 
-		float maxDistance = Vector3.Magnitude (min - max);
+        Vector3 min = Vector3.positiveInfinity;
+        Vector3 max = Vector3.negativeInfinity;
 
-		m_TargetCameraDistance = ( maxDistance / 2 / Camera.aspect ) / Mathf.Tan (Camera.fieldOfView * Mathf.Deg2Rad / 2);
-		m_TargetPosition = Vector3.Lerp (min, max, 0.5f);
-	}
+        foreach (Tank tank in aliveTanks)
+        {
+            min = Vector3.Min(min, tank.transform.position);
+            max = Vector3.Max(max, tank.transform.position);
+        }
 
-	public void UpdateCursors ()
-	{
-		NormalizeCursorCount ();
+        float maxDistance = Vector3.Magnitude(min - max);
 
-		for ( int i = 0; i < m_Tanks.Count; i++ )
-		{
-			if (m_Tanks[i].TankInput == null)
-			{
-				return;
-			}
-
-			m_TankCursors[i].color = Colors[i % Colors.Length];
-
-			Vector3 position = m_Tanks[i].photonView.isMine ?
-				m_Tanks[i].TankInput.CursorPosition : Camera.WorldToScreenPoint (m_Tanks[i].NetworkTank.CursorWorldPosition);
-			
-			m_TankCursors[i].rectTransform.position = position;
-		}
-	}
-
-	private void NormalizeCursorCount ()
-	{
-		while ( m_TankCursors.Count < m_Tanks.Count )
-		{
-			Image rt = Instantiate (cursorPrefab, CanvasPanel.Instance.transform);
-
-			m_TankCursors.Add (rt);
-		}
-
-		while (m_TankCursors.Count > m_Tanks.Count)
-		{
-			Destroy (m_TankCursors[0].gameObject);
-			m_TankCursors.RemoveAt (0);
-		}
-	}
+        m_TargetCameraDistance = (maxDistance / 2 / Camera.aspect) / Mathf.Tan(Camera.fieldOfView * Mathf.Deg2Rad / 2);
+        m_TargetPosition = Vector3.Lerp(min, max, 0.5f);
+    }
 }

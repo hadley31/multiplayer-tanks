@@ -7,8 +7,6 @@ public class TankInput : TankBase
 	private const float Tank_Bottom_Height = 0.333f;
 	private const float SQRT2 = 1.41421356237f;
 
-	public static bool InputOverride = false;
-
 	private Plane m_GroundPlane;
 
 
@@ -37,7 +35,7 @@ public class TankInput : TankBase
 			return;
 		}
 
-		if (InputOverride == true)
+		if (GameLevelControl.Current?.HasControl == true)
 		{
 			return;
 		}
@@ -50,12 +48,12 @@ public class TankInput : TankBase
 
 		if ( Input.GetButtonDown ("Shoot") )
 		{
-			Shooting.Shoot ();
+			Shooting?.Shoot ();
 		}
 
 		if ( Input.GetButtonDown ("Landmine") )
 		{
-			TankLandmine.Use ();
+			TankLandmine?.Use ();
 		}
 	}
 

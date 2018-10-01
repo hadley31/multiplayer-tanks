@@ -10,37 +10,13 @@ public class GameLevelControl : ControlElement
 		private set;
 	}
 
-	public Transform spawnpoint;
-	public TankFollowCameraRig cameraRigPrefab;
-
 	public override void OnGainControl ()
 	{
 		Debug.Log ("GameLevelControl gained control");
 		Current = this;
 
-		SpawnLocalTank ();
-
-		TankInput.InputOverride = false;
-
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;
-	}
-
-	public void SpawnLocalTank ()
-	{
-		if ( TankFollowCameraRig.Instance == null )
-		{
-			Instantiate (cameraRigPrefab);
-		}
-
-		if ( Tank.Local == null )
-		{
-			PhotonNetwork.Instantiate ("Tank_Player", spawnpoint.position, spawnpoint.rotation, 0);
-
-			Tank.Local.name = "Tank_" + Player.LocalAlias;
-
-			Tank.Local.Visuals.RevertToTeamColor ();
-		}
 	}
 
 	public override void OnLoseControl ()
@@ -53,6 +29,6 @@ public class GameLevelControl : ControlElement
 
 	public override void OnControlUpdate ()
 	{
-		TankFollowCameraRig.Instance?.UpdateCursors ();
+		
 	}
 }

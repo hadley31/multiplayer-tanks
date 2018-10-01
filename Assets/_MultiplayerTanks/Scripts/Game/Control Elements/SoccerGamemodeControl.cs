@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class SoccerGamemodeControl : ControlElement
 {
-	public TeamPickControl pickTeamControl;
+	public TeamSelectMenuControl teamSelectControl;
 
 	public override void OnGainControl ()
 	{
-		if ( pickTeamControl.SelectedTeam == 0 )
+		if ( teamSelectControl.SelectedTeam == 0 )
 		{
-			pickTeamControl.gameObject.SetActive (true);
+			teamSelectControl.gameObject.SetActive (true);
 			return;
 		}
 
 		if ( Tank.Local == null )
 		{
-			Vector3 spawn = pickTeamControl.SelectedTeam == 1 ? new Vector3 (-18, 0, 0) : new Vector3 (18, 0, 0);
+			Vector3 spawn = teamSelectControl.SelectedTeam == 1 ? new Vector3 (-18, 0, 0) : new Vector3 (18, 0, 0);
 			PhotonNetwork.Instantiate ("Tank_Soccer", spawn, Quaternion.identity, 0);
 
-			Tank.Local.Team = Server.Current.GetTeam (pickTeamControl.SelectedTeam);
+			Tank.Local.Team = Server.Current.GetTeam (teamSelectControl.SelectedTeam);
 
 			Tank.Local.Visuals.RevertToTeamColor ();
 		}
-
-		TankInput.InputOverride = false;
 
 		Cursor.lockState = CursorLockMode.Locked;
 		Cursor.visible = false;

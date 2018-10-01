@@ -9,7 +9,7 @@ public abstract class ControlElement : MonoBehaviour
 		get { return Universe.controls.IndexOf (this); }
 	}
 
-	public bool InControl
+	public bool HasControl
 	{
 		get { return Universe.ElementInControl == this; }
 	}

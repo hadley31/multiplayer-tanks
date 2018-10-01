@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TeamPickControl : ControlElement
+public class TeamSelectMenuControl : ControlElement
 {
 	public int SelectedTeam
 	{
