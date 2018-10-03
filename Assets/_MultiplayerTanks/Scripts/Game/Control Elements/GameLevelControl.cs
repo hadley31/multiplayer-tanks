@@ -4,31 +4,38 @@ using UnityEngine;
 
 public class GameLevelControl : ControlElement
 {
-	public static GameLevelControl Current
-	{
-		get;
-		private set;
-	}
+    public static GameLevelControl Current
+    {
+        get;
+        private set;
+    }
 
-	public override void OnGainControl ()
-	{
-		Debug.Log ("GameLevelControl gained control");
-		Current = this;
+    public override void OnGainControl()
+    {
+        if (Current != null)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
-		Cursor.lockState = CursorLockMode.Locked;
-		Cursor.visible = false;
-	}
+        Debug.Log("GameLevelControl gained control");
+        Current = this;
 
-	public override void OnLoseControl ()
-	{
-		if (Current == this)
-		{
-			Current = null;
-		}
-	}
+        CrosshairManager.Current.HideCursor();
+    }
 
-	public override void OnControlUpdate ()
-	{
-		
-	}
+    public override void OnLoseControl()
+    {
+        if (Current == this)
+        {
+            Current = null;
+        }
+
+		CrosshairManager.Current.ShowCursor();
+    }
+
+    public override void OnControlUpdate()
+    {
+
+    }
 }

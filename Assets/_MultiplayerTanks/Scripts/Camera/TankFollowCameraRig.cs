@@ -21,8 +21,12 @@ public class TankFollowCameraRig : MonoBehaviour
     private Vector3 m_TargetPosition;
     private float m_TargetCameraDistance;
 
+    private readonly List<Tank> m_Tanks = new List<Tank>();
 
-    private List<Tank> m_Tanks = new List<Tank>();
+    public List<Tank> Tanks
+    {
+        get { return m_Tanks; }
+    }
 
     #region Properties
 
@@ -142,12 +146,23 @@ public class TankFollowCameraRig : MonoBehaviour
                 m_Tanks.Add(t);
             }
         }
-
     }
 
     public void StopFollowing(Tank tank)
     {
         m_Tanks.Remove(tank);
+    }
+
+    public void ToggleFollow(Tank tank)
+    {
+        if (m_Tanks.Contains(tank))
+        {
+            StopFollowing(tank);
+        }
+        else
+        {
+            Follow(tank);
+        }
     }
 
     private void UpdateTargetPosition()

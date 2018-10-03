@@ -52,8 +52,6 @@ public class GamemodeManager : Photon.MonoBehaviour
 	public void SetActiveGamemode (string name)
 	{
 		this.ActiveGamemode = AvailableGamemodes.Find (x => x.GetShortName () == name);
-
-
 	}
 
 	public T GetActiveGamemode<T> () where T : Gamemode

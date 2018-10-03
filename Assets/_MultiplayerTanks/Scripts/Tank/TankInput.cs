@@ -4,100 +4,103 @@ using UnityEngine;
 
 public class TankInput : TankBase
 {
-	private const float Tank_Bottom_Height = 0.333f;
-	private const float SQRT2 = 1.41421356237f;
+    private const float Tank_Bottom_Height = 0.333f;
+    private const float SQRT2 = 1.41421356237f;
 
-	private Plane m_GroundPlane;
-
-
-	public Vector3 CursorPosition
-	{
-		get;
-		set;
-	}
-
-	private void Awake ()
-	{
-		CursorPosition = new Vector3 (Screen.width / 2, Screen.height / 2);
-		m_GroundPlane = new Plane (Vector3.up, Vector3.up * Tank_Bottom_Height);
-	}
+    private Plane m_GroundPlane;
 
 
-	private void Update ()
-	{
-		if ( Tank.IsLocal == false )
-		{
-			return;
-		}
+    public Vector3 CursorPosition
+    {
+        get;
+        set;
+    }
 
-		if ( Tank.IsAlive == false )
-		{
-			return;
-		}
-
-		if (GameLevelControl.Current?.HasControl == true)
-		{
-			return;
-		}
-
-		UpdateCursorPosition ();
-
-		Movement.SetLookTarget (GetLookTarget ());
-		Movement.SetTargetDirection (GetTargetDirection ());
-		Movement.SetBoostHeld (Input.GetButton ("Boost"));
-
-		if ( Input.GetButtonDown ("Shoot") )
-		{
-			Shooting?.Shoot ();
-		}
-
-		if ( Input.GetButtonDown ("Landmine") )
-		{
-			TankLandmine?.Use ();
-		}
-	}
-
-	private void UpdateCursorPosition ()
-	{
-		Vector3 tempCursorPosition = CursorPosition;
-
-		tempCursorPosition.x += Input.GetAxis ("Mouse X") * 2.0f;
-		tempCursorPosition.y += Input.GetAxis ("Mouse Y") * 2.0f;
-
-		tempCursorPosition.x = Mathf.Clamp (tempCursorPosition.x, 0, Screen.width);
-		tempCursorPosition.y = Mathf.Clamp (tempCursorPosition.y, 0, Screen.height);
-
-		CursorPosition = tempCursorPosition;
-	}
-
-	public Vector3 GetLookTarget ()
-	{
-		Ray ray = Camera.main.ScreenPointToRay (CursorPosition);
-
-		float enterPoint;
-		if ( m_GroundPlane.Raycast (ray, out enterPoint) )
-		{
-			return ray.GetPoint (enterPoint);
-		}
-
-		return Vector3.zero;
-	}
-
-	private Vector3 GetTargetDirection ()
-	{
-		// Keyboard friendly input
-
-		float vert = Input.GetAxisRaw ("Vertical");
-		float horiz = Input.GetAxisRaw ("Horizontal");
-
-		return new Vector3 (horiz, 0, vert).normalized;
+    private void Awake()
+    {
+        CursorPosition = new Vector3(Screen.width / 2, Screen.height / 2);
+        m_GroundPlane = new Plane(Vector3.up, Vector3.up * Tank_Bottom_Height);
+    }
 
 
-		// Controller friendly input
+    private void Update()
+    {
+        if (Tank.IsLocal == false)
+        {
+            return;
+        }
 
-		//float vert = Input.GetAxis ("Vertical");
-		//float horiz = Input.GetAxis ("Horizontal");
+        if (Tank.IsAlive == false)
+        {
+            return;
+        }
 
-		//return new Vector3 (horiz, 0, vert) / SQRT2;
-	}
+        print(GameLevelControl.Current?.HasControl);
+
+        if ((GameLevelControl.Current?.HasControl ?? false) == false)
+        {
+            print("ahhhh");
+            return;
+        }
+
+        UpdateCursorPosition();
+
+        Movement.SetLookTarget(GetLookTarget());
+        Movement.SetTargetDirection(GetTargetDirection());
+        Movement.SetBoostHeld(Input.GetButton("Boost"));
+
+        if (Input.GetButtonDown("Shoot"))
+        {
+            Shooting?.Shoot();
+        }
+
+        if (Input.GetButtonDown("Landmine"))
+        {
+            TankLandmine?.Use();
+        }
+    }
+
+    private void UpdateCursorPosition()
+    {
+        Vector3 tempCursorPosition = CursorPosition;
+
+        tempCursorPosition.x += Input.GetAxis("Mouse X") * 2.0f;
+        tempCursorPosition.y += Input.GetAxis("Mouse Y") * 2.0f;
+
+        tempCursorPosition.x = Mathf.Clamp(tempCursorPosition.x, 0, Screen.width);
+        tempCursorPosition.y = Mathf.Clamp(tempCursorPosition.y, 0, Screen.height);
+
+        CursorPosition = tempCursorPosition;
+    }
+
+    public Vector3 GetLookTarget()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(CursorPosition);
+
+        float enterPoint;
+        if (m_GroundPlane.Raycast(ray, out enterPoint))
+        {
+            return ray.GetPoint(enterPoint);
+        }
+
+        return Vector3.zero;
+    }
+
+    private Vector3 GetTargetDirection()
+    {
+        // Keyboard friendly input
+
+        float vert = Input.GetAxisRaw("Vertical");
+        float horiz = Input.GetAxisRaw("Horizontal");
+
+        return new Vector3(horiz, 0, vert).normalized;
+
+
+        // Controller friendly input
+
+        //float vert = Input.GetAxis ("Vertical");
+        //float horiz = Input.GetAxis ("Horizontal");
+
+        //return new Vector3 (horiz, 0, vert) / SQRT2;
+    }
 }
