@@ -577,7 +577,7 @@ MonoBehaviour:
   moveLerpSpeed: 4
   rotateLerpSpeed: 20
   lookLerpSpeed: 25
-  maxPositionError: 25
+  maxPositionError: 50
 --- !u!114 &114704399957638496
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -5,22 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class SceneLoader : MonoBehaviour
 {
-	public bool leaveRoomBeforeLoad = false;
+    public bool leaveRoomBeforeLoad = false;
 
-	public void LoadScene (string scene)
-	{
-		if (leaveRoomBeforeLoad)
-		{
-			NetworkManager.LeaveRoom ();
-		}
+    public void LoadScene(string scene)
+    {
+        if (leaveRoomBeforeLoad)
+        {
+            NetworkManager.LeaveRoom();
+        }
 
-		print ($"Loading scene: {scene}");
+        print($"Loading scene: {scene}");
 
-		SceneManager.LoadScene (scene, LoadSceneMode.Single);
-	}
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
+    }
 
-	public void NetworkLoadScene (string scene)
-	{
-		PhotonNetwork.LoadLevel (scene);
-	}
+    public void NetworkLoadScene(string scene)
+    {
+        PhotonNetwork.LoadLevel(scene);
+    }
 }

@@ -37,16 +37,18 @@ public class CrosshairManager : MonoBehaviour
     }
 
 
-    public void ShowCursor()
+    public void HideCursor()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        print("Cursor hidden...");
     }
 
-    public void HideCursor()
+    public void ShowCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
+        print("Cursor revealed...");
     }
 
     private void LateUpdate()
@@ -69,7 +71,7 @@ public class CrosshairManager : MonoBehaviour
 
             if (Tanks[i].IsLocal)
             {
-                if (Cursor.visible == true)
+                if (Cursor.visible == false)
                 {
                     m_TankCursors[i].rectTransform.position = Tanks[i].TankInput.CursorPosition;
                 }

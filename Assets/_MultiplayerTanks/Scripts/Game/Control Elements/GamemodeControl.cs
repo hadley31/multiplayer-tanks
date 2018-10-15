@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameLevelControl : ControlElement
+public class GamemodeControl : ControlElement
 {
-    public static GameLevelControl Current
+    public static GamemodeControl Current
     {
         get;
         private set;
@@ -21,7 +21,7 @@ public class GameLevelControl : ControlElement
         Debug.Log("GameLevelControl gained control");
         Current = this;
 
-        CrosshairManager.Current.HideCursor();
+        CrosshairManager.Current?.HideCursor();
     }
 
     public override void OnLoseControl()
@@ -31,7 +31,7 @@ public class GameLevelControl : ControlElement
             Current = null;
         }
 
-		CrosshairManager.Current.ShowCursor();
+		CrosshairManager.Current?.ShowCursor();
     }
 
     public override void OnControlUpdate()

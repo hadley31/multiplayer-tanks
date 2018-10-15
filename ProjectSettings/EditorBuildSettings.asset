@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_MultiplayerTanks/Scenes/MainMenu.unity
     guid: e2254eb77e2ca7349ad57412886de06f
-  - enabled: 1
+  - enabled: 0
     path: Assets/_MultiplayerTanks/Scenes/TestMap.unity
     guid: 1d5cac26c9cafec47930f185fc695e50
-  - enabled: 1
+  - enabled: 0
     path: Assets/_MultiplayerTanks/Scenes/SaveTheTank.unity
     guid: 4c248bad25befa942a3fdfaf550359f7
   - enabled: 1
@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_MultiplayerTanks/Scenes/Multiplayer/Soccer.unity
     guid: 5cfd08d6df81b13479e7e516757dc352
-  - enabled: 1
+  - enabled: 0
     path: Assets/_MultiplayerTanks/Scenes/Multiplayer/TeamDeathmatch.unity
     guid: a1f1fd9807e41ba4abcaa3c936660710
   m_configObjects: {}

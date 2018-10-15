@@ -36,7 +36,7 @@ public class NetworkTank : TankBase
 
     private void Update()
     {
-        if (!photonView.isMine)
+        if (!Tank.IsLocal)
         {
             UpdateTop();
             CursorWorldPosition = Vector3.Lerp(CursorWorldPosition, m_TargetCursorWorldPos, Time.deltaTime * 10);
@@ -46,7 +46,7 @@ public class NetworkTank : TankBase
 
     private void FixedUpdate()
     {
-        if (!photonView.isMine)
+        if (!Tank.IsLocal)
         {
             // Update this rigidbody's position
             Movement.Rigidbody.MovePosition(GetLerpedPosition());
@@ -62,6 +62,7 @@ public class NetworkTank : TankBase
     {
         if (stream.isWriting)
         {
+            // we are sending data
             stream.SendNext(Movement.Rigidbody.position);
             stream.SendNext(Movement.Velocity);
 
@@ -72,6 +73,7 @@ public class NetworkTank : TankBase
         }
         else
         {
+            // we are receiving data
             m_NetworkPosition = (Vector3)stream.ReceiveNext();
             m_NetworkVelocity = (Vector3)stream.ReceiveNext();
 

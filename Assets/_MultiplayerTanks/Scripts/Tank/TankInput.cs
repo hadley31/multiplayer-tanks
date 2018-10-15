@@ -35,11 +35,8 @@ public class TankInput : TankBase
             return;
         }
 
-        print(GameLevelControl.Current?.HasControl);
-
-        if ((GameLevelControl.Current?.HasControl ?? false) == false)
+        if ((GamemodeControl.Current?.HasControl ?? false) == false)
         {
-            print("ahhhh");
             return;
         }
 
