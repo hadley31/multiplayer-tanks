@@ -31,13 +31,6 @@ public class AimHelper : GizmoHelper
 				RaycastHit hitInfo;
 				if ( Physics.SphereCast (position, m_Shoot.radius, direction, out hitInfo, 1000) )
 				{
-					IProjectileInteractive interactive = hitInfo.transform.GetComponent<IProjectileInteractive> ();
-
-					if ( interactive == null )
-					{
-						break;
-					}
-
 					points.Add (hitInfo.point);
 
 					if ( hitInfo.transform.GetComponent<Wall> () == null )

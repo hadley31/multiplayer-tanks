@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TankFollowCameraRig : MonoBehaviour
+public class SpectatorCamera : MonoBehaviour
 {
-    public static TankFollowCameraRig Instance
+    public static SpectatorCamera Instance
     {
         get;
         private set;

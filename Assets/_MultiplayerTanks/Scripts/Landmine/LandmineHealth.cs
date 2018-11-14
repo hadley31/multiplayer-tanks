@@ -4,38 +4,23 @@ using UnityEngine;
 
 public class LandmineHealth : Health
 {
-	public override void DecreaseRPC (int amount)
-	{
-		if ( NetworkManager.IsMasterClient == false )
-		{
-			return;
-		}
+    public override void SetValue(int value)
+    {
+        if (NetworkManager.IsMasterClient == false)
+        {
+            return;
+        }
 
-		Decrease (amount);
-	}
+        SetValueRPC(value);
+    }
 
-	public override void SetValueRPC (int value)
-	{
-		if ( NetworkManager.IsMasterClient == false )
-		{
-			return;
-		}
+    public override void SetMaxValue(int maxValue, bool setValueToMax = false)
+    {
+        if (NetworkManager.IsMasterClient == false)
+        {
+            return;
+        }
 
-		SetValue (value);
-	}
-
-	public override void SetValueToMaxRPC ()
-	{
-		if ( NetworkManager.IsMasterClient == false )
-		{
-			return;
-		}
-
-		SetValueToMax ();
-	}
-
-	public override void Destroy ()
-	{
-		
-	}
+        SetMaxValueRPC(maxValue);
+    }
 }

@@ -23,13 +23,13 @@ public class SpectatorControl : ControlElement
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray ray = TankFollowCameraRig.Instance.Camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = SpectatorCamera.Instance.Camera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, mask) == true)
             {
                 Tank tank = hitInfo.transform.GetComponent<Tank>();
                 if (tank != null)
                 {
-                    TankFollowCameraRig.Instance?.ToggleFollow(tank);
+                    SpectatorCamera.Instance?.ToggleFollow(tank);
                 }
             }
         }

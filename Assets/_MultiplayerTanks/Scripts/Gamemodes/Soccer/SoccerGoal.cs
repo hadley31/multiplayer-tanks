@@ -38,7 +38,5 @@ public class SoccerGoal : MonoBehaviour
 		Server.Current.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
 
 		onScore.Invoke ();
-
-		ball.ResetPosition ();
 	}
 }

@@ -10,7 +10,7 @@ public class OfflineMode : MonoBehaviour
 	{
 		if (PhotonNetwork.inRoom)
 		{
-			Debug.LogWarning ("Offline mode canceled becuase you are already in a room!");
+			Debug.LogWarning ("You are already in a room! Offline mode canceled.");
 			return;
 		}
 
@@ -18,7 +18,7 @@ public class OfflineMode : MonoBehaviour
 
 		if ( createRoomOnAwake )
 		{
-			NetworkManager.CreateRoom ("Offline_Room");
+			NetworkManager.CreateRoom ("Offline");
 		}
 	}
 

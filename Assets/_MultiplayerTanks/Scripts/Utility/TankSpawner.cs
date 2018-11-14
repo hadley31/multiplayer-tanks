@@ -48,7 +48,7 @@ public class TankSpawner : MonoBehaviour
 		tank.Movement.Rigidbody.MovePosition (point.position);
 		tank.Movement.Rigidbody.MoveRotation (point.rotation);
 
-		tank.SpawnRPC ();
+		tank.Spawn ();
 	}
 	
 	public Transform GetNextSpawnPoint ()

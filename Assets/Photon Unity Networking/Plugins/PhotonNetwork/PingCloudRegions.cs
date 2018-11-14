@@ -4,6 +4,7 @@ using System.Collections;
 using System.Diagnostics;
 using ExitGames.Client.Photon;
 using UnityEngine;
+using UnityEngine.Networking;
 using Debug = UnityEngine.Debug;
 using SupportClassPun = ExitGames.Client.Photon.SupportClass;
 
@@ -99,13 +100,13 @@ public class PingMonoEditor : PhotonPing
 
 public class PingHttp : PhotonPing
 {
-    private WWW webRequest;
+    private UnityWebRequest webRequest;
 
     public override bool StartPing(string address)
     {
         address = "https://" + address + "/photon/m/?ping&r=" + UnityEngine.Random.Range(0, 10000);
         Debug.Log("StartPing: " + address);
-        this.webRequest = new WWW(address);
+        this.webRequest = new UnityWebRequest(address);
         return true;
     }
 

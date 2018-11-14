@@ -6,166 +6,166 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class Server
 {
-	#region Statics
+    #region Statics
 
-	public static Server Current
-	{
-		get { return new Server (PhotonNetwork.room); }
-	}
+    public static Server Current
+    {
+        get { return new Server(PhotonNetwork.room); }
+    }
 
-	#endregion
+    #endregion
 
-	#region Properties
+    #region Properties
 
-	public Room Photon
-	{
-		get;
-	}
+    public Room Photon
+    {
+        get;
+    }
 
-	public string Name
-	{
-		get { return Photon.Name; }
-	}
+    public string Name
+    {
+        get { return Photon.Name; }
+    }
 
-	public int PlayerCount
-	{
-		get { return Photon.PlayerCount; }
-	}
+    public int PlayerCount
+    {
+        get { return Photon.PlayerCount; }
+    }
 
-	public int MaxPlayers
-	{
-		get { return Photon.MaxPlayers; }
-		set { Photon.MaxPlayers = value; }
-	}
+    public int MaxPlayers
+    {
+        get { return Photon.MaxPlayers; }
+        set { Photon.MaxPlayers = value; }
+    }
 
-	public bool IsVisible
-	{
-		get { return Photon.IsVisible; }
-		set { Photon.IsVisible = value; }
-	}
+    public bool IsVisible
+    {
+        get { return Photon.IsVisible; }
+        set { Photon.IsVisible = value; }
+    }
 
-	public bool IsJoinable
-	{
-		get { return Photon.IsOpen; }
-		set { Photon.IsOpen = value; }
-	}
+    public bool IsJoinable
+    {
+        get { return Photon.IsOpen; }
+        set { Photon.IsOpen = value; }
+    }
 
-	public int InactiveTime
-	{
-		get { return Photon.PlayerTtl; }
-		set { Photon.PlayerTtl = value; }
-	}
+    public int InactiveTime
+    {
+        get { return Photon.PlayerTtl; }
+        set { Photon.PlayerTtl = value; }
+    }
 
-	#endregion
+    #endregion
 
-	public Server (Room room)
-	{
-		this.Photon = room;
-	}
+    public Server(Room room)
+    {
+        this.Photon = room;
+    }
 
-	public void SetProperty (string key, object obj)
-	{
-		if ( NetworkManager.IsMasterClient == false )
-		{
-			Debug.LogWarning ($"Attempting to set a room property ({key}) when you are not the master client!");
-			//return;
-		}
+    public void SetProperty(string key, object obj)
+    {
+        if (NetworkManager.IsMasterClient == false)
+        {
+            Debug.LogWarning($"Attempting to set a room property ({key}) when you are not the master client!");
+            //return;
+        }
 
-		Photon.SetCustomProperties (new Hashtable () { { key, obj } });
-	}
+        Photon.SetCustomProperties(new Hashtable() { { key, obj } });
+    }
 
-	public T GetProperty<T> (string key, T defaultValue = default (T))
-	{
-		object obj;
-		if ( Photon.CustomProperties.TryGetValue (key, out obj) && obj is T )
-		{
-			return (T) obj;
-		}
+    public T GetProperty<T>(string key, T defaultValue = default(T))
+    {
+        object obj;
+        if (Photon.CustomProperties.TryGetValue(key, out obj) && obj is T)
+        {
+            return (T)obj;
+        }
 
-		return defaultValue;
-	}
+        return defaultValue;
+    }
 
-	public void ClearProperty (string key)
-	{
-		SetProperty (key, null);
-	}
+    public void ClearProperty(string key)
+    {
+        SetProperty(key, null);
+    }
 
-	#region Team
-
-
-	public void SetTeamName (int team, string name)
-	{
-		SetProperty (RoomProperty.Team_Name + team, name);
-	}
+    #region Team
 
 
-	public string GetTeamName (int team)
-	{
-		return GetProperty<string> (RoomProperty.Team_Name + team);
-	}
+    public void SetTeamName(int team, string name)
+    {
+        SetProperty(RoomProperty.Team_Name + team, name);
+    }
 
 
-	public void SetTeamSize (int size)
-	{
-		SetProperty (RoomProperty.Team_MaxSize, size);
-	}
+    public string GetTeamName(int team)
+    {
+        return GetProperty<string>(RoomProperty.Team_Name + team);
+    }
 
 
-	public int GetTeamSize ()
-	{
-		return GetProperty<int> (RoomProperty.Team_MaxSize);
-	}
+    public void SetTeamSize(int size)
+    {
+        SetProperty(RoomProperty.Team_MaxSize, size);
+    }
 
 
-	public void SetTeamColor (int team, Color color)
-	{
-		SetProperty (RoomProperty.Team_Color + team, color.ToVector ());
-	}
+    public int GetTeamSize()
+    {
+        return GetProperty<int>(RoomProperty.Team_MaxSize);
+    }
 
 
-	public Color GetTeamColor (int team)
-	{
-		return GetProperty (RoomProperty.Team_Color + team, Tank.Default_Color.ToVector ()).ToColor ();
-	}
+    public void SetTeamColor(int team, Color color)
+    {
+        SetProperty(RoomProperty.Team_Color + team, color.ToVector());
+    }
 
 
-	public void SetTeamScore (int team, int amount)
-	{
-		SetProperty (RoomProperty.Team_Score + team, amount);
-	}
+    public Color GetTeamColor(int team)
+    {
+        return GetProperty(RoomProperty.Team_Color + team, Tank.Default_Color.ToVector()).ToColor();
+    }
 
 
-	public int GetTeamScore (int team)
-	{
-		return GetProperty<int> (RoomProperty.Team_Score + team);
-	}
+    public void SetTeamScore(int team, int amount)
+    {
+        SetProperty(RoomProperty.Team_Score + team, amount);
+    }
 
 
-	public void IncreaseTeamScore (int team, int amount)
-	{
-		SetTeamScore (team, GetTeamScore (team) + amount);
-	}
+    public int GetTeamScore(int team)
+    {
+        return GetProperty<int>(RoomProperty.Team_Score + team);
+    }
 
 
-	public void SetTeam (int number, Team team)
-	{
-		SetTeamName (number, team);
-		SetTeamColor (number, team);
-	}
+    public void IncreaseTeamScore(int team, int amount)
+    {
+        SetTeamScore(team, GetTeamScore(team) + amount);
+    }
 
 
-	public Team GetTeam (int number)
-	{
-		if ( number <= 0 )
-		{
-			return Team.None;
-		}
+    public void SetTeam(int number, Team team)
+    {
+        SetTeamName(number, team);
+        SetTeamColor(number, team);
+    }
 
-		string name = GetTeamName (number);
-		Color color = GetTeamColor (number);
 
-		return new Team (name, number, color);
-	}
+    public Team GetTeam(int number)
+    {
+        if (number <= 0)
+        {
+            return Team.None;
+        }
 
-	#endregion
+        string name = GetTeamName(number);
+        Color color = GetTeamColor(number);
+
+        return new Team(name, number, color);
+    }
+
+    #endregion
 }

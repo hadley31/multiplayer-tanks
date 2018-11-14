@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class SoccerGamemodeControl : GamemodeControl
 {
+    protected override string TankName
+    {
+        get { return "Tank_Soccer"; }
+    }
+
     public TeamSelectMenuControl teamSelectControl;
 
     public override void OnGainControl()
@@ -16,12 +21,11 @@ public class SoccerGamemodeControl : GamemodeControl
 
         if (Tank.Local == null)
         {
-            Vector3 spawn = teamSelectControl.SelectedTeam == 1 ? new Vector3(-18, 0, 0) : new Vector3(18, 0, 0);
-            PhotonNetwork.Instantiate("Tank_Soccer", spawn, Quaternion.identity, 0);
+            Vector3 spawn = Vector3.right * 18 * (teamSelectControl.SelectedTeam == 1 ? -1 : 1);
+            Tank tank = CreateTank();
 
-            Tank.Local.Team = Server.Current.GetTeam(teamSelectControl.SelectedTeam);
-
-            Tank.Local.Visuals.RevertToTeamColor();
+            tank.transform.position = spawn;
+            tank.SetTeam(teamSelectControl.SelectedTeam);
         }
 
         base.OnGainControl();
@@ -38,6 +42,11 @@ public class SoccerGamemodeControl : GamemodeControl
     }
 
     public void OnGoalScored(int team)
+    {
+
+    }
+
+    public void OnChangeTeam(int team)
     {
 
     }

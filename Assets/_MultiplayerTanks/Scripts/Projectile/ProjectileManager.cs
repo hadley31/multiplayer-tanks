@@ -69,13 +69,13 @@ public class ProjectileManager : Photon.MonoBehaviour
 
 	#region Spawn / Destroy
 
-	public void SpawnNewRPC (Vector3 position, Vector3 direction, int bounces, int damage, int health, float speed, int viewID, int id, double createTime)
+	public void SpawnNew (Vector3 position, Vector3 direction, int bounces, int damage, int health, float speed, int viewID, int id, double createTime)
 	{
-		photonView.RPC ("SpawnNew", PhotonTargets.All, position, direction, bounces, damage, health, speed, viewID, id, createTime);
+		photonView.RPC ("SpawnNewRPC", PhotonTargets.All, position, direction, bounces, damage, health, speed, viewID, id, createTime);
 	}
 
 	[PunRPC]
-	public void SpawnNew (Vector3 position, Vector3 direction, int bounces, int damage, int health, float speed, int viewID, int id, double createTime)
+	private void SpawnNewRPC (Vector3 position, Vector3 direction, int bounces, int damage, int health, float speed, int viewID, int id, double createTime)
 	{
 		Projectile p = m_Pool.Spawn<Projectile> ();
 
@@ -98,20 +98,20 @@ public class ProjectileManager : Photon.MonoBehaviour
 		m_ProjectileID = id + 1;
 	}
 
-	public void DestroyRPC (int id)
+	public void Destroy (int id)
 	{
 		if (PhotonNetwork.isMasterClient)
 		{
-			photonView.RPC ("Destroy", PhotonTargets.All, id);
+			photonView.RPC ("DestroyRPC", PhotonTargets.All, id);
 		}
 		else
 		{
-			Destroy (id);
+			DestroyRPC (id);
 		}
 	}
 
 	[PunRPC]
-	public void Destroy (int id)
+	public void DestroyRPC (int id)
 	{
 		if ( Instance == null )
 		{

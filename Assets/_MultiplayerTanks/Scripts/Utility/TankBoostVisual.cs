@@ -3,28 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Slider))]
 public class TankBoostVisual : MonoBehaviour
 {
-	public Slider slider;
+    private Slider m_Slider;
 
-	public float Value
-	{
-		get;
-		private set;
-	}
+    public float Value
+    {
+        get { return m_Slider.value; }
+        set
+        {
+            if (m_Slider.value != value)
+            {
+                m_Slider.value = value;
+            }
+        }
+    }
 
-	private void Update ()
-	{
-		Tank tank = TankFollowCameraRig.Instance?.MainTarget;
+    private void Awake()
+    {
+        m_Slider = GetComponent<Slider>();
+    }
 
-		if ( tank != null )
-		{
-			float newValue = tank.Movement.Boost / tank.Movement.maxBoost;
-			if ( newValue != Value )
-			{
-				slider.value = newValue;
-				Value = newValue;
-			}
-		}
-	}
+    private void Update()
+    {
+        Tank tank = SpectatorCamera.Instance?.MainTarget;
+
+        if (tank != null)
+        {
+            Value = tank.Movement.Boost / tank.Movement.maxBoost;
+        }
+    }
 }

@@ -46,7 +46,7 @@ public class TankShoot : TankBase
 
 		float projectileSpeed = this.speed + Vector3.Dot (Movement.Velocity, spawnPoint.forward) * relativeSpeedEffect;
 
-		ProjectileManager.Instance.SpawnNewRPC (spawnPoint.position, spawnPoint.forward, bounces, damage, health, projectileSpeed, Tank.ID, id, PhotonNetwork.time);
+		ProjectileManager.Instance.SpawnNew (spawnPoint.position, spawnPoint.forward, bounces, damage, health, projectileSpeed, Tank.ID, id, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}

@@ -77,7 +77,7 @@ public class TankLandmine : TankBase
 
         int id = LandmineManager.GetNextID();
 
-        LandmineManager.Instance.SpawnNewRPC(transform.position, fuse, damage, health, radius, photonView.viewID, id, PhotonNetwork.time);
+        LandmineManager.Instance.SpawnNew(transform.position, fuse, damage, health, radius, photonView.viewID, id, PhotonNetwork.time);
 
         Landmines--;
         m_rechargeTimer = useCooldown;

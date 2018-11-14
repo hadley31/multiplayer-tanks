@@ -2,12 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GamemodeControl : ControlElement
+public abstract class GamemodeControl : ControlElement
 {
     public static GamemodeControl Current
     {
         get;
         private set;
+    }
+
+    protected virtual string TankName
+    {
+        get { return "Tank"; }
     }
 
     public override void OnGainControl()
@@ -31,11 +36,20 @@ public class GamemodeControl : ControlElement
             Current = null;
         }
 
-		CrosshairManager.Current?.ShowCursor();
+        CrosshairManager.Current?.ShowCursor();
     }
 
     public override void OnControlUpdate()
     {
 
+    }
+
+    public virtual Tank CreateTank()
+    {
+        Tank tank = PhotonNetwork.Instantiate(TankName, Vector3.zero, Quaternion.identity, 0).GetComponent<Tank>();
+
+        tank.Visuals.RevertToTeamColor();
+
+        return tank;
     }
 }

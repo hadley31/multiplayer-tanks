@@ -46,7 +46,7 @@ public class EntityHurt : EntityBase
 			Health h = m_HurtList[i];
 			if ( h != null )
 			{
-				h.DecreaseRPC (damage);
+				h.Decrease (damage);
 			}
 		}
 		m_HurtTimer = 0;

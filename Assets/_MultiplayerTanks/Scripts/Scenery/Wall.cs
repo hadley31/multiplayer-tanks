@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent (typeof(Collider))]
-public class Wall : MonoBehaviour, IProjectileInteractive
+public class Wall : MonoBehaviour
 {
 	public static int Layer_Mask
 	{

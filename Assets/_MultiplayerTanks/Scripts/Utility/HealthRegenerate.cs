@@ -17,7 +17,7 @@ public class HealthRegenerate : MonoBehaviour
 
 		if (m_Timer > rate)
 		{
-			health.DecreaseRPC (-amount);
+			health.Decrease (-amount);
 			m_Timer = 0;
 		}
 	}

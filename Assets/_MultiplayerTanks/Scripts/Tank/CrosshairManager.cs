@@ -19,7 +19,7 @@ public class CrosshairManager : MonoBehaviour
 
     private List<Tank> Tanks
     {
-        get { return TankFollowCameraRig.Instance.Tanks.FindAll(x => x.IsPlayer); }
+        get { return SpectatorCamera.Instance.Tanks.FindAll(x => x.IsPlayer); }
     }
 
 
@@ -41,14 +41,14 @@ public class CrosshairManager : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        print("Cursor hidden...");
+        print("Cursor hidden.");
     }
 
     public void ShowCursor()
     {
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
-        print("Cursor revealed...");
+        print("Cursor revealed.");
     }
 
     private void LateUpdate()
@@ -78,7 +78,7 @@ public class CrosshairManager : MonoBehaviour
             }
             else
             {
-                m_TankCursors[i].rectTransform.position = TankFollowCameraRig.Instance.Camera.WorldToScreenPoint(Tanks[i].NetworkTank.CursorWorldPosition);
+                m_TankCursors[i].rectTransform.position = SpectatorCamera.Instance.Camera.WorldToScreenPoint(Tanks[i].NetworkTank.CursorWorldPosition);
             }
         }
     }

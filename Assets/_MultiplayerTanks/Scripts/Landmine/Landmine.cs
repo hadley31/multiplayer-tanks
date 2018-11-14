@@ -3,177 +3,173 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent (typeof (LandmineHealth))]
-public class Landmine : EntityBase, IProjectileInteractive
+[RequireComponent(typeof(LandmineHealth))]
+public class Landmine : EntityBase
 {
-	#region Private Fields
+    #region Private Fields
 
-	private Material m_Material;
-	private float m_FuseTimer;
-	private float m_ColorSwitchTime, m_ColorSwitchTimer;
-	private bool m_IsColoredRed;
-	private bool m_HasExploded;
+    private Material m_Material;
+    private float m_FuseTimer;
+    private float m_ColorSwitchTime, m_ColorSwitchTimer;
+    private bool m_IsColoredRed;
+    private bool m_HasExploded;
 
-	#endregion
+    #endregion
 
-	#region Properties
+    #region Properties
 
-	public int Damage
-	{
-		get;
-		private set;
-	}
+    public int Damage
+    {
+        get;
+        private set;
+    }
 
-	public float Radius
-	{
-		get;
-		private set;
-	}
+    public float Radius
+    {
+        get;
+        private set;
+    }
 
-	public float Fuse
-	{
-		get;
-		private set;
-	}
+    public float Fuse
+    {
+        get;
+        private set;
+    }
 
-	public int ID
-	{
-		get;
-		private set;
-	}
+    public int ID
+    {
+        get;
+        private set;
+    }
 
-	public Tank Sender
-	{
-		get;
-		private set;
-	}
+    public Tank Sender
+    {
+        get;
+        private set;
+    }
 
-	public Player Owner
-	{
-		get { return Sender?.Owner; }
-	}
+    public Player Owner
+    {
+        get { return Sender?.Owner; }
+    }
 
-	#endregion
+    #endregion
 
-	#region Monobehaviours
+    #region Monobehaviours
 
-	private void Awake ()
-	{
-		this.m_Material = GetComponentInChildren<Renderer> ().material;
-	}
+    private void Awake()
+    {
+        this.m_Material = GetComponentInChildren<Renderer>().material;
+    }
 
-	private void Update ()
-	{
-		m_FuseTimer -= Time.deltaTime;
-		m_ColorSwitchTimer -= Time.deltaTime;
+    private void Update()
+    {
+        m_FuseTimer -= Time.deltaTime;
+        m_ColorSwitchTimer -= Time.deltaTime;
 
-		if ( m_ColorSwitchTimer <= 0 )
-		{
-			m_IsColoredRed = !m_IsColoredRed;
-			m_Material.color = m_IsColoredRed ? Color.red : Color.yellow;
+        if (m_ColorSwitchTimer <= 0)
+        {
+            m_IsColoredRed = !m_IsColoredRed;
+            m_Material.color = m_IsColoredRed ? Color.red : Color.yellow;
 
-			m_ColorSwitchTime = m_FuseTimer / 10;
-			m_ColorSwitchTimer = m_ColorSwitchTime;
-		}
+            m_ColorSwitchTime = m_FuseTimer / 10;
+            m_ColorSwitchTimer = m_ColorSwitchTime;
+        }
 
-		if ( m_FuseTimer <= 0 )
-		{
-			Explode ();
-		}
-	}
+        if (m_FuseTimer <= 0)
+        {
+            Explode();
+        }
+    }
 
-	#endregion
+    #endregion
 
-	public void OnProjectileInteraction (Projectile p)
-	{
-		Health.DecreaseRPC (p.Damage);
+    public void OnProjectileInteraction(Projectile p)
+    {
+        Health.Decrease(p.Damage);
 
-		p.DestroyRPC ();
-	}
+        p.Destroy();
+    }
 
-	public void Explode ()
-	{
-		if ( NetworkManager.IsMasterClient == false )
-		{
-			return;
-		}
+    public void Explode()
+    {
+        if (NetworkManager.IsMasterClient == false)
+        {
+            return;
+        }
 
-		if ( m_HasExploded == true )
-		{
-			return;
-		}
+        if (m_HasExploded == true)
+        {
+            return;
+        }
 
-		m_HasExploded = true;
+        m_HasExploded = true;
 
-		Collider[] colliders = Physics.OverlapSphere (transform.position, Radius);
-		foreach ( Collider c in colliders )
-		{
-			Health h = c.GetComponent<Health> ();
+        Collider[] colliders = Physics.OverlapSphere(transform.position, Radius);
+        foreach (Collider c in colliders)
+        {
+            Health h = c.GetComponent<Health>();
 
-			if ( h != null )
-			{
-				h.DecreaseRPC (Damage);
-				print ("Landmine damaged: " + h.gameObject.name);
-			}
-		}
+            if (h != null)
+            {
+                h.Decrease(Damage);
+                h.BroadcastMessage("OnLandmineInteraction", this, SendMessageOptions.DontRequireReceiver);
+                print("Landmine damaged: " + h.gameObject.name);
+            }
+        }
 
-		DestroyRPC ();
-	}
+        Destroy();
+    }
 
-	public void SpawnExplosion ()
-	{
-		// Spawn explosion
-		Instantiate (LandmineExplosion.Get (0), transform.position, Quaternion.identity).Prime (Radius, 0.5f);
-	}
+    public void SpawnExplosion()
+    {
+        // Spawn explosion
+        Instantiate(LandmineExplosion.Get(0), transform.position, Quaternion.identity).Prime(Radius, 0.5f);
+    }
 
-	#region Property Setters
+    #region Property Setters
 
-	public void SetPosition (Vector3 position)
-	{
-		this.transform.position = position;
-	}
+    public void SetPosition(Vector3 position)
+    {
+        this.transform.position = position;
+    }
 
-	public void SetFuse (float time)
-	{
-		this.Fuse = time;
+    public void SetFuse(float time)
+    {
+        this.Fuse = time;
 
-		this.m_FuseTimer = Fuse;
-		this.m_HasExploded = false;
-	}
+        this.m_FuseTimer = Fuse;
+        this.m_HasExploded = false;
+    }
 
-	public void SetDamage (int damage)
-	{
-		this.Damage = damage;
-	}
+    public void SetDamage(int damage)
+    {
+        this.Damage = damage;
+    }
 
-	public void SetRadius (float radius)
-	{
-		this.Radius = radius;
-	}
+    public void SetRadius(float radius)
+    {
+        this.Radius = radius;
+    }
 
-	public void SetID (int id)
-	{
-		this.ID = id;
-	}
+    public void SetID(int id)
+    {
+        this.ID = id;
+    }
 
-	public void SetSender (int viewID)
-	{
-		this.Sender = PhotonView.Find (viewID)?.GetComponent<Tank> ();
-	}
+    public void SetSender(int viewID)
+    {
+        this.Sender = PhotonView.Find(viewID)?.GetComponent<Tank>();
+    }
 
-	#endregion
+    #endregion
 
-	#region Destroy
+    #region Destroy
 
-	public void Destroy ()
-	{
-		LandmineManager.Instance.Destroy (this.ID);
-	}
+    public void Destroy()
+    {
+        LandmineManager.Instance.Destroy(this.ID);
+    }
 
-	public void DestroyRPC ()
-	{
-		LandmineManager.Instance.DestroyRPC (this.ID);
-	}
-
-	#endregion
+    #endregion
 }

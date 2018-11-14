@@ -2,54 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class TeamSelectMenuControl : ControlElement
 {
-	public int SelectedTeam
-	{
-		get;
-		private set;
-	}
+    public int SelectedTeam
+    {
+        get;
+        private set;
+    }
 
-	public Image Team1Image;
-	public Image Team2Image;
-	public Text Team1Text;
-	public Text Team2Text;
+    public Image Team1Image;
+    public Image Team2Image;
+    public Text Team1Text;
+    public Text Team2Text;
 
-	public override void OnGainControl ()
-	{
-		SelectedTeam = 0;
+    public IntUnityEvent onSelectTeam;
 
-		Team1Image.color = GetColor (1);
-		Team2Image.color = GetColor (2);
-		Team1Text.text = $"Join {GetName (1)}";
-		Team2Text.text = $"Join {GetName (2)}";
-	}
+    public override void OnGainControl()
+    {
+        SelectedTeam = 0;
 
-	public override void OnControlUpdate ()
-	{
+        Team1Image.color = GetColor(1);
+        Team2Image.color = GetColor(2);
+        Team1Text.text = GetName(1);
+        Team2Text.text = GetName(2);
+    }
 
-	}
+    public override void OnControlUpdate()
+    {
 
-	public override void OnLoseControl ()
-	{
+    }
 
-	}
+    public override void OnLoseControl()
+    {
 
-	public void SelectTeam (int team)
-	{
-		SelectedTeam = team;
+    }
 
-		gameObject.SetActive (false);
-	}
+    public void SelectTeam(int team)
+    {
+        SelectedTeam = team;
 
-	private string GetName (int team)
-	{
-		return Server.Current?.GetTeamName (team) ?? $"Team {team}";
-	}
+        onSelectTeam.Invoke(team);
+        gameObject.SetActive(false);
+    }
 
-	private Color GetColor (int team)
-	{
-		return Server.Current?.GetTeamColor (team) ?? Tank.Default_Color;
-	}
+    private string GetName(int team)
+    {
+        return Server.Current?.GetTeamName(team) ?? $"Team {team}";
+    }
+
+    private Color GetColor(int team)
+    {
+        return Server.Current?.GetTeamColor(team) ?? Tank.Default_Color;
+    }
 }

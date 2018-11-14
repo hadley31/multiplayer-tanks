@@ -70,6 +70,11 @@ public struct Team
 		return a.Name;
 	}
 
+	public static implicit operator Team (int a)
+	{
+		return Server.Current?.GetTeam(a) ?? Team.None;
+	}
+
 	public static implicit operator Color (Team a)
 	{
 		return a.Color;
