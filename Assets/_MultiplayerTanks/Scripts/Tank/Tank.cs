@@ -44,6 +44,11 @@ public class Tank : TankBase
         get { return photonView.isMine; }
     }
 
+    public bool IsLocalPlayer
+    {
+        get { return IsLocal && IsPlayer; }
+    }
+
     public Player Owner
     {
         get { return photonView.owner; }
@@ -228,7 +233,7 @@ public class Tank : TankBase
 
     public void Remove()
     {
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     private void UpdateList()

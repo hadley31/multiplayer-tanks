@@ -55,6 +55,8 @@ public class SoccerGamemodeControl : GamemodeControl
                 Tank.Local.Remove();
             }
 
+            CrosshairManager.Current?.ShowCursor();
+
             return;
         }
 

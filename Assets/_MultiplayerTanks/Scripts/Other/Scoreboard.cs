@@ -18,21 +18,9 @@ public class Scoreboard : MonoBehaviour
 	{
 		content.DestroyChildren ();
 
-		List<Tank> team1 = Tank.All.Where (x => x.Team == 1).OrderByDescending (x => x.Score).ToList ();
+		List<Tank> team1 = Tank.All.OrderByDescending (x => x.Score).ToList ();
 
 		foreach ( Tank tank in team1 )
-		{
-			if ( tank.IsPlayer == false )
-			{
-				continue;
-			}
-
-			Instantiate (elementPrefab, content, false).Prime (tank);
-		}
-
-		List<Tank> team2 = Tank.All.FindAll (x => x.Team == 2).OrderByDescending (x => x.Score).ToList ();
-
-		foreach ( Tank tank in team2 )
 		{
 			if ( tank.IsPlayer == false )
 			{

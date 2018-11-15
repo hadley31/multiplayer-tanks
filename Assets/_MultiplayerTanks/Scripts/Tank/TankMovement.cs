@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TankMovement : TankBase
 {
-    private static readonly Vector3 Horizontal = new Vector3(1, 0, 1);
+    private static readonly Vector3 XZ = new Vector3(1, 0, 1);
 
     [Header("Move & Look Info")]
     public float moveSpeed = 4;
@@ -87,7 +87,7 @@ public class TankMovement : TankBase
 
     public Vector3 Velocity
     {
-        get { return Vector3.Scale(Rigidbody.velocity, Horizontal); }
+        get { return Vector3.Scale(Rigidbody.velocity, XZ); }
         private set { Rigidbody.velocity = value; }
     }
 
@@ -143,7 +143,7 @@ public class TankMovement : TankBase
     protected virtual void UpdateSpeed()
     {
         m_speed = moveSpeed;
-		
+
         if (IsMoving && BoostHeld)
         {
             IsBoosting = true;

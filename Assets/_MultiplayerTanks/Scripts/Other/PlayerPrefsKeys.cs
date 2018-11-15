@@ -3,7 +3,7 @@
 public static class PlayerPrefsKeys
 {
 	public const string User_Alias = "ua";
-	public const string Camera_Offset_Z = "cox";
+	public const string Camera_Offset_Z = "coz";
 	public const string Camera_Offset_Y = "coy";
 	public const string Camera_Angle = "ca";
 

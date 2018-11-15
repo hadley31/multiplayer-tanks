@@ -32,9 +32,40 @@ public class NetworkTank : TankBase
     }
 
 
-    private void Start(){
-        if (!Tank.IsLocal){
+    private void Start()
+    {
+        if (!Tank.IsLocal)
+        {
             Movement.Rigidbody.interpolation = RigidbodyInterpolation.None;
+        }
+    }
+
+
+    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.isWriting)
+        {
+            // we are sending data
+            stream.SendNext(Movement.Position);
+            stream.SendNext(Movement.Velocity);
+
+            stream.SendNext(Movement.Rigidbody.rotation.eulerAngles.y);
+            stream.SendNext(Movement.Top.eulerAngles.y);
+
+            stream.SendNext(TankInput.GetLookTarget());
+        }
+        else
+        {
+            // we are receiving data
+            m_NetworkPosition = (Vector3)stream.ReceiveNext();
+            m_NetworkVelocity = (Vector3)stream.ReceiveNext();
+
+            m_NetworkRotation = (float)stream.ReceiveNext();
+            m_NetworkTopRotation = (float)stream.ReceiveNext();
+
+            m_TargetCursorWorldPos = (Vector3)stream.ReceiveNext();
+
+            m_LastNetworkDataReceivedTime = info.timestamp;
         }
     }
 
@@ -59,35 +90,6 @@ public class NetworkTank : TankBase
             // Update the rigidbody's rotation
             Quaternion newRotation = Quaternion.Euler(0, m_NetworkRotation, 0);
             Movement.Rigidbody.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.fixedDeltaTime * rotateLerpSpeed);
-        }
-    }
-
-
-    private void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.isWriting)
-        {
-            // we are sending data
-            stream.SendNext(Movement.Rigidbody.position);
-            stream.SendNext(Movement.Velocity);
-
-            stream.SendNext(Movement.Rigidbody.rotation.eulerAngles.y);
-            stream.SendNext(Movement.Top.eulerAngles.y);
-
-            stream.SendNext(TankInput.GetLookTarget());
-        }
-        else
-        {
-            // we are receiving data
-            m_NetworkPosition = (Vector3)stream.ReceiveNext();
-            m_NetworkVelocity = (Vector3)stream.ReceiveNext();
-
-            m_NetworkRotation = (float)stream.ReceiveNext();
-            m_NetworkTopRotation = (float)stream.ReceiveNext();
-
-            m_TargetCursorWorldPos = (Vector3)stream.ReceiveNext();
-
-            m_LastNetworkDataReceivedTime = info.timestamp;
         }
     }
 

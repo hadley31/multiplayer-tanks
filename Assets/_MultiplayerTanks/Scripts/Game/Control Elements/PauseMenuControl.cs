@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionsMenuControl : ControlElement
+public class PauseMenuControl : ControlElement
 {
 
 	public override void OnGainControl ()
