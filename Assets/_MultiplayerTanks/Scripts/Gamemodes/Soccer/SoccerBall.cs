@@ -6,12 +6,8 @@ using UnityEngine;
 public class SoccerBall : Photon.MonoBehaviour
 {
     public float projectileHitForce = 100;
+    public float landmineHitForce = 1000;
     public float tankHitForce = 300;
-
-    public GameObject GameObject
-    {
-        get { return gameObject; }
-    }
 
     public Rigidbody Rigidbody
     {
@@ -134,5 +130,13 @@ public class SoccerBall : Photon.MonoBehaviour
         }
 
         p.Destroy();
+    }
+
+    public void OnLandmineInteraction(Landmine landmine)
+    {
+        Vector3 force = (transform.position - landmine.transform.position).normalized * landmineHitForce;
+        Vector3 position = landmine.transform.position;
+
+        AddForce(landmine.Sender.ID, force, position);
     }
 }

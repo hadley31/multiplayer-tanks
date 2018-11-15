@@ -51,7 +51,7 @@ public class TankShoot : TankBase
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}
 
-	public bool TooCloseToWall ()
+	private bool TooCloseToWall ()
 	{
 		Vector3 start = transform.position;
 		Vector3 direction = spawnPoint.position - start;

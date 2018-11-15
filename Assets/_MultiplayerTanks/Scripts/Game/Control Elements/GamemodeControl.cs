@@ -25,8 +25,6 @@ public abstract class GamemodeControl : ControlElement
 
         Debug.Log("GameLevelControl gained control");
         Current = this;
-
-        CrosshairManager.Current?.HideCursor();
     }
 
     public override void OnLoseControl()

@@ -30,11 +30,12 @@ public class SoccerGoal : MonoBehaviour
 
 		if ( tank != null )
 		{
-			int reward = tank.Team.Number == team ? playerPointsPerGoal : -playerPointsPerGoal;
+			int reward = tank.Team.Number == team ? playerPointsPerGoal : -playerPointsPerGoal / 2;
 
 			tank.Score += reward;
 		}
 
+		
 		Server.Current.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
 
 		onScore.Invoke ();

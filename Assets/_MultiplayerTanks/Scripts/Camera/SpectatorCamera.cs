@@ -5,6 +5,11 @@ using UnityEngine.UI;
 
 public class SpectatorCamera : MonoBehaviour
 {
+    public int mask
+    {
+        get { return LayerMask.GetMask("Tank"); }
+    }
+
     public static SpectatorCamera Instance
     {
         get;
@@ -89,6 +94,19 @@ public class SpectatorCamera : MonoBehaviour
 
     private void Update()
     {
+        if (Tank.Local == null && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            Ray ray = SpectatorCamera.Instance.Camera.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, mask) == true)
+            {
+                Tank tank = hitInfo.transform.GetComponent<Tank>();
+                if (tank != null)
+                {
+                    SpectatorCamera.Instance?.ToggleFollow(tank);
+                }
+            }
+        }
+
         Scroll();
     }
 

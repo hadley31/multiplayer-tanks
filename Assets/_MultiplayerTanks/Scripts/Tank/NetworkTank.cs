@@ -10,8 +10,6 @@ public class NetworkTank : TankBase
     public float rotateLerpSpeed = 10;
     public float lookLerpSpeed = 25;
 
-    public float maxPositionError = 2;
-
 
     private Vector3 m_NetworkPosition;
     private Vector3 m_NetworkVelocity;
@@ -31,6 +29,13 @@ public class NetworkTank : TankBase
     public PhotonPlayer Owner
     {
         get { return photonView.owner; }
+    }
+
+
+    private void Start(){
+        if (!Tank.IsLocal){
+            Movement.Rigidbody.interpolation = RigidbodyInterpolation.None;
+        }
     }
 
 
@@ -111,14 +116,6 @@ public class NetworkTank : TankBase
 
         Vector3 lerpedPosition = Vector3.Lerp(transform.position, estimatedPosition, Time.deltaTime * moveLerpSpeed);
 
-
-        if (Vector3.SqrMagnitude(lerpedPosition - estimatedPosition) < maxPositionError)
-        {
-            return lerpedPosition;
-        }
-        else
-        {
-            return estimatedPosition;
-        }
+        return lerpedPosition;
     }
 }

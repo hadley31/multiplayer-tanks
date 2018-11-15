@@ -11,8 +11,6 @@ public class CrosshairManager : MonoBehaviour
         private set;
     }
 
-    public static readonly Color[] Colors = { Color.red, Color.blue, Color.green, Color.grey, Color.yellow, Color.magenta };
-
     [Header("Cursor")]
     public Image cursorPrefab;
     private List<Image> m_TankCursors = new List<Image>();
@@ -62,12 +60,7 @@ public class CrosshairManager : MonoBehaviour
 
         for (int i = 0; i < Tanks.Count; i++)
         {
-            if (Tanks[i].IsPlayer == false)
-            {
-                continue;
-            }
-
-            m_TankCursors[i].color = Colors[i % Colors.Length];
+            m_TankCursors[i].color = Tanks[i].Team.Color;
 
             if (Tanks[i].IsLocal)
             {

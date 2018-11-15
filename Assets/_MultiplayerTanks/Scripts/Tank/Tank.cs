@@ -151,7 +151,7 @@ public class Tank : TankBase
         if (NetworkManager.IsMasterClient)
         {
             Health.Decrease(p.Damage);
-			// Set last person/thing to damage us. Move to health class?
+            // Set last person/thing to damage us. Move to health class?
         }
 
         p.Destroy();
@@ -226,6 +226,11 @@ public class Tank : TankBase
 
     #endregion
 
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
+
     private void UpdateList()
     {
         if (IsAlive)
@@ -246,5 +251,25 @@ public class Tank : TankBase
                 AllDead.Add(this);
             }
         }
+    }
+
+    public override bool Equals(object other)
+    {
+        return other is Tank tank ? this.ID == tank.ID : false;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public static bool operator ==(Tank a, Tank b)
+    {
+        return a?.ID == b?.ID;
+    }
+
+    public static bool operator !=(Tank a, Tank b)
+    {
+        return a?.ID != b?.ID;
     }
 }

@@ -108,13 +108,13 @@ public class Landmine : EntityBase
         Collider[] colliders = Physics.OverlapSphere(transform.position, Radius);
         foreach (Collider c in colliders)
         {
+            c.BroadcastMessage("OnLandmineInteraction", this, SendMessageOptions.DontRequireReceiver);
             Health h = c.GetComponent<Health>();
 
             if (h != null)
             {
                 h.Decrease(Damage);
-                h.BroadcastMessage("OnLandmineInteraction", this, SendMessageOptions.DontRequireReceiver);
-                print("Landmine damaged: " + h.gameObject.name);
+                //print("Landmine damaged: " + h.gameObject.name);
             }
         }
 

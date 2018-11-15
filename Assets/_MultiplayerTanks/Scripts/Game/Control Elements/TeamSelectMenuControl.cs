@@ -10,7 +10,7 @@ public class TeamSelectMenuControl : ControlElement
     {
         get;
         private set;
-    }
+    } = -1;
 
     public Image Team1Image;
     public Image Team2Image;
@@ -21,7 +21,7 @@ public class TeamSelectMenuControl : ControlElement
 
     public override void OnGainControl()
     {
-        SelectedTeam = 0;
+        SelectedTeam = -1;
 
         Team1Image.color = GetColor(1);
         Team2Image.color = GetColor(2);
