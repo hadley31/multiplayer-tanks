@@ -24,7 +24,7 @@ public class KeybindToggle : MonoBehaviour
     void Update()
     {
 #if UNITY_WEBGL || UNITY_EDITOR
-        KeyCode key = this.key == KeyCode.Escape ? KeyCode.F10 : this.key;
+        KeyCode key = this.key == KeyCode.Escape ? KeyCode.F2 : this.key;
 #endif
         if (hold)
         {

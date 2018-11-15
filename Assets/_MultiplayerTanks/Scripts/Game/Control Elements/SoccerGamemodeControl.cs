@@ -19,6 +19,11 @@ public class SoccerGamemodeControl : GamemodeControl
             return;
         }
 
+        if (Tank.Local != null)
+        {
+            CrosshairManager.Current?.HideCursor();
+        }
+
         base.OnGainControl();
     }
 
