@@ -17,7 +17,7 @@ public class CrosshairManager : MonoBehaviour
 
     private List<Tank> Tanks
     {
-        get { return SpectatorCamera.Instance.Tanks.FindAll(x => x.IsPlayer); }
+        get { return SpectatorCamera.Instance?.Tanks?.FindAll(x => x.IsPlayer); }
     }
 
 

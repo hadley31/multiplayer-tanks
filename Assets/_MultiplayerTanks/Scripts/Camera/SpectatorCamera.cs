@@ -41,12 +41,6 @@ public class SpectatorCamera : MonoBehaviour
         private set;
     }
 
-    public Camera MinimapCamera
-    {
-        get;
-        private set;
-    }
-
     public Light Light
     {
         get;
@@ -65,7 +59,6 @@ public class SpectatorCamera : MonoBehaviour
     private void Awake()
     {
         Camera = transform.Find("Main Camera Parent/Camera").GetComponent<Camera>();
-        MinimapCamera = transform.Find("Minimap").GetComponent<Camera>();
         Light = GetComponentInChildren<Light>();
 
         m_TargetCameraDistance = defaultCameraDistance;

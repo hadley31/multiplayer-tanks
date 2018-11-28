@@ -159,8 +159,8 @@ public class PhotonEditor : EditorWindow
 		EditorApplication.projectChanged += EditorUpdate;
         EditorApplication.hierarchyChanged += EditorUpdate;
         #else
-        EditorApplication.projectWindowChanged += EditorUpdate;
-        EditorApplication.hierarchyWindowChanged += EditorUpdate;
+        EditorApplication.projectChanged += EditorUpdate;
+        EditorApplication.hierarchyChanged += EditorUpdate;
         #endif
         EditorApplication.update += OnUpdate;
 

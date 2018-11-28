@@ -304,6 +304,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 2446834529c0a544eb7904d6e82baf31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -316,6 +317,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: e772eaada4348a449a39c6d54d774630, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -366,7 +368,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onDestroy:
     m_PersistentCalls:
       m_Calls:
@@ -414,7 +417,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114326414294758354
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -424,6 +428,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: fbe525a6d30f148459ab211b538637ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -444,10 +449,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 6875e633d0c331044ab6517d354c0c6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 114843091049709618, guid: feab7de62db410b459c3f90bcd15fc26, type: 3}
+  projectilePrefab: {fileID: 114843091049709618, guid: feab7de62db410b459c3f90bcd15fc26,
+    type: 3}
   spawnPoint: {fileID: 4463067625149264}
   fireRate: 0.018
   bounces: 1
@@ -465,10 +472,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 57d273dc6ce614e4d9d94392477fa723, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  landminePrefab: {fileID: 114173939571103772, guid: bc586e1d43524c04eb1ca4330c70bc0b, type: 3}
+  landminePrefab: {fileID: 114173939571103772, guid: bc586e1d43524c04eb1ca4330c70bc0b,
+    type: 3}
   maxLandmines: 2
   useCooldown: 5
   landmineRechargeCooldown: 20
@@ -485,6 +494,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 6c6b2e9bc53086f42923f64a138621ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -492,15 +502,18 @@ MonoBehaviour:
   onColorChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: ColorUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: ColorUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   onShow:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   onHide:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114202015364617662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -510,6 +523,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 41600821dcdbdc0478f37fb9e780e1cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -523,6 +537,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 4d862d0c8e3c3f74696f23ec449d20a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -531,7 +546,8 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: IntUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: IntUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   onDie:
     m_PersistentCalls:
       m_Calls:
@@ -546,7 +562,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &114873482023609346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -556,6 +573,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 8724676aba8f6814fb74eefbfb5ac5d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -571,6 +589,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 72b18372cfd78254788baf67b110440a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -586,6 +605,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -642,6 +662,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1674659365865050}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: ba9b9c5650ecf104db42f1d3e8380393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

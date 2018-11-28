@@ -47,6 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083739183469312}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 2446834529c0a544eb7904d6e82baf31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -59,6 +60,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083739183469312}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: f2b30da7623b280499513817ab93def5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -71,6 +73,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083739183469312}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: afb1fe8e33b9df941a9ab6a8d9d3750a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -83,6 +86,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083739183469312}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: 4d862d0c8e3c3f74696f23ec449d20a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -91,7 +95,8 @@ MonoBehaviour:
   onHealthChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: IntUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: IntUnityEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
   onDie:
     m_PersistentCalls:
       m_Calls:
@@ -106,7 +111,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!54 &54058414637843412
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -145,6 +151,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1083739183469312}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
   m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
@@ -156,7 +163,8 @@ MonoBehaviour:
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 0}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
