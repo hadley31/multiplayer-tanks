@@ -93,6 +93,11 @@ public class LandmineManager : Photon.MonoBehaviour
         photonView.RPC("DestroyRPC", PhotonTargets.All, id);
     }
 
+    public void TryDestroy(int id)
+    {
+        
+    }
+
     [PunRPC]
     private void DestroyRPC(int id)
     {

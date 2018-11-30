@@ -14,13 +14,14 @@ public class TankHealthVisual : MonoBehaviour
         private set;
     }
 
-    private void Awake(){
+    private void Awake()
+    {
         m_Slider = GetComponent<Slider>();
     }
 
     private void Update()
     {
-        Tank tank = SpectatorCamera.Instance?.MainTarget;
+        Tank tank = SpectatorCamera.Instance?.MainTarget.GetComponent<Tank>();
 
         if (tank != null)
         {

@@ -1,101 +1,54 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
-public class SpectatorCamera : MonoBehaviour
+public class SpectatorCamera : VCamera
 {
+    public static SpectatorCamera Instance
+    {
+        get { return CameraManager.Instance.Current as SpectatorCamera; }
+    }
+
     public int mask
     {
         get { return LayerMask.GetMask("Tank"); }
     }
 
-    public static SpectatorCamera Instance
-    {
-        get;
-        private set;
-    }
-
     public float scrollSpeed = 5;
 
-    [Header("Follow Tank")]
+    [Header("Follow")]
     public float followSpeed = 15.0f;
     public float cameraZoomSpeed = 8.0f;
     public float defaultCameraDistance = 15.0f;
+    public UnityEvent onTargetsChanged;
 
-    private Vector3 m_TargetPosition;
-    private float m_TargetCameraDistance;
+    private readonly List<Entity> m_Targets = new List<Entity>();
 
-    private readonly List<Tank> m_Tanks = new List<Tank>();
-
-    public List<Tank> Tanks
+    public List<Entity> Targets
     {
-        get { return m_Tanks; }
+        get { return m_Targets; }
     }
 
-    #region Properties
-
-    public Camera Camera
+    public Entity MainTarget
     {
-        get;
-        private set;
+        get { return m_Targets.Count > 0 ? m_Targets[0] : null; }
     }
-
-    public Light Light
-    {
-        get;
-        set;
-    }
-
-    public Tank MainTarget
-    {
-        get { return m_Tanks.Count > 0 ? m_Tanks[0] : null; }
-    }
-
-    #endregion
 
     #region Monobehaviours
-
-    private void Awake()
-    {
-        Camera = transform.Find("Main Camera Parent/Camera").GetComponent<Camera>();
-        Light = GetComponentInChildren<Light>();
-
-        m_TargetCameraDistance = defaultCameraDistance;
-    }
-
-    private void OnEnable()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-        }
-        else
-        {
-            Debug.LogWarning("A camera rig is already active?!");
-            Destroy(this.gameObject);
-        }
-    }
-
-    private void OnDisable()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
-    }
 
     private void Update()
     {
         if (Tank.Local == null && Input.GetKeyDown(KeyCode.Mouse0))
         {
-            Ray ray = SpectatorCamera.Instance.Camera.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 100, mask) == true)
             {
-                Tank tank = hitInfo.transform.GetComponent<Tank>();
-                if (tank != null)
+                Entity ent = hitInfo.transform.GetComponent<Entity>();
+                if (ent != null)
                 {
-                    SpectatorCamera.Instance?.ToggleFollow(tank);
+                    ToggleFollow(ent);
                 }
             }
         }
@@ -103,16 +56,11 @@ public class SpectatorCamera : MonoBehaviour
         Scroll();
     }
 
-    private void LateUpdate()
-    {
-        FollowTank();
-    }
-
     #endregion
 
     private void Scroll()
     {
-        if (m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false))
+        if (m_Targets.Count == 0)
         {
             Vector3 direction = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
 
@@ -123,88 +71,88 @@ public class SpectatorCamera : MonoBehaviour
         }
     }
 
-    private void FollowTank()
+    public void OnlyFollow(params Entity[] targets)
     {
-        if (m_Tanks.Count == 0 || (m_Tanks.Count == 1 && MainTarget.IsAlive == false))
-        {
-            return;
-        }
+        m_Targets.Clear();
 
-        UpdateTargetPosition();
-
-        Vector3 camPos = Camera.transform.localPosition;
-
-        camPos.z = Mathf.Lerp(camPos.z, -m_TargetCameraDistance - defaultCameraDistance, Time.deltaTime * cameraZoomSpeed);
-
-        Camera.transform.localPosition = camPos;
-
-        transform.position = Vector3.Lerp(transform.position, m_TargetPosition, Time.deltaTime * followSpeed);
+        Follow(targets);
     }
 
-    public void OnlyFollow(params Tank[] tanks)
+    public void Follow(params Entity[] targets)
     {
-        m_Tanks.Clear();
-
-        Follow(tanks);
-    }
-
-    public void Follow(params Tank[] tanks)
-    {
-        foreach (Tank t in tanks)
+        foreach (Entity t in targets)
         {
-            if (m_Tanks.Contains(t) == false)
+            if (m_Targets.Contains(t) == false)
             {
-                m_Tanks.Add(t);
+                m_Targets.Add(t);
             }
         }
+        onTargetsChanged.Invoke();
     }
 
-    public void StopFollowing(Tank tank)
+    public void StopFollowing(Entity target)
     {
-        m_Tanks.Remove(tank);
+        m_Targets.Remove(target);
     }
 
-    public void ToggleFollow(Tank tank)
+    public void ToggleFollow(Entity target)
     {
-        if (m_Tanks.Contains(tank))
+        if (m_Targets.Contains(target))
         {
-            StopFollowing(tank);
+            StopFollowing(target);
         }
         else
         {
-            Follow(tank);
+            Follow(target);
         }
     }
 
-    private void UpdateTargetPosition()
+    public override void OnGainFocus()
     {
-        List<Tank> aliveTanks = m_Tanks.FindAll(x => x.IsAlive);
 
-        if (aliveTanks.Count == 0)
+    }
+
+    public override void OnLoseFocus()
+    {
+
+    }
+
+    public override void OnFocusUpdate()
+    {
+        List<Entity> targets = m_Targets?.FindAll(x => !x.Is<Tank>() || x.GetComponent<Tank>().IsAlive);
+
+        if (targets?.Count == 0)
         {
-            m_TargetCameraDistance = 0;
             return;
         }
 
-        if (aliveTanks.Count == 1)
+        float angle = Rotation.eulerAngles.x * Mathf.Deg2Rad;
+
+        Vector3 offset;
+        if (targets.Count == 1)
         {
-            m_TargetCameraDistance = 0;
-            m_TargetPosition = aliveTanks[0].transform.position;
+            offset = new Vector3(0, defaultCameraDistance * Mathf.Sin(angle), -defaultCameraDistance * Mathf.Cos(angle));
+            Position = targets[0].transform.position + offset;
             return;
         }
 
         Vector3 min = Vector3.positiveInfinity;
         Vector3 max = Vector3.negativeInfinity;
 
-        foreach (Tank tank in aliveTanks)
+        foreach (Entity ent in targets)
         {
-            min = Vector3.Min(min, tank.transform.position);
-            max = Vector3.Max(max, tank.transform.position);
+            min = Vector3.Min(min, ent.transform.position);
+            max = Vector3.Max(max, ent.transform.position);
         }
+
+        Vector3 middle = Vector3.Lerp(min, max, 0.5f);
 
         float maxDistance = Vector3.Magnitude(min - max);
 
-        m_TargetCameraDistance = (maxDistance / 2 / Camera.aspect) / Mathf.Tan(Camera.fieldOfView * Mathf.Deg2Rad / 2);
-        m_TargetPosition = Vector3.Lerp(min, max, 0.5f);
+        float targetCameraDistance = defaultCameraDistance + (maxDistance / 2 / Camera.main.aspect) / Mathf.Tan(Camera.main.fieldOfView * Mathf.Deg2Rad / 2);
+
+        offset = new Vector3(0, targetCameraDistance * Mathf.Sin(angle), -targetCameraDistance * Mathf.Cos(angle));
+
+        Position = middle + offset;
     }
 }

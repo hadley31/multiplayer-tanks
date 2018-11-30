@@ -122,12 +122,7 @@ public class Tank : TankBase
 
     private void Start()
     {
-        if (photonView.isMine && this.IsPlayer)
-        {
-            SpectatorCamera.Instance?.Follow(this);
-        }
-
-        SpawnRPC();
+        Spawn();
     }
 
     private void OnDestroy()
@@ -141,7 +136,7 @@ public class Tank : TankBase
         AllAlive.Remove(this);
         AllDead.Remove(this);
 
-        SpectatorCamera.Instance?.StopFollowing(this);
+        SpectatorCamera.Instance?.StopFollowing(Entity);
     }
 
     #endregion

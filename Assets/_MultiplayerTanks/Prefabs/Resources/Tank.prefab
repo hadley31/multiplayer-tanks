@@ -336,7 +336,7 @@ MonoBehaviour:
           m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 114357885377584908}
-        m_MethodName: SetValueToMaxRPC
+        m_MethodName: SetValueToMax
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

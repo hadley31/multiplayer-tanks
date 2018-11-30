@@ -110,11 +110,6 @@ public class TankMovement : TankBase
 
     protected virtual void Update()
     {
-        if (Tank.IsLocal == false)
-        {
-            return;
-        }
-
         if (Tank.IsAlive == false)
         {
             return;
@@ -126,11 +121,6 @@ public class TankMovement : TankBase
 
     protected virtual void FixedUpdate()
     {
-        if (Tank.IsLocal == false)
-        {
-            return;
-        }
-
         if (Tank.IsAlive == false)
         {
             return;
@@ -163,12 +153,11 @@ public class TankMovement : TankBase
 
     protected virtual void Move()
     {
+        Rigidbody.AddForce(TargetVelocity - Velocity, ForceMode.VelocityChange);
         if (IsGrounded == false)
         {
-            Rigidbody.AddForce(Physics.gravity * 9.81f * 0.7f);
+            Rigidbody.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
         }
-
-        Rigidbody.AddForce(TargetVelocity - Velocity, ForceMode.VelocityChange);
     }
 
     protected virtual void Rotate()
@@ -176,6 +165,7 @@ public class TankMovement : TankBase
         if (TargetDirection.sqrMagnitude > Mathf.Epsilon)
         {
             Quaternion target = Quaternion.LookRotation(TargetDirection, Vector3.up);
+            Rigidbody.angularVelocity = Vector3.zero;
             Rigidbody.rotation = Quaternion.Slerp(Rigidbody.rotation, target, Time.fixedDeltaTime * rotateSpeed);
         }
     }

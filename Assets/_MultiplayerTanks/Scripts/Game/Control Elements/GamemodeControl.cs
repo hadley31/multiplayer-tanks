@@ -12,7 +12,7 @@ public abstract class GamemodeControl : ControlElement
 
     protected virtual string TankName
     {
-        get { return "Tank"; }
+        get { return "Player Tank"; }
     }
 
     public override void OnGainControl()

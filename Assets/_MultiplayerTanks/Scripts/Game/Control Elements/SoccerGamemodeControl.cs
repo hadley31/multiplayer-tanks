@@ -6,7 +6,7 @@ public class SoccerGamemodeControl : GamemodeControl
 {
     protected override string TankName
     {
-        get { return "Tank_Soccer"; }
+        get { return "Soccer Tank"; }
     }
 
     public TeamSelectMenuControl teamSelectControl;
@@ -74,6 +74,6 @@ public class SoccerGamemodeControl : GamemodeControl
             Tank.Local.SetTeam(team);
         }
 
-        SpectatorCamera.Instance?.OnlyFollow(Tank.Local);
+        SpectatorCamera.Instance?.OnlyFollow(Tank.Local.Entity);
     }
 }

@@ -7,8 +7,6 @@ public class TankInput : TankBase
     private const float Tank_Bottom_Height = 0.333f;
     private const float SQRT2 = 1.41421356237f;
 
-    private Plane m_GroundPlane;
-
 
     public Vector3 CursorPosition
     {
@@ -19,7 +17,6 @@ public class TankInput : TankBase
     private void Awake()
     {
         CursorPosition = new Vector3(Screen.width / 2, Screen.height / 2);
-        m_GroundPlane = new Plane(Vector3.up, Vector3.up * Tank_Bottom_Height);
     }
 
 
@@ -75,7 +72,8 @@ public class TankInput : TankBase
         Ray ray = Camera.main.ScreenPointToRay(CursorPosition);
 
         float enterPoint;
-        if (m_GroundPlane.Raycast(ray, out enterPoint))
+        Plane plane = new Plane(Vector3.up, transform.position + Vector3.up * Tank_Bottom_Height);
+        if (plane.Raycast(ray, out enterPoint))
         {
             return ray.GetPoint(enterPoint);
         }

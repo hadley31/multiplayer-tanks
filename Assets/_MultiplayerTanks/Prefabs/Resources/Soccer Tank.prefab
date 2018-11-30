@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6799275540384712394
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 219097532324893243}
+      propertyPath: m_Name
+      value: Soccer Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 186921478793111809}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 186921478793111809}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 187387945077385139}
+      propertyPath: boostSpeedMultiplier
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 187387945077385139}
+      propertyPath: moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224965165760944469}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6724302087028593905, guid: 78a4005c503817341b0fc9bc08747508,
+        type: 3}
+      propertyPath: m_Name
+      value: Soccer Tank
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684455705094172619, guid: 78a4005c503817341b0fc9bc08747508,
+        type: 3}
+      propertyPath: viewIdField
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684455705094172619, guid: 78a4005c503817341b0fc9bc08747508,
+        type: 3}
+      propertyPath: instantiationId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684007342253875577, guid: 78a4005c503817341b0fc9bc08747508,
+        type: 3}
+      propertyPath: moveSpeed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6684007342253875577, guid: 78a4005c503817341b0fc9bc08747508,
+        type: 3}
+      propertyPath: boostSpeedMultiplier
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 78a4005c503817341b0fc9bc08747508, type: 3}
+--- !u!1 &219097532324893243 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6724302087028593905, guid: 78a4005c503817341b0fc9bc08747508,
+    type: 3}
+  m_PrefabInstance: {fileID: 6799275540384712394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &224965165760944469 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6720740309823037343, guid: 78a4005c503817341b0fc9bc08747508,
+    type: 3}
+  m_PrefabInstance: {fileID: 6799275540384712394}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &187387945077385139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6684007342253875577, guid: 78a4005c503817341b0fc9bc08747508,
+    type: 3}
+  m_PrefabInstance: {fileID: 6799275540384712394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219097532324893243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: fbe525a6d30f148459ab211b538637ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &186921478793111809 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6684455705094172619, guid: 78a4005c503817341b0fc9bc08747508,
+    type: 3}
+  m_PrefabInstance: {fileID: 6799275540384712394}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 219097532324893243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

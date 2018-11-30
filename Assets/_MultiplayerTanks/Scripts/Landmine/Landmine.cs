@@ -166,6 +166,11 @@ public class Landmine : EntityBase
 
     #region Destroy
 
+    public void TryDestroy()
+    {
+        LandmineManager.Instance.TryDestroy(this.ID);
+    }
+
     public void Destroy()
     {
         LandmineManager.Instance.Destroy(this.ID);

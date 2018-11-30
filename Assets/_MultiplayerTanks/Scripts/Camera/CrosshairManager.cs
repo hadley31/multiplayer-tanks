@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,7 +18,7 @@ public class CrosshairManager : MonoBehaviour
 
     private List<Tank> Tanks
     {
-        get { return SpectatorCamera.Instance?.Tanks?.FindAll(x => x.IsPlayer); }
+        get { return SpectatorCamera.Instance?.Targets?.Where(x => x.Is<Tank>()).Select(x => x.GetComponent<Tank>()).ToList(); }
     }
 
 
@@ -71,7 +72,7 @@ public class CrosshairManager : MonoBehaviour
             }
             else
             {
-                m_TankCursors[i].rectTransform.position = SpectatorCamera.Instance.Camera.WorldToScreenPoint(Tanks[i].NetworkTank.CursorWorldPosition);
+                m_TankCursors[i].rectTransform.position = Camera.main.WorldToScreenPoint(Tanks[i].NetworkTank.CursorWorldPosition);
             }
         }
     }

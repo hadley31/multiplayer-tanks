@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
-public class SoccerBall : Photon.MonoBehaviour
+public class SoccerBall : EntityBase
 {
     public float projectileHitForce = 100;
     public float landmineHitForce = 1000;
@@ -35,12 +35,7 @@ public class SoccerBall : Photon.MonoBehaviour
 
     private void Start()
     {
-        Rigidbody.useGravity = NetworkManager.IsMasterClient;
-    }
-
-    public void OnMasterClientSwitched(PhotonPlayer newMasterClient)
-    {
-        Rigidbody.useGravity = NetworkManager.IsMasterClient;
+        //Rigidbody.useGravity = NetworkManager.IsMasterClient;
     }
 
     public void ResetPosition()
@@ -115,11 +110,8 @@ public class SoccerBall : Photon.MonoBehaviour
     [PunRPC]
     private void AddForceRPC(int id, Vector3 force, Vector3 position)
     {
-        if (NetworkManager.IsMasterClient)
-        {
-            Rigidbody.AddForceAtPosition(force, position, ForceMode.Acceleration);
-            LastViewToTouch = id;
-        }
+        Rigidbody.AddForceAtPosition(force, position, ForceMode.Acceleration);
+        LastViewToTouch = id;
     }
 
     public void OnProjectileInteraction(Projectile p)

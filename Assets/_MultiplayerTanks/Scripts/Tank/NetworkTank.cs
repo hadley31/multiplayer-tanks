@@ -47,7 +47,7 @@ public class NetworkTank : TankBase
         {
             // we are sending data
             stream.SendNext(Movement.Position);
-            stream.SendNext(Movement.Velocity);
+            stream.SendNext(Movement.TargetVelocity);
 
             stream.SendNext(Movement.Rigidbody.rotation.eulerAngles.y);
             stream.SendNext(Movement.Top.eulerAngles.y);
@@ -74,9 +74,19 @@ public class NetworkTank : TankBase
     {
         if (!Tank.IsLocal)
         {
-            UpdateTop();
             CursorWorldPosition = Vector3.Lerp(CursorWorldPosition, m_TargetCursorWorldPos, Time.deltaTime * 10);
+
+            Movement.SetTargetDirection(m_NetworkVelocity);
         }
+    }
+
+    private void LateUpdate()
+    {
+        if (!Tank.IsLocal)
+        {
+            UpdateTop();
+        }
+
     }
 
 
@@ -84,12 +94,7 @@ public class NetworkTank : TankBase
     {
         if (!Tank.IsLocal)
         {
-            // Update this rigidbody's position
-            Movement.Rigidbody.MovePosition(GetLerpedPosition());
-
-            // Update the rigidbody's rotation
-            Quaternion newRotation = Quaternion.Euler(0, m_NetworkRotation, 0);
-            Movement.Rigidbody.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.fixedDeltaTime * rotateLerpSpeed);
+            Movement.Rigidbody.MovePosition(Vector3.Lerp(transform.position, m_NetworkPosition, Time.deltaTime * 10));
         }
     }
 
@@ -102,7 +107,7 @@ public class NetworkTank : TankBase
     }
 
 
-    private Vector3 GetLerpedPosition()
+    private Vector3 GetEstimatedPosition()
     {
         // Get the users ping to the server in seconds
         float pingInSeconds = PhotonNetwork.GetPing() * 0.001f;
@@ -114,10 +119,6 @@ public class NetworkTank : TankBase
         float totalTimePassed = pingInSeconds + timeSinceLastUpdate;
 
         // Estimate the position of the tank using linear approximation
-        Vector3 estimatedPosition = m_NetworkPosition + (m_NetworkVelocity * totalTimePassed);
-
-        Vector3 lerpedPosition = Vector3.Lerp(transform.position, estimatedPosition, Time.deltaTime * moveLerpSpeed);
-
-        return lerpedPosition;
+        return m_NetworkPosition + (m_NetworkVelocity * totalTimePassed);
     }
 }
