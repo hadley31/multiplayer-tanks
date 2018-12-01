@@ -74,6 +74,6 @@ public class SoccerGamemodeControl : GamemodeControl
             Tank.Local.SetTeam(team);
         }
 
-        SpectatorCamera.Instance?.OnlyFollow(Tank.Local.Entity);
+        EntityFollowCamera.Instance?.OnlyFollow(Tank.Local.Entity);
     }
 }

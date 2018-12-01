@@ -27,7 +27,7 @@ public class TankBoostVisual : MonoBehaviour
 
     private void Update()
     {
-        Tank tank = SpectatorCamera.Instance?.MainTarget?.GetComponent<Tank>();
+        Tank tank = EntityFollowCamera.Instance?.MainTarget?.GetComponent<Tank>();
 
         if (tank != null)
         {

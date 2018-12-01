@@ -702,11 +702,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamNames:
-  - Sick
-  - Beats
+  - Blue Team
+  - Red Team
   teamColors:
-  - {r: 0.8113208, g: 0.07271269, b: 0.5953952, a: 1}
-  - {r: 0.18945917, g: 0.7830189, b: 0.08495018, a: 1}
+  - {r: 0.07450982, g: 0.6278254, b: 0.8117647, a: 1}
+  - {r: 0.8207547, g: 0.25938955, b: 0.25938943, a: 1}
 --- !u!114 &104530650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2778,6 +2778,60 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &620340103
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 620340105}
+  - component: {fileID: 620340104}
+  m_Layer: 0
+  m_Name: Spectator Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &620340104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620340103}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fieldOfView: 60
+  follow: 1
+  look: 1
+  scrollSpeed: 0
+  offset: {x: 0, y: 10, z: -10}
+  onTargetsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!4 &620340105
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 620340103}
+  m_LocalRotation: {x: 0.44630906, y: -0, z: -0, w: 0.894879}
+  m_LocalPosition: {x: 0, y: 5.59, z: -3.21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 53.014004, y: 0, z: 0}
 --- !u!1001 &638743487
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2979,32 +3033,32 @@ PrefabInstance:
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.37
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.33
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.46098793
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.8874064
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
@@ -3014,7 +3068,7 @@ PrefabInstance:
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 54.902004
       objectReference: {fileID: 0}
     - target: {fileID: 5286390554949891396, guid: d5b6728e76ae6a4498f0ef7e49520c0f,
         type: 3}
@@ -3317,10 +3371,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fieldOfView: 60
-  scrollSpeed: 5
-  followSpeed: 15
-  cameraZoomSpeed: 5
-  defaultCameraDistance: 15
+  follow: 0
+  look: 1
+  scrollSpeed: 0
+  offset: {x: 0, y: 10, z: -10}
   onTargetsChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -3334,11 +3388,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 833867002}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 14.88, z: -18.83}
+  m_LocalPosition: {x: 0, y: 20, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
 --- !u!1001 &838839951
 PrefabInstance:
@@ -7016,6 +7070,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pause Menu
       objectReference: {fileID: 0}
+    - target: {fileID: 8044132668766071331, guid: 3fa4e1b2af242784fa066247a705e3b8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8044132668766071328, guid: 3fa4e1b2af242784fa066247a705e3b8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7128,6 +7187,11 @@ PrefabInstance:
     - target: {fileID: 1548245955, guid: 3fa4e1b2af242784fa066247a705e3b8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: SetActive
+      objectReference: {fileID: 0}
+    - target: {fileID: 8044132667234760564, guid: 3fa4e1b2af242784fa066247a705e3b8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fa4e1b2af242784fa066247a705e3b8, type: 3}

@@ -88,14 +88,10 @@ public class TankInput : TankBase
         float vert = Input.GetAxisRaw("Vertical");
         float horiz = Input.GetAxisRaw("Horizontal");
 
-        return new Vector3(horiz, 0, vert).normalized;
+        Vector3 input = (Camera.main.transform.forward + Camera.main.transform.up) * vert + Camera.main.transform.right * horiz;
 
+        input = Vector3.ProjectOnPlane(input, transform.up);
 
-        // Controller friendly input
-
-        //float vert = Input.GetAxis ("Vertical");
-        //float horiz = Input.GetAxis ("Horizontal");
-
-        //return new Vector3 (horiz, 0, vert) / SQRT2;
+        return input.normalized;
     }
 }

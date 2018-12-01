@@ -136,7 +136,7 @@ public class Tank : TankBase
         AllAlive.Remove(this);
         AllDead.Remove(this);
 
-        SpectatorCamera.Instance?.StopFollowing(Entity);
+        EntityFollowCamera.Instance?.StopFollowing(Entity);
     }
 
     #endregion

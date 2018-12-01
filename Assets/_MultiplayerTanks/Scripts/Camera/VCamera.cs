@@ -25,12 +25,18 @@ public abstract class VCamera : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        CameraManager.Instance?.AddVCam(this);
+        CameraController.Instance?.AddVCam(this);
     }
 
     protected virtual void OnDisable()
     {
-        CameraManager.Instance?.RemoveVCam(this);
+        CameraController.Instance?.RemoveVCam(this);
+    }
+
+    protected virtual void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(Position, Rotation * Vector3.forward);
     }
 
     public abstract void OnGainFocus();
@@ -39,6 +45,6 @@ public abstract class VCamera : MonoBehaviour
 
     public void RequestFocus()
     {
-        CameraManager.Instance?.RequestFocus(this);
+        CameraController.Instance?.RequestFocus(this);
     }
 }

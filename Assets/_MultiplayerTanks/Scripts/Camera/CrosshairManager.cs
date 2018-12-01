@@ -18,7 +18,7 @@ public class CrosshairManager : MonoBehaviour
 
     private List<Tank> Tanks
     {
-        get { return SpectatorCamera.Instance?.Targets?.Where(x => x.Is<Tank>()).Select(x => x.GetComponent<Tank>()).ToList(); }
+        get { return EntityFollowCamera.Instance?.Targets?.Where(x => x.Is<Tank>()).Select(x => x.GetComponent<Tank>()).ToList(); }
     }
 
 
@@ -48,6 +48,14 @@ public class CrosshairManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = true;
         print("Cursor revealed.");
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Delete))
+        {
+            ShowCursor();
+        }
     }
 
     private void LateUpdate()
