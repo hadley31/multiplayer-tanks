@@ -305,8 +305,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 45086571}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 6}
+  m_LocalPosition: {x: 20.431, y: 1.745, z: 0}
+  m_LocalScale: {x: 0.1, y: 3.492, z: 6}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 11
@@ -736,6 +736,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 276face4796e4fa49a916d717a5ef96a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &110077357
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 110077359}
+  - component: {fileID: 110077358}
+  m_Layer: 0
+  m_Name: Spectator Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &110077358
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110077357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requestFocusOnEnable: 0
+  fieldOfView: 60
+  follow: 0
+  look: 1
+  scrollSpeed: 0
+  offset: {x: 0, y: 10, z: -10}
+  onTargetsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!4 &110077359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110077357}
+  m_LocalRotation: {x: 0.27059805, y: 0.6532815, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: -30, y: 20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 20
+  m_LocalEulerAnglesHint: {x: 45, y: 90, z: 0}
 --- !u!1 &125569053
 GameObject:
   m_ObjectHideFlags: 0
@@ -834,8 +889,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 125569053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21, y: 1.5, z: 0}
-  m_LocalScale: {x: 1, y: 3, z: 6}
+  m_LocalPosition: {x: -20.45, y: 1.76, z: -0.014}
+  m_LocalScale: {x: 0.1, y: 3.5184782, z: 5.9700003}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 10
@@ -2303,6 +2358,61 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463564745}
   m_CullTransparentMesh: 0
+--- !u!1 &507638849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 507638851}
+  - component: {fileID: 507638850}
+  m_Layer: 0
+  m_Name: Spectator Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &507638850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507638849}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requestFocusOnEnable: 0
+  fieldOfView: 60
+  follow: 0
+  look: 1
+  scrollSpeed: 0
+  offset: {x: 0, y: 10, z: -10}
+  onTargetsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!4 &507638851
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 507638849}
+  m_LocalRotation: {x: 0, y: 0.92387956, z: -0.38268343, w: 0}
+  m_LocalPosition: {x: 0, y: 20, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 45, y: 180, z: 0}
 --- !u!1 &508303746
 GameObject:
   m_ObjectHideFlags: 0
@@ -2810,6 +2920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requestFocusOnEnable: 1
   fieldOfView: 60
   follow: 1
   look: 1
@@ -3372,6 +3483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requestFocusOnEnable: 0
   fieldOfView: 60
   follow: 0
   look: 1
@@ -3459,6 +3571,61 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 838839951}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &893898021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 893898023}
+  - component: {fileID: 893898022}
+  m_Layer: 0
+  m_Name: Spectator Camera
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &893898022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893898021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_GeneratorAsset: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: feaea8c28ec00b843b910790e34cc469, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requestFocusOnEnable: 0
+  fieldOfView: 60
+  follow: 0
+  look: 1
+  scrollSpeed: 0
+  offset: {x: 0, y: 10, z: -10}
+  onTargetsChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!4 &893898023
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 893898021}
+  m_LocalRotation: {x: -0.27059805, y: 0.6532815, z: -0.27059805, w: -0.6532815}
+  m_LocalPosition: {x: 30, y: 20, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 45, y: 270, z: 0}
 --- !u!1 &950979400
 GameObject:
   m_ObjectHideFlags: 0
@@ -7014,12 +7181,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3295729648247713871, guid: d228bf5eb6c0c0b4c8b5ef7fa60e5a41,
-        type: 3}
-      propertyPath: cursorPrefab
-      value: 
-      objectReference: {fileID: 114311163479895748, guid: a4ea66ec255737f40815b493dfa5f6f5,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d228bf5eb6c0c0b4c8b5ef7fa60e5a41, type: 3}
 --- !u!1001 &5354584532323866659

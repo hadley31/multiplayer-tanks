@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class VCamera : MonoBehaviour
 {
+    public bool requestFocusOnEnable;
     public float fieldOfView = 60;
 
     public virtual Vector3 Position
@@ -26,6 +27,11 @@ public abstract class VCamera : MonoBehaviour
     protected virtual void OnEnable()
     {
         CameraController.Instance?.AddVCam(this);
+
+        if (requestFocusOnEnable)
+        {
+            RequestFocus();
+        }
     }
 
     protected virtual void OnDisable()
