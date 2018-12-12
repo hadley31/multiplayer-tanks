@@ -7,6 +7,11 @@ public abstract class VCamera : MonoBehaviour
     public bool requestFocusOnEnable;
     public float fieldOfView = 60;
 
+    public bool IsCurrent
+    {
+        get { return CameraController.CurrentVCam == this; }
+    }
+
     public virtual Vector3 Position
     {
         get { return transform.position; }
@@ -26,7 +31,7 @@ public abstract class VCamera : MonoBehaviour
 
     protected virtual void OnEnable()
     {
-        CameraController.Instance?.AddVCam(this);
+        CameraController.AddVCam(this);
 
         if (requestFocusOnEnable)
         {
@@ -36,7 +41,7 @@ public abstract class VCamera : MonoBehaviour
 
     protected virtual void OnDisable()
     {
-        CameraController.Instance?.RemoveVCam(this);
+        CameraController.RemoveVCam(this);
     }
 
     protected virtual void OnDrawGizmos()
@@ -51,6 +56,6 @@ public abstract class VCamera : MonoBehaviour
 
     public void RequestFocus()
     {
-        CameraController.Instance?.RequestFocus(this);
+        CameraController.RequestFocus(this);
     }
 }

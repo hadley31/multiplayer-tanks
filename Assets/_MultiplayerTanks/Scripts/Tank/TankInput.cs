@@ -32,8 +32,9 @@ public class TankInput : TankBase
             return;
         }
 
-        if ((GamemodeControl.Current?.HasControl ?? false) == false)
+        if (GamemodeControl.Current == null)
         {
+            Movement.SetTargetDirection(Vector3.zero);
             return;
         }
 

@@ -11,9 +11,12 @@ public class SoccerGoalTextDisplay : Photon.MonoBehaviour
     public TextMeshProUGUI team1Score;
     public TextMeshProUGUI team2Score;
 
+    private CanvasGroup group;
+
     private void Awake()
     {
-        gameObject.SetActive(false);
+        group = GetComponent<CanvasGroup>();
+        group.alpha = 0;
     }
 
     public void UpdateText(int team)
@@ -41,15 +44,19 @@ public class SoccerGoalTextDisplay : Photon.MonoBehaviour
 
     public void Display()
     {
-        gameObject.SetActive(true);
         StartCoroutine(DisplayText());
     }
 
     private IEnumerator DisplayText()
     {
+        group.alpha = 1;
+
         yield return new WaitForSecondsRealtime(duration);
 
-        gameObject.SetActive(false);
+        while (group.alpha > 0){
+            group.alpha -= Time.deltaTime / duration;
+            yield return null;
+        }
     }
 
     private string GetName(int team)

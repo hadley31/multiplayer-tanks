@@ -42,10 +42,12 @@ public class Landmine : EntityBase
         private set;
     }
 
+
+    private int senderID;
+
     public Tank Sender
     {
-        get;
-        private set;
+        get { return PhotonView.Find(senderID)?.GetComponent<Tank>(); }
     }
 
     public Player Owner
@@ -157,9 +159,9 @@ public class Landmine : EntityBase
         this.ID = id;
     }
 
-    public void SetSender(int viewID)
+    public void SetSenderID(int viewID)
     {
-        this.Sender = PhotonView.Find(viewID)?.GetComponent<Tank>();
+        this.senderID = viewID;
     }
 
     #endregion

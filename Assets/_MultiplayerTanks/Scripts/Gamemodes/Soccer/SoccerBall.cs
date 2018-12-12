@@ -33,11 +33,6 @@ public class SoccerBall : EntityBase
         Collider = GetComponent<Collider>();
     }
 
-    private void Start()
-    {
-        //Rigidbody.useGravity = NetworkManager.IsMasterClient;
-    }
-
     public void ResetPosition()
     {
         if (NetworkManager.IsMasterClient == false)
@@ -75,7 +70,7 @@ public class SoccerBall : EntityBase
 
         Vector3 force = (Rigidbody.position - tank.transform.position) * tankHitForce;
 
-        AddForce(tank.ID, force, tank.transform.position);
+        AddForceNetworkTest(tank.ID, force, tank.transform.position);
     }
 
     private void Update()
@@ -90,6 +85,31 @@ public class SoccerBall : EntityBase
             ResetPosition();
         }
     }
+
+
+    public void AddForceNetworkTest(int id, Vector3 force, Vector3 position)
+    {
+        if (Tank.Local.ID != id)
+        {
+            return;
+        }
+
+        Rigidbody.AddForceAtPosition(force, position, ForceMode.Acceleration);
+        photonView.RPC("AddForceNetworkTestRPC", PhotonTargets.Others, id, Rigidbody.position, Rigidbody.velocity, PhotonNetwork.time);
+    }
+
+    [PunRPC]
+    private void AddForceNetworkTestRPC(int id, Vector3 ballPos, Vector3 ballVel, double time)
+    {
+        float dt = (float)(PhotonNetwork.time - time);
+
+        Vector3 newPos = ballPos + ballVel * dt + 0.5f * Physics.gravity * dt * dt;
+        Vector3 velocity = ballVel + Physics.gravity * dt;
+
+        Rigidbody.MovePosition(newPos);
+        Rigidbody.velocity = velocity;
+    }
+
 
     public void AddForce(int id, Vector3 force, Vector3 position)
     {
@@ -118,7 +138,7 @@ public class SoccerBall : EntityBase
     {
         if (p.Sender.ID == Tank.Local.ID)
         {
-            AddForce(p.Sender.ID, p.Direction * projectileHitForce, p.Rigidbody.position);
+            AddForceNetworkTest(p.Sender.ID, p.Direction * projectileHitForce, p.Rigidbody.position);
         }
 
         p.Destroy();
@@ -129,6 +149,6 @@ public class SoccerBall : EntityBase
         Vector3 force = (transform.position - landmine.transform.position).normalized * landmineHitForce;
         Vector3 position = landmine.transform.position;
 
-        AddForce(landmine.Sender.ID, force, position);
+        AddForceNetworkTest(landmine.Sender.ID, force, position);
     }
 }

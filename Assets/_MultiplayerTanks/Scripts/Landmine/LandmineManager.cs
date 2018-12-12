@@ -75,7 +75,7 @@ public class LandmineManager : Photon.MonoBehaviour
         landmine.SetPosition(position);
         landmine.SetDamage(damage);
         landmine.SetRadius(radius);
-        landmine.SetSender(viewID);
+        landmine.SetSenderID(viewID);
         landmine.SetID(mineID);
 
         m_Landmines.Add(landmine);

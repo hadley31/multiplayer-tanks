@@ -71,13 +71,18 @@ public class Server
             //return;
         }
 
+        if (GetProperty<object>(key) == obj)
+        {
+            // This is already the value on record, so we don't need to do anything, and just return.
+            return;
+        }
+
         Photon.SetCustomProperties(new Hashtable() { { key, obj } });
     }
 
     public T GetProperty<T>(string key, T defaultValue = default(T))
     {
-        object obj;
-        if (Photon.CustomProperties.TryGetValue(key, out obj) && obj is T)
+        if (Photon.CustomProperties.TryGetValue(key, out object obj) && obj is T)
         {
             return (T)obj;
         }

@@ -84,23 +84,28 @@ public class Tank : TankBase
 
     public Team Team
     {
-        get { return Server.Current.GetTeam(GetProperty(TankProperty.Team, 0)); }
+        get { return Server.Current?.GetTeam(GetProperty<int>(TankProperty.Team)) ?? 0; }
         private set { SetProperty(TankProperty.Team, (int)value); }
     }
 
     public void SetProperty(string key, object value)
     {
-        Server.Current.SetProperty(key + this.ID, value);
+        Server.Current?.SetProperty(key + this.ID, value);
     }
 
     public T GetProperty<T>(string key, T defaultValue = default(T))
     {
+        if (Server.Current == null)
+        {
+            return defaultValue;
+        }
+
         return Server.Current.GetProperty(key + this.ID, defaultValue);
     }
 
     public void ClearProperty(string key)
     {
-        Server.Current.ClearProperty(key + this.ID);
+        Server.Current?.ClearProperty(key + this.ID);
     }
 
     #endregion
@@ -174,6 +179,7 @@ public class Tank : TankBase
     [PunRPC]
     private void SpawnRPC()
     {
+        gameObject.name = "Tank - " + OwnerAlias;
         IsAlive = true;
 
         UpdateList();

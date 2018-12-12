@@ -9,7 +9,7 @@ public class SoccerGoal : MonoBehaviour
 	public int playerPointsPerGoal = 1;
 	public int teamPointsPerGoal = 1;
 
-	public UnityEvent onScore;
+	public IntUnityEvent onScore;
 
 	public void OnEnter (Entity ent)
 	{
@@ -36,8 +36,8 @@ public class SoccerGoal : MonoBehaviour
 		}
 
 		
-		Server.Current.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
+		Server.Current?.IncreaseTeamScore (this.team, this.teamPointsPerGoal);
 
-		onScore.Invoke ();
+		onScore.Invoke (team);
 	}
 }

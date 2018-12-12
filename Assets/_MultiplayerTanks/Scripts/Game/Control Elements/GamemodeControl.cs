@@ -44,10 +44,12 @@ public abstract class GamemodeControl : ControlElement
 
     public virtual Tank CreateTank()
     {
-        Tank tank = PhotonNetwork.Instantiate(TankName, Vector3.zero, Quaternion.identity, 0).GetComponent<Tank>();
+        Tank tank = PhotonNetwork.Instantiate(TankName, GetSpawnPoint(), Quaternion.identity, 0).GetComponent<Tank>();
 
         tank.Visuals.RevertToTeamColor();
 
         return tank;
     }
+
+    public abstract Vector3 GetSpawnPoint();
 }

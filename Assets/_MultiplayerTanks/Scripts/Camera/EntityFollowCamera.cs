@@ -8,7 +8,7 @@ public class EntityFollowCamera : VCamera
 {
     public static EntityFollowCamera Instance
     {
-        get { return CameraController.Instance?.Current as EntityFollowCamera; }
+        get { return CameraController.CurrentVCam as EntityFollowCamera; }
     }
 
     public bool follow = true;
@@ -83,7 +83,7 @@ public class EntityFollowCamera : VCamera
 
     public override void OnGainFocus()
     {
-
+        
     }
 
     public override void OnLoseFocus()

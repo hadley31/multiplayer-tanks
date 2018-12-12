@@ -4,23 +4,24 @@ using UnityEngine;
 
 public class SetTeamValues : MonoBehaviour
 {
-	public List<string> teamNames;
-	public List<Color> teamColors;
+    public List<string> teamNames;
+    public List<Color> teamColors;
 
-	private void Start ()
-	{
-		for ( int i = 0; i < teamNames.Count; i++ )
-		{
-			int index = i + 1;
+    private void Start()
+    {
+        if (!NetworkManager.IsMasterClient)
+        {
+            return;
+        }
 
-			Server.Current.SetTeamName (index, teamNames[i]);
-		}
+        for (int i = 0; i < teamNames.Count; i++)
+        {
+            Server.Current.SetTeamName(i + 1, teamNames[i]);
+        }
 
-		for ( int i = 0; i < teamColors.Count; i++ )
-		{
-			int index = i + 1;
-
-			Server.Current.SetTeamColor (index, teamColors[i]);
-		}
-	}
+        for (int i = 0; i < teamColors.Count; i++)
+        {
+            Server.Current.SetTeamColor(i + 1, teamColors[i]);
+        }
+    }
 }

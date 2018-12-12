@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PhotonView))]
 public class SoccerGamemodeControl : GamemodeControl
 {
     protected override string TankName
@@ -9,7 +10,11 @@ public class SoccerGamemodeControl : GamemodeControl
         get { return "Soccer Tank"; }
     }
 
+    public int playerPointsPerGoal = 5;
+    public int teamPointsPerGoal = 1;
+
     public TeamSelectMenuControl teamSelectControl;
+    public IntUnityEvent onGoalScored;
 
     public override void OnGainControl()
     {
@@ -39,7 +44,18 @@ public class SoccerGamemodeControl : GamemodeControl
 
     public void OnGoalScored(int team)
     {
+        if (!NetworkManager.IsMasterClient)
+        {
+            return;
+        }
 
+        GetComponent<PhotonView>().RPC("OnGoalScoredRPC", PhotonTargets.All, team);
+    }
+
+    [PunRPC]
+    private void OnGoalScoredRPC(int team)
+    {
+        onGoalScored.Invoke(team);
     }
 
     public void OnChangeTeam(int team)
@@ -55,6 +71,8 @@ public class SoccerGamemodeControl : GamemodeControl
                 Tank.Local.Remove();
             }
 
+            print("Spectating!");
+
             CrosshairManager.Current?.ShowCursor();
 
             return;
@@ -62,11 +80,11 @@ public class SoccerGamemodeControl : GamemodeControl
 
         if (Tank.Local == null)
         {
-            Vector3 spawn = Vector3.right * 18 * (teamSelectControl.SelectedTeam == 1 ? -1 : 1);
+
             Tank tank = CreateTank();
 
-            tank.transform.position = spawn;
             tank.SetTeam(teamSelectControl.SelectedTeam);
+
             CrosshairManager.Current?.HideCursor();
         }
         else
@@ -75,5 +93,10 @@ public class SoccerGamemodeControl : GamemodeControl
         }
 
         EntityFollowCamera.Instance?.OnlyFollow(Tank.Local.Entity);
+    }
+
+    public override Vector3 GetSpawnPoint()
+    {
+        return Vector3.right * 18 * (teamSelectControl.SelectedTeam == 1 ? -1 : 1) + Vector3.forward * Random.Range(-5, 5);
     }
 }

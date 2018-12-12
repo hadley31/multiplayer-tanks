@@ -77,10 +77,11 @@ public class Projectile : EntityBase
         }
     }
 
+    private int senderID;
+
     public Tank Sender
     {
-        get;
-        private set;
+        get { return Tank.All?.Find(x => x.ID == senderID); }
     }
 
     public Player Owner
@@ -183,9 +184,9 @@ public class Projectile : EntityBase
         this.ID = id;
     }
 
-    public void SetSender(int viewID)
+    public void SetSenderID(int viewID)
     {
-        this.Sender = Tank.All.Find(x => x.ID == viewID);
+        this.senderID = viewID;
 
         if (this.Sender?.Team != null)
         {

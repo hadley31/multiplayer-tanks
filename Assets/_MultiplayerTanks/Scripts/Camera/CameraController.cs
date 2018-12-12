@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CameraController : MonoBehaviour
 {
@@ -15,31 +16,33 @@ public class CameraController : MonoBehaviour
     public float rotateSlerpSpeed = 15.0f;
     public float zoomLerpSpeed = 5.0f;
 
+    public UnityEvent onFocusChanged;
 
-    private List<VCamera> m_VirtualCameras;
-    private int m_Index;
+    private static List<VCamera> virtualCameras;
+    private static int m_Index;
 
-    private int Index
+    private static int Index
     {
-        get { return m_Index = Mathf.Clamp(m_Index, 0, m_VirtualCameras?.Count - 1 ?? 0); }
-        set { m_Index = Mathf.Clamp(value, 0, m_VirtualCameras?.Count - 1 ?? 0); }
+        get { return m_Index = Mathf.Clamp(m_Index, 0, virtualCameras?.Count - 1 ?? 0); }
+        set { m_Index = Mathf.Clamp(value, 0, virtualCameras?.Count - 1 ?? 0); }
     }
 
-    public VCamera Current
+    public static VCamera CurrentVCam
     {
         get;
         private set;
     }
 
-    public Camera Camera
+    private Camera m_Camera;
+
+    public static Camera Camera
     {
-        get;
-        private set;
+        get { return Instance?.m_Camera; }
     }
 
     private void Awake()
     {
-        Camera = GetComponent<Camera>();
+        m_Camera = GetComponent<Camera>();
     }
 
     private void OnEnable()
@@ -76,60 +79,63 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        VCamera desired = m_VirtualCameras?[Index];
-        if (Current == desired && Current != null)
+        VCamera desired = virtualCameras?[Index];
+        if (CurrentVCam == desired && CurrentVCam != null)
         {
-            Current.OnFocusUpdate();
+            CurrentVCam.OnFocusUpdate();
         }
         else
         {
-            Current?.OnLoseFocus();
+            CurrentVCam?.OnLoseFocus();
             desired?.OnGainFocus();
 
-            Current = desired;
+            if (CurrentVCam != (CurrentVCam = desired))
+            {
+                onFocusChanged.Invoke();
+            }
         }
 
-        if (Current == null)
+        if (CurrentVCam == null)
         {
             return;
         }
 
-        transform.position = Vector3.Lerp(transform.position, Current.Position, Time.deltaTime * moveLerpSpeed);
-        transform.rotation = Quaternion.Slerp(transform.rotation, Current.Rotation, Time.deltaTime * rotateSlerpSpeed);
-        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, Current.FieldOfView, Time.deltaTime * zoomLerpSpeed);
+        transform.position = Vector3.Lerp(transform.position, CurrentVCam.Position, Time.deltaTime * moveLerpSpeed);
+        transform.rotation = Quaternion.Slerp(transform.rotation, CurrentVCam.Rotation, Time.deltaTime * rotateSlerpSpeed);
+        Camera.fieldOfView = Mathf.Lerp(Camera.fieldOfView, CurrentVCam.FieldOfView, Time.deltaTime * zoomLerpSpeed);
     }
 
-    public void AddVCam(VCamera vCamera)
+    public static void AddVCam(VCamera vCamera)
     {
-        if (m_VirtualCameras == null)
+        if (virtualCameras == null)
         {
-            m_VirtualCameras = new List<VCamera>();
+            virtualCameras = new List<VCamera>();
         }
 
-        if (!m_VirtualCameras.Contains(vCamera))
+        if (!virtualCameras.Contains(vCamera))
         {
-            m_VirtualCameras.Add(vCamera);
+            virtualCameras.Add(vCamera);
         }
     }
 
-    public void RemoveVCam(VCamera vCamera)
+    public static void RemoveVCam(VCamera vCamera)
     {
-        m_VirtualCameras?.Remove(vCamera);
+        virtualCameras?.Remove(vCamera);
     }
 
-    public void Next()
+    public static void Next()
     {
         Index++;
     }
 
-    public void Previous()
+    public static void Previous()
     {
         Index--;
     }
 
-    public void RequestFocus(VCamera vCamera)
+    public static void RequestFocus(VCamera vCamera)
     {
-        int index = m_VirtualCameras.IndexOf(vCamera);
+        int index = virtualCameras.IndexOf(vCamera);
         if (index > 0)
         {
             Index = index;

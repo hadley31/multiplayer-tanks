@@ -42,11 +42,9 @@ public class TankShoot : TankBase
 			return;
 		}
 
-		int id = ProjectileManager.GetNextID ();
-
 		float projectileSpeed = this.speed + Vector3.Dot (Movement.Velocity, spawnPoint.forward) * relativeSpeedEffect;
 
-		ProjectileManager.Instance.SpawnNew (spawnPoint.position, spawnPoint.forward, bounces, damage, health, projectileSpeed, Tank.ID, id, PhotonNetwork.time);
+		ProjectileManager.Instance.SpawnNew (spawnPoint.position, spawnPoint.forward, bounces, radius, damage, health, projectileSpeed, Tank.ID, PhotonNetwork.time);
 
 		m_LastShootTime = Time.realtimeSinceStartup;
 	}
