@@ -11,8 +11,8 @@ public class KeybindToggle : MonoBehaviour
 
     public bool Toggled
     {
-        get { return toggleObject.activeSelf; }
-        set { toggleObject.SetActive(value); }
+        get { return toggleObject?.activeSelf ?? false; }
+        set { toggleObject?.SetActive(value); }
     }
 
 
