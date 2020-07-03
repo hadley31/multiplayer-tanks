@@ -1,5 +1,5 @@
 # Multiplayer Tanks
-A multiplayer tank game made with Unity, inspired by the "Wii Play" mini-game, "Tanks!"  
+A multiplayer tank game made with Unity, inspired by [Tanks!](https://nintendo.fandom.com/wiki/Tanks!)
 
 ## Play it yourself!
 * Play it in your [broswer](https://hadley31.github.io/multiplayer-tanks).
